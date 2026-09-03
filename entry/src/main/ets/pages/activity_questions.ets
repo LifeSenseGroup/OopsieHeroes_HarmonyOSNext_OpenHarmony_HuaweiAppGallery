@@ -113,8 +113,8 @@ struct ActivityQuestions {
             this.currentIndex++;
             this.controller.changeIndex(this.currentIndex);
           } else {
-            // Final Step -> Navigate to Pair Sensor
-            router.pushUrl({ url: 'pages/activity_pair_new_sensor' });
+            // Finish onboarding without requiring a hardware sensor.
+            router.replaceUrl({ url: 'pages/activity_home' });
           }
         })
     }

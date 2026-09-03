@@ -91,12 +91,10 @@ struct ActivityIntro {
 
   build() {
     Column({ space: 0 }) {
-      // Logo
-      Image($r('app.media.carin_logo_2pt'))
-        .width(64)
-        .height('auto')
-        .objectFit(ImageFit.Fill)
-        .fillColor($r('app.color.lifesense_dark_purple'))
+      Text('OOPSIE HEROES')
+        .fontSize(24)
+        .fontWeight(FontWeight.Bold)
+        .fontColor($r('app.color.lifesense_dark_purple'))
         .margin({ top: 24, left: 8, right: 8 })
 
       // Intro Slides (Swiper)

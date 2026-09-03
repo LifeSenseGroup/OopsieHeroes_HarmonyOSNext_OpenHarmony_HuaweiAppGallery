@@ -1,0 +1,1 @@
+here the build from the webapp (oopsieWeApp at the moment) dist directory should be copied 

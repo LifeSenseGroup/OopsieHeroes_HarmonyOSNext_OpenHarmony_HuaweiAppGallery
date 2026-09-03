@@ -1,7 +1,5 @@
 import router from '@ohos.router';
 import promptAction from '@ohos.promptAction';
-import emitter from '@ohos.events.emitter';
-import { SensorManager, SENSOR_EVENT_ID, SensorUpdateEvent } from '../manager/SensorManager';
 import { CycleManager } from '../manager/CycleManager';
 
 // Define interface for dialog response
@@ -30,35 +28,12 @@ struct ActivityHome {
     // 1. Check Initial State
     this.checkStatus();
 
-    // 2. Start Sensor Manager
-    SensorManager.getInstance().start(getContext(this));
-
-    // 3. Listen for Sensor Events
-    emitter.on({ eventId: SENSOR_EVENT_ID }, (eventData: emitter.EventData) => {
-      let data = eventData.data as SensorUpdateEvent;
-      if (data.status === 'CONNECTED') {
-        this.isConnected = true;
-        this.syncStatusText = "Connected";
-        this.isSyncing = false;
-      }
-      else if (data.status === 'DISCONNECTED') {
-        this.isConnected = false;
-        this.syncStatusText = "Not Connected";
-        this.isSyncing = false;
-      }
-      else if (data.status === 'SYNCING') {
-        this.syncStatusText = data.message || "Synchronizing with the sensor...";
-        this.isSyncing = true;
-      }
-    });
-
-    // 4. Calculate Progress (Placeholder - see note below)
+    // Calculate progress from local activity data.
     this.calculateProgress();
   }
 
   async checkStatus() {
     this.isMeasuring = await CycleManager.getInstance().isMeasuring();
-    this.isConnected = SensorManager.getInstance().isConnected;
   }
 
   // TODO: Logic for progress needs to be ported from Home.kt
@@ -84,28 +59,16 @@ struct ActivityHome {
           .height('100%')
 
         // Center: Sync Status
-        Text(this.syncStatusText)
+        Text('READY TO TRAIN')
           .fontSize(12)
           .fontColor('#808080')
           .textAlign(TextAlign.Center)
 
         // Right: Settings & Sync
         Row() {
-          // Sync Icon
-          Image($r('app.media.ic_sync_black_24dp'))
-            .width(24)
-            .height(24)
-            .fillColor(Color.Black)
-            .margin({ right: 16 })
-            .onClick(() => {
-              if (this.isConnected) {
-                promptAction.showToast({ message: "Syncing..." });
-              }
-            })
-
           // Settings Icon
           Stack({ alignContent: Alignment.TopEnd }) {
-            Image($r('app.media.ic_carin_sensor'))
+            Image($r('app.media.app_icon'))
               .width(28)
               .height(28)
               .fillColor(this.colorLightPurple)
@@ -244,7 +207,7 @@ struct ActivityHome {
   ExpandableFab() {
     Button({ type: ButtonType.Normal }) {
       Row() {
-        Image($r('app.media.ic_carin_sensor_only_border_thick2'))
+        Image($r('app.media.activity'))
           .width(24)
           .height(24)
           .fillColor(Color.White)
@@ -274,14 +237,7 @@ struct ActivityHome {
       return;
     }
 
-    // 2. If not connected, prompt pair
-    if (!this.isConnected) {
-      promptAction.showToast({ message: "Please connect sensor first" });
-      this.navigateTo('pages/activity_pair_new_sensor');
-      return;
-    }
-
-    // 3. Start Logic
+    // Start local measuring without requiring a hardware sensor.
     promptAction.showDialog({
       title: 'Start Measuring',
       message: 'Ensure sensor is worn correctly.',

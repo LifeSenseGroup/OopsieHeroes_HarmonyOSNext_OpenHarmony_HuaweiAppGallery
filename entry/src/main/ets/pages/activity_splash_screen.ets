@@ -13,14 +13,22 @@ struct ActivitySplashScreen {
 
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      Image($r('app.media.carin_start_screen_70q'))
-        .objectFit(ImageFit.Cover) // Ensures image covers space without distortion
-        .width('100%')
-        .height('100%')
+      Column({ space: 18 }) {
+        Image($r('app.media.activity'))
+          .width(96)
+          .height(96)
+          .objectFit(ImageFit.Contain)
+
+        Text('OOPSIE HEROES')
+          .fontSize(28)
+          .fontWeight(FontWeight.Bold)
+          .fontColor(Color.White)
+          .letterSpacing(2)
+      }
     }
     .width('100%')
     .height('100%')
-    .backgroundColor(Color.White)
+    .backgroundColor('#101D3A')
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
   }
 }
