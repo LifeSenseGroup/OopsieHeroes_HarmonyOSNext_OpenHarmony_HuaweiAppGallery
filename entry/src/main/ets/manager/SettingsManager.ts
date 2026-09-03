@@ -1,6 +1,6 @@
 import dataPreferences from '@ohos.data.preferences';
 import { BusinessError } from '@kit.BasicServicesKit';
-import { Context } from '@kit.AbilityKit';
+import common from '@ohos.app.ability.common';
 
 // Porting the Setting Enums from Android
 export enum SettingString {
@@ -40,7 +40,7 @@ export class SettingsManager {
   }
 
   // --- INITIALIZATION ---
-  public async init(context: Context) {
+  public async init(context: common.UIAbilityContext) {
     try {
       this.preferences = await dataPreferences.getPreferences(context, this.PREF_NAME);
       console.info('SettingsManager: Preferences initialized');

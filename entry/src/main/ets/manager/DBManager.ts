@@ -1,5 +1,5 @@
 import relationalStore from '@ohos.data.relationalStore';
-import { Context } from '@kit.AbilityKit';
+import common from '@ohos.app.ability.common';
 
 // Define Interfaces matching your Data Models
 export interface Cycle {
@@ -30,7 +30,7 @@ export interface DrinkRecord {
 export class DBManager {
   private static instance: DBManager;
   private store: relationalStore.RdbStore | null = null;
-  private context: Context | null = null;
+  private context: common.UIAbilityContext | null = null;
 
   // Database Config
   private readonly DB_NAME = 'CarinStore.db';
@@ -83,7 +83,7 @@ export class DBManager {
     return DBManager.instance;
   }
 
-  public init(context: Context): Promise<void> {
+  public init(context: common.UIAbilityContext): Promise<void> {
     this.context = context;
     const config: relationalStore.StoreConfig = {
       name: this.DB_NAME,

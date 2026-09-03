@@ -5,13 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "C:\\Users\\markt\\.ohos\\config\\default_carin-huawei-harmony_bsfRS37HBeop0GlCq5TFBPLedMmzWud5RP71gSeBUaU=.cer",
+          "certpath": "C:\\Users\\nikie\\.ohos\\config\\default_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_xiRAXxpX2yqaxg3eLnov9aancSXD3pu8J8EC-M1ISQM=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B23749A5C38F94ECEF107468AE744724D529A6F152ED8545E854C128817389872CBBABAC553583F",
-          "profile": "C:\\Users\\markt\\.ohos\\config\\default_carin-huawei-harmony_bsfRS37HBeop0GlCq5TFBPLedMmzWud5RP71gSeBUaU=.p7b",
+          "keyPassword": "0000001ABB52C28F41875CF238C01B08F521840FB34A1FD638AE7708A75EF5EC744D837DE460B96F72F1",
+          "profile": "C:\\Users\\nikie\\.ohos\\config\\default_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_xiRAXxpX2yqaxg3eLnov9aancSXD3pu8J8EC-M1ISQM=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:\\Users\\markt\\.ohos\\config\\default_carin-huawei-harmony_bsfRS37HBeop0GlCq5TFBPLedMmzWud5RP71gSeBUaU=.p12",
-          "storePassword": "0000001B8DD47D2DBB112574999F2EEA1718B822FBAF44DAEA589A424532F52F641EE0B744C5166DAE282E"
+          "storeFile": "C:\\Users\\nikie\\.ohos\\config\\default_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_xiRAXxpX2yqaxg3eLnov9aancSXD3pu8J8EC-M1ISQM=.p12",
+          "storePassword": "0000001AD302690D7C33A97756770D6043A688E21811CED661CFEB317A6DDA57CE629172360F35112857"
         }
       }
     ],
