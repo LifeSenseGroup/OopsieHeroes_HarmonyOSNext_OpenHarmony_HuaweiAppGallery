@@ -1,0 +1,56 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\markt\\.ohos\\config\\default_carin-huawei-harmony_bsfRS37HBeop0GlCq5TFBPLedMmzWud5RP71gSeBUaU=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B23749A5C38F94ECEF107468AE744724D529A6F152ED8545E854C128817389872CBBABAC553583F",
+          "profile": "C:\\Users\\markt\\.ohos\\config\\default_carin-huawei-harmony_bsfRS37HBeop0GlCq5TFBPLedMmzWud5RP71gSeBUaU=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\markt\\.ohos\\config\\default_carin-huawei-harmony_bsfRS37HBeop0GlCq5TFBPLedMmzWud5RP71gSeBUaU=.p12",
+          "storePassword": "0000001B8DD47D2DBB112574999F2EEA1718B822FBAF44DAEA589A424532F52F641EE0B744C5166DAE282E"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "targetSdkVersion": "5.1.0(18)",
+        "compatibleSdkVersion": "5.1.0(18)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}

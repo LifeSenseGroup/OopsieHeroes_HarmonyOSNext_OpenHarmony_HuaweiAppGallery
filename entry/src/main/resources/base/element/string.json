@@ -1,0 +1,122 @@
+{
+  "string": [
+    { "name": "app_short_name", "value": "Oopsie Heroes" },
+    { "name": "app_full_name", "value": "Oopsie Heroes" },
+    { "name": "video_source", "value": "http://lifesense-group.com/wp-content/uploads/video_source_english.txt" },
+    { "name": "carin_wear_website", "value": "carinwear.com" },
+    { "name": "lifesense_group_website", "value": "lifesense-group.com" },
+    { "name": "stitch_client_app_id", "value": "planbe_app-mawit" },
+    { "name": "email_attachment_name", "value": "carin_data_" },
+    { "name": "daily_notifications_json_uri", "value": "en_daily_notifications.json" },
+    { "name": "measure_day_notifications_json_uri", "value": "en_measure_day_notifications.json" },
+    { "name": "standard_exercises_json_uri", "value": "en_standard_exercises.json" },
+    { "name": "personalised_exercises_json_uri", "value": "en_personalised_exercises.json" },
+    { "name": "video_tutorials_json_uri", "value": "en_video_tutorials.json" },
+    { "name": "privacy_policy_uri", "value": "en_privacy_policy.html" },
+
+    { "name": "alcohol", "value": "Alcohol" },
+    { "name": "coffee", "value": "Coffee" },
+    { "name": "carbonated", "value": "Carbonated" },
+    { "name": "tea", "value": "Tea" },
+    { "name": "non_carbonated", "value": "Non-Carbonated" },
+    { "name": "water", "value": "Water" },
+    { "name": "done", "value": "Done" },
+    { "name": "no_drink_quantity", "value": "You have not entered a quantity" },
+    { "name": "no_drink_type", "value": "You have not selected a drink type" },
+    { "name": "week", "value": "Week %1$d" },
+    { "name": "day", "value": "day %1$d" },
+    { "name": "stop_measure_header", "value": "Stop measuring day" },
+    { "name": "data_summary_header", "value": "Data summary" },
+    { "name": "notifications_settings_header", "value": "Notifications settings" },
+    { "name": "send_summary", "value": "Send summary" },
+    { "name": "keep_it_quiet", "value": "Keep it quiet" },
+    { "name": "send_measuring_day_notifications", "value": "Send only notifications of the measuring day" },
+    { "name": "send_all_notifications", "value": "Send all the notifications" },
+    { "name": "yes", "value": "yes" },
+    { "name": "no", "value": "no" },
+
+    { "name": "module_desc", "value": "Main entry module for Oopsie Heroes" },
+    { "name": "EntryAbility_desc", "value": "Oopsie Heroes main ability" },
+    { "name": "EntryAbility_label", "value": "Oopsie Heroes" },
+    { "name": "app_name", "value": "Oopsie Heroes" },
+
+    { "name": "welcome_to_oopsie_heroes", "value": "Welcome to Oopsie Heroes" },
+    { "name": "i_agree", "value": "I agree to the" },
+    { "name": "terms_and_conditions", "value": "Terms and Conditions" },
+    { "name": "privacy_policy", "value": "Privacy Policy" },
+    { "name": "get_started", "value": "GET STARTED" },
+    { "name": "futura_std_bold", "value": "Futura-Std-Bold" },
+    { "name": "futura_std_medium", "value": "Futura-Std-Medium" },
+    { "name": "futura_std_heavy", "value": "Futura-Std-Heavy" },
+
+    { "name": "birthday", "value": "Birthday" },
+    { "name": "pair_new_sensor", "value": "PAIR A NEW SENSOR" },
+    { "name": "looking_for_sensors", "value": "Looking for sensors" },
+    { "name": "scan", "value": "SCAN" },
+    { "name": "pair", "value": "PAIR" },
+
+    { "name": "about", "value": "About" },
+    { "name": "carin_sensor", "value": "Carin Sensor" },
+    { "name": "serial_number", "value": "Serial Number" },
+    { "name": "software_version", "value": "Software Version" },
+    { "name": "update", "value": "Update" },
+    { "name": "app_uses_libraries", "value": "This app uses the following open-source libraries:" },
+    { "name": "apache_license", "value": "Apache License 2.0" },
+    { "name": "mit_license", "value": "MIT License" },
+
+    { "name": "add_drink", "value": "Add drink" },
+    { "name": "choose_drink", "value": "Choose your drink" },
+    { "name": "amount", "value": "Amount" },
+    { "name": "time", "value": "Time" },
+    { "name": "enter", "value": "ENTER" },
+
+    { "name": "calendar", "value": "Calendar" },
+
+    { "name": "exercises", "value": "Exercises" },
+
+    { "name": "history", "value": "History" },
+
+    { "name": "measure", "value": "Measure" },
+    { "name": "no_data_to_show", "value": "No data to show" },
+
+    { "name": "abort", "value": "Abort" },
+    { "name": "ok", "value": "OK" },
+
+    { "name": "close", "value": "Close" },
+
+    { "name": "settings", "value": "Settings" },
+    { "name": "not_connected", "value": "Not connected" },
+    { "name": "information", "value": "Information" },
+
+    { "name": "tutorial", "value": "Tutorial" },
+
+    { "name": "updating_sensor", "value": "Updating Sensor" },
+    { "name": "sensor_update_instructions", "value": "Please keep the sensor close to the phone and do not close the app." },
+
+    { "name": "country", "value": "Country" },
+
+    { "name": "you_have_leak_while", "value": "You have leak while..." },
+    { "name": "multiple_choices", "value": "Multiple choices allowed" },
+    { "name": "sleeping", "value": "Sleeping" },
+    { "name": "sneezing", "value": "Sneezing" },
+    { "name": "exercising", "value": "Exercising" },
+    { "name": "staying_still", "value": "Staying still" },
+
+    { "name": "leaks", "value": "Leaks" },
+
+    { "name": "rate_condition_question_start", "value": "Because of incontinence, my quality of life is..." },
+    { "name": "make_a_choice", "value": "Make a choice" },
+    { "name": "sentiment_1", "value": "...very bad!" },
+    { "name": "sentiment_2", "value": "...bad!" },
+    { "name": "sentiment_3", "value": "...neutral." },
+    { "name": "sentiment_4", "value": "...good!" },
+    { "name": "sentiment_5", "value": "...very good!" },
+
+    { "name": "sensor_type_question", "value": "Which sensor do you have?" },
+    { "name": "sensor_type_training", "value": "Carin Training" },
+
+    { "name": "weight", "value": "Weight" },
+
+    { "name": "blink", "value": "BLINK" }
+  ]
+}

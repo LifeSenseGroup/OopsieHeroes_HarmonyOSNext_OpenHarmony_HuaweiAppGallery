@@ -1,0 +1,29 @@
+{
+  "theme": [
+    {
+      "name": "AppTheme",
+      "value": [
+        { "name": "colorPrimary",      "value": "$color:lightViolet" },
+        { "name": "colorPrimaryDark",  "value": "$color:violet" },
+        { "name": "colorAccent",       "value": "$color:persianGreen" }
+      ]
+    },
+    {
+      "name": "Settings_Title_Row",
+      "value": [
+        { "name": "fontFamily", "value": "$media:futura_std_medium" },
+        { "name": "textAllCaps","value": "true" },
+        { "name": "textSize",   "value": "$float:settingsTitleRowTextSize" },
+        { "name": "textColor",  "value": "#000000" }
+      ]
+    },
+    {
+      "name": "Settings_Normal_Row",
+      "value": [
+        { "name": "fontFamily", "value": "$media:futura_std_medium" },
+        { "name": "textSize",   "value": "$float:settingsNormalRowTextSize" },
+        { "name": "textColor",  "value": "#000000" }
+      ]
+    }
+  ]
+}

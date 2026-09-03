@@ -1,0 +1,6 @@
+{
+  "float": [
+    { "name": "settingsTitleRowTextSize",  "value": "20fp" },
+    { "name": "settingsNormalRowTextSize", "value": "16fp" }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "src": [
+    "pages/activity_splash_screen",
+    "pages/activity_intro",
+    "pages/activity_questions",
+    "pages/activity_pair_new_sensor",
+    "pages/activity_home",
+    "pages/activity_add_drink",
+    "pages/activity_measure",
+    "pages/activity_calendar",
+    "pages/activity_exercises",
+    "pages/activity_video_tutorials",
+    "pages/activity_settings",
+    "pages/activity_about",
+    "pages/activity_privacy_policy",
+    "pages/activity_video_player",
+    "pages/activity_exercises_history"
+  ]
+}
