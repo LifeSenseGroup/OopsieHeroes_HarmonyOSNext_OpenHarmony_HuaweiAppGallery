@@ -3,6 +3,8 @@
 /local.properties
 /.idea
 **/build
+!entry/src/main/resources/rawfile/oopsie/build/
+!entry/src/main/resources/rawfile/oopsie/build/**
 /.hvigor
 .cxx
 /.clangd

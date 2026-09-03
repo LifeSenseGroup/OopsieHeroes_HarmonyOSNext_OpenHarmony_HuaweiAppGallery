@@ -1,0 +1,56 @@
+
+
+<!-- use the router to switch screens -->
+<Router {routes} />
+
+<script lang="ts">
+// Import the router component
+import Router from 'svelte-spa-router'
+import {wrap} from 'svelte-spa-router/wrap'  // for conditional routing
+// Import the list of routes
+import routes from './routes'
+// src/i18n.js for internationalization
+import { addMessages } from 'svelte-i18n';
+import {  init, getLocaleFromNavigator } from 'svelte-i18n';
+
+import en from './locales/en.json';
+import nl from './locales/nl.json';
+import ja from './locales/ja.json';
+//import { openDB } from 'idb';
+import { onMount } from 'svelte';
+import {store_db} from './stores.js';
+
+
+
+addMessages('nl', nl);
+addMessages('en', en);
+addMessages('ja', ja);
+
+init({
+  fallbackLocale: 'en',
+  initialLocale: getLocaleFromNavigator(),
+});
+
+import {initNativeBridge} from './utils/bridge';
+
+initNativeBridge()
+
+async function setupDB()
+{
+   // Set up the database
+//    $store_db = await openDB('settings-store', 1, {
+//             upgrade($store_db) {
+//            $store_db.createObjectStore('settings');
+//      }
+//   })
+//   var a = await $store_db.get('settings', 'content')
+//   console.log(a)
+}
+
+onMount( 
+         () => setupDB()
+       );
+
+
+
+</script>

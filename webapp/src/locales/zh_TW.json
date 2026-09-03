@@ -1,0 +1,148 @@
+{
+    "Continue" : "继续",
+    "SettingsScreen" :  {
+      "Alarm" : "警報",
+      "Stop alarm" : "停止鬧鈴",
+      "Choose your alarm sound" : "選擇鬧鈴聲音",
+      "Alarm Settings" : "鬧鐘設定",
+      "Record the voice of one of your parents:" : "請錄製爸爸媽媽其中一人的聲音",
+      "Are you sure you want to reset your user?" : "確定要重置使用者嗎?",
+      "Cancel" : "取消",
+      "Go to Settings" : "前往設定",
+      "Harsh alarm" : "急促鈴聲",
+      "Increase the volume to hear the sound " : "增加音量讓聲音清楚",
+      "Listen to microphone" : "注意麥克風",
+      "OK" : "OK",
+      "Phone-like" : "手機鈴聲",
+      "Please record a personal message first" : "請先輸入個人訊息",
+      "Recording…" : "録音",
+      "Remember the alarm sound" : "紀錄鬧鈴聲音",
+      "Reset" : "重置",
+      "Reset user" : "重置使用者",
+      "Rooster" : "公雞啼叫",
+      "Select Sensor" : "選擇感測器",
+      "Sensor" : "感測器",
+      "Settings" : "設定",
+      "Smooth & Gentle" : "輕鬆緩和", 
+      "To detect sensor sound, enable access to the microphone from App Settings." : "要偵測感測器的聲音，請先從“應用程序設置”中啟用麥克風的權限。",
+      "To use the voice recording feature, enable access to the microphone and to write to storage from App Settings" : "要使用語音記錄功能，請先從“應用程序設置”啟用麥克風的權限",
+      "To use the voice recording feature, enable access to the microphone from App Settings" : "要使用錄音功能，請先從“應用程序設置”中啟用對麥克風的權限",
+      "Voice recording" : "錄音",
+      "Volume too low" : "聲音太小聲了",
+      "We need access to your microphone." : "請允許開啟麥克風權限",
+      "We need to write to your phone so we can save the recording." : "請允許開啟錄音權限",
+      "Write to storage" : "寫入並儲存"
+  },
+   
+    "HomeScreen" : { 
+      "The progress will be available after the 2nd measuring day" : "The progress will be available after the 2nd measuring day",
+      "Did you have a dry night?" : "你/妳有個乾燥舒適的夜晚嗎?",
+      "Do it later" : "等會再做",
+      "Do you want first to leave a review on ThrustPilot?" : "您有任何想發表的評論嗎?",
+      "Feedback sent!" : "意見已發送!",
+      "Give feedback" : "提供意見",
+      "Go to sleep" : "去睡覺",
+      "How are you doing?" : "你好嗎?",
+      "No" : "不",
+      "Oops, little interruption" : "糟糕, 有一點干擾",
+      "Resume" : "重新開始",
+      "Resume sensor sound detection." : "重新偵測感測器聲音",
+      "Take 2 minutes to share your thoughts." : "花兩分鐘分享您的意見",
+      "Wake up" :  "起床囉",
+      "Yes" : "是的"
+  
+    },
+    
+    "OnboardingScreen" : { 
+      "Hi!" : "嗨!",
+      "How old are you?" : "請問你幾歲了?",
+      "To start using Oopsie Heroes, we first need your email address." : "開始使用Oopsie Heroes前, 需要先輸入您的電子郵件地址",
+      "I agree to the" : "我同意：",
+      "Privacy Policy" : " 隱私政策",
+      "Email" : "電子郵件",
+      "Pick your hero!" : "選擇你/妳喜愛的英雄!",
+      "Next" : "下一步",
+      "Let’s go!" : "開始囉!",
+      "Start" : "開始"
+    },
+
+  
+    "CalendarScreen" : { 
+      "April" : "四月",
+      "August" : "八月",
+      "Calendar" : "行事曆",
+      "December" : "十二月",
+      "Delete" : "刪除",
+      "Do you really want delete this event?" : "您確定要刪除嗎?",
+      "February" : "二月",
+      "Fri" : "五",
+      "January" : "一月",
+      "July" : "七月",
+      "June" : "六月",
+      "March" : "三月",
+      "May" : "五月",
+      "Mon" : "一",
+      "November" : "十一月",
+      "October" : "十月",
+      "PERCENTAGE DRY NIGHTS" : "沒有尿床的一天",
+      "Sat" : "六",
+      "September" : "九月",
+      "Sun" : "日",
+      "TOTAL STARS EARNED" : "獲得的總星星數",
+      "Thu" : "四",
+      "Tue" : "二",
+      "Wed" : "三",
+      "You received " : "已收到",
+      "You’re a superstar!" : "你/妳表現的非常棒 ",
+      "No wet events this day" : "今天沒有尿床喔 ",
+      "one star" : "一顆星星"
+    },
+    
+  "feedback_questions" : {
+  "Are the stickers strong enough?" : "貼紙使用上牢固嗎?",
+  
+  "Any thoughts or suggestions you would like to share?" : "您有什麼建議想要分享嗎？",
+  "Ask Me Later" : "等一會再問我",
+  "Awesome!" : "太棒了!",
+  "Bad" : "糟糕",
+  "Comments" : "註釋",
+  "Do Pee-Rest-Pee" : "小便",
+  "Do you wake up sooner with the voice recording than with the standard alarm sound?" : "與標準的警報鈴聲相比，使用自己的錄音會更容易叫醒小朋友嗎？",
+  "Does the alarm wake you up ?" : "警報聲音可以叫醒您嗎?",
+  "Done" : "完成",
+ 
+  "Feedback" : "意見",
+  "Good night" : "晚安",
+  "Great" : "很棒",
+ 
+  "How was your experience opening the Oopsie Heroes packaging?" : "您覺得尿床守衛隊的包裝容易打開嗎？",
+  "How was your general experience using Oopsie Heroes?" : "您使用尿床守衛隊後的感覺如何？",
+ 
+  "Is the alarm easy to turn off " :  "鬧鐘容易關閉嗎?",
+  "Leave" : "離開",
+  "Leaving already?" : "確定要離開?",
+  
+  "Listening to your sensor" : "注意感測器",
+  
+  "No Internet connection" : "沒有網路連結",
+  "Not yet" : "還沒有",
+  "Oopsie Heroes" : "尿床守衛隊",
+  "Oopsie Heroes Plus" : "尿床守衛隊PLUS版",
+  
+  "Sensor detection" : "偵測感測器",
+  "Sometimes" : "偶爾",
+  
+ 
+  "Terrible" :"可怕的",
+  
+  "Was it clear how to use the stickers?" : "知道如何使用貼紙嗎?",
+  "We don't use it" : "我們沒有使用",
+  "Your feedback will help us to improve our product." : "您的意見對我們改進產品有很大的幫助"
+  
+  
+  
+  
+  
+  
+  }
+  }

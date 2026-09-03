@@ -1,0 +1,512 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-24 14:45+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Mime-Version: 1.0\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: src/screen/RegisterEmail.tsx:49
+msgid " Privacy Policy."
+msgstr " Política de Privacidad."
+
+#: src/screen/Settings.tsx:36 src/services/triggerAlarmTask.ts:20
+msgid "Alarm"
+msgstr "Alarma"
+
+#: src/screen/AlarmSettings.tsx:49
+msgid "Alarm Settings"
+msgstr "Configurar Alarma"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:78
+msgid "Any thoughts or suggestions you would like to share?"
+msgstr "¿Sugerencias a compartir?"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:10
+msgid "April"
+msgstr "Abril"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:53
+msgid "Are the stickers strong enough?"
+msgstr "¿Son las calcomanías suficientemente fuertes?"
+
+#: src/screen/Settings.tsx:60
+msgid "Are you sure you want to reset your user?"
+msgstr "¿Está seguro que quiere reiniciar su usuario?"
+
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:123
+#: src/helper/utils.ts:103
+msgid "Ask Me Later"
+msgstr "Preguntar más tarde"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:14
+msgid "August"
+msgstr "Agosto"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:44
+#: src/component/FeedbackQuestion/feedback_questions.tsx:74
+msgid "Awesome!"
+msgstr "¡Asombroso!"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:44
+#: src/component/FeedbackQuestion/feedback_questions.tsx:74
+msgid "Bad"
+msgstr "Mal"
+
+#: src/screen/Calendar/CalendarScreen.tsx:129
+msgid "Calendar"
+msgstr "Calendario"
+
+#: src/component/SoundDetectionBlockedDialog.tsx:7
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:124
+#: src/component/VoiceRecording/VoiceRecordingBlockedDialog.tsx:13
+#: src/helper/utils.ts:104 src/screen/Calendar/CalendarScreen.tsx:120
+#: src/screen/Settings.tsx:62
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/component/SelectSounds.tsx:51
+msgid "Choose your alarm sound"
+msgstr "Seleccione la alarma"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:80
+msgid "Comments"
+msgstr "Comentarios"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:18
+msgid "December"
+msgstr "Diciembre"
+
+#: src/screen/Calendar/CalendarScreen.tsx:120
+#: src/screen/Calendar/LeakEvent/LeakEvent.tsx:29
+msgid "Delete"
+msgstr "Eliminar"
+
+#: src/screen/Home.tsx:142
+msgid "Did you have a dry night?"
+msgstr "¿Pasaste la noche sin mojarte?"
+
+#: src/helper/dryRules.ts:3
+msgid "Do Pee-Rest-Pee"
+msgstr "Hacer Pipí-Descansar-Pipí"
+
+#: src/screen/Home.tsx:132
+msgid "Do it later"
+msgstr "Hazlo más tarde"
+
+#: src/screen/Calendar/CalendarScreen.tsx:120
+msgid "Do you really want delete this event?"
+msgstr "¿De verdad quieres eliminar este evento?"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:63
+msgid "Do you wake up sooner with the voice recording than with the standard alarm sound?"
+msgstr "¿Despiertas más rápido con la voz grabada que con la alarma normal?"
+
+#: src/screen/Home.tsx:33
+msgid "Do you want first to leave a review on ThrustPilot ?"
+msgstr "¿Quiéres primero dejar una evaluación en ThrustPilot?"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:58
+msgid "Does the alarm wake you up?"
+msgstr "¿Te despertó la alarma?"
+
+#: src/component/AlertVolumeLow.tsx:5 src/screen/RegisterAge.tsx:35
+msgid "Done"
+msgstr "Hecho"
+
+#: src/screen/RegisterEmail.tsx:56
+msgid "Email"
+msgstr "Correo Electrónico"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:8
+msgid "February"
+msgstr "Febrero"
+
+#: src/screen/Feedback.tsx:193
+msgid "Feedback"
+msgstr "Comentarios"
+
+#: src/screen/Home.tsx:152
+msgid "Feedback sent!"
+msgstr "Comentarios enviados!"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:28
+msgid "Fri"
+msgstr "Vi"
+
+#: src/screen/Home.tsx:132
+msgid "Give feedback"
+msgstr "Deje sus comentarios"
+
+#: src/component/SoundDetectionBlockedDialog.tsx:7
+#: src/component/VoiceRecording/VoiceRecordingBlockedDialog.tsx:13
+msgid "Go to Settings"
+msgstr "Vaya a Configuración"
+
+#: src/screen/Home.tsx:117
+msgid "Go to sleep"
+msgstr "Ir a dormir"
+
+#: src/helper/freqAnalyzer.ts:30
+msgid "Good night"
+msgstr "Buenas noches"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:44
+#: src/component/FeedbackQuestion/feedback_questions.tsx:74
+msgid "Great"
+msgstr "Grandioso"
+
+#: src/helper/alarmSound.ts:111
+msgid "Harsh alarm"
+msgstr "Alarma fuerte"
+
+#: src/screen/RegisterEmail.tsx:35
+msgid "Hi!"
+msgstr "¡Hola!"
+
+#: src/screen/Home.tsx:132
+msgid "How did we do?"
+msgstr "¿Cómo lo hicimos?"
+
+#: src/screen/RegisterAge.tsx:33
+msgid "How old are you?"
+msgstr "¿Cuántos años tienes?"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:43
+msgid "How was your experience opening the Oopsie Heroes packaging?"
+msgstr "¿Cómo fue su experiencia abriendo el paquete Oopsie Héroes?"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:73
+msgid "How was your general experience using Oopsie Heroes?"
+msgstr "¿En general cómo fue su experiencia utilizando Oopsie Héroes?"
+
+#: src/screen/RegisterEmail.tsx:45
+msgid "I agree to the"
+msgstr "Estoy de acuerdo con"
+
+#: src/component/AlertVolumeLow.tsx:5
+msgid "Increase the volume to hear the sound."
+msgstr "Aumente el volumen para escuchar el sonido."
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:68
+msgid "Is the alarm easy to turn off?"
+msgstr "¿Es fácil de apagar la alarma?"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:7
+msgid "January"
+msgstr "Enero"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:13
+msgid "July"
+msgstr "Julio"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:12
+msgid "June"
+msgstr "Junio"
+
+#: src/screen/Feedback.tsx:176
+msgid "Leave"
+msgstr "Salir"
+
+#: src/screen/Feedback.tsx:176
+msgid "Leaving already?"
+msgstr "¿Listo para salir?"
+
+#: src/screen/Home.tsx:133
+msgid "Let us know by leaving a review on TrustPilot"
+msgstr "Háganoslo saber dejando un comentario en ThustPilot"
+
+#: src/screen/RegisterEmail.tsx:61
+msgid "Let’s go!"
+msgstr "¡Vamos!"
+
+#: src/helper/utils.ts:101
+msgid "Listen to microphone"
+msgstr "Escuche el micrófono"
+
+#: src/helper/freqAnalyzer.ts:30
+msgid "Listening to your sensor"
+msgstr "Escuchando tu sensor"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:9
+msgid "March"
+msgstr "Marzo"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:11
+msgid "May"
+msgstr "Mayo"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:24
+msgid "Mon"
+msgstr "Lun"
+
+#: src/screen/RegisterAge.tsx:39
+msgid "Next"
+msgstr "Siguiente"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:49
+#: src/component/FeedbackQuestion/feedback_questions.tsx:54
+#: src/component/FeedbackQuestion/feedback_questions.tsx:59
+#: src/component/FeedbackQuestion/feedback_questions.tsx:64
+#: src/component/FeedbackQuestion/feedback_questions.tsx:69
+#: src/screen/Home.tsx:35 src/screen/Home.tsx:142
+msgid "No"
+msgstr "No"
+
+#: src/screen/Feedback.tsx:183
+msgid "No Internet connection"
+msgstr "Sin conexión a internet"
+
+#: src/screen/Feedback.tsx:176
+msgid "Not yet"
+msgstr "Aun no"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:17
+msgid "November"
+msgstr "Noviembre"
+
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:125
+#: src/helper/utils.ts:105
+msgid "OK"
+msgstr "OK"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:16
+msgid "October"
+msgstr "Octubre"
+
+#: src/screen/Night.tsx:52 src/screen/Night.tsx:144
+msgid "Oops, little interruption"
+msgstr "Oops, pequeña interrupción"
+
+#: src/helper/SensorType.tsx:5
+msgid "Oopsie Heroes"
+msgstr "Oopsie Héroes"
+
+#: src/helper/SensorType.tsx:9
+msgid "Oopsie Heroes Plus"
+msgstr "Oopsie Héroes Plus"
+
+#: src/helper/alarmSound.ts:115
+msgid "OopsieHeroes"
+msgstr "OopsieHéroes"
+
+#: src/screen/Calendar/DetailBox.tsx:50
+msgid "PERCENTAGE DRY NIGHTS"
+msgstr "PORCENTAJE DE NOCHES SECAS"
+
+#: src/helper/alarmSound.ts:103
+msgid "Phone-like"
+msgstr "Teléfono"
+
+#: src/screen/RegisterSex.tsx:87
+msgid "Pick your hero!"
+msgstr "¡Elije a tu héroe!"
+
+#: src/helper/alarmSound.ts:68
+msgid "Please record a personal message first"
+msgstr "Por favor primero grabe un mensaje personal"
+
+#: src/component/SelectSounds.tsx:61
+msgid "Record the voice of one of your parents:"
+msgstr "Registre la voz de uno de sus padres:"
+
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:82
+msgid "Recording…"
+msgstr "Grabando..."
+
+#: src/helper/dryRules.ts:4
+msgid "Remember the alarm sound"
+msgstr "Recuerde el sonido de la alarma"
+
+#: src/screen/Settings.tsx:67
+msgid "Reset"
+msgstr "Reiniciar"
+
+#: src/screen/Settings.tsx:60
+msgid "Reset user"
+msgstr "Reiniciar usuario"
+
+#: src/screen/Night.tsx:144
+msgid "Resume"
+msgstr "Reanudar"
+
+#: src/screen/Night.tsx:52 src/screen/Night.tsx:144
+msgid "Resume sensor sound detection."
+msgstr "Reanudar la detección del sonido del sensor."
+
+#: src/helper/alarmSound.ts:107
+msgid "Rooster"
+msgstr "Gallo"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:29
+msgid "Sat"
+msgstr "Sab"
+
+#: src/helper/dryRules.ts:6
+msgid ""
+"Say to myself:\n"
+"\"If I wake up by myself, I go to the toilet to pee\""
+msgstr ""
+"Me digo: \n"
+"\"Si me despierto solo, voy al baño a hacer pipí\""
+
+#: src/helper/dryRules.ts:5
+msgid ""
+"Say to myself:\n"
+"\"If the alarm goes off, I get up immediately and go to the toilet\""
+msgstr ""
+"Me digo:\n"
+"\"Si suena la alarma, me levanto inmediatamente y voy al baño\""
+
+#: src/screen/AlarmSettings.tsx:39 src/screen/SensorSettings.tsx:86
+msgid "Select Sensor"
+msgstr "Selecciona Sensor"
+
+#: src/screen/Settings.tsx:41
+msgid "Sensor"
+msgstr "Sensor"
+
+#: src/helper/freqAnalyzer.ts:30
+msgid "Sensor detection"
+msgstr "Detección de sensor"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:15
+msgid "September"
+msgstr "Septiembre"
+
+#: src/screen/Settings.tsx:51
+msgid "Settings"
+msgstr "Configuración"
+
+#: src/helper/alarmSound.ts:99
+msgid "Smooth & Gentle"
+msgstr "Suave y gentil"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:59
+msgid "Sometimes"
+msgstr "Algunas veces"
+
+#: src/screen/RegisterSex.tsx:98
+msgid "Start"
+msgstr "Iniciar"
+
+#: src/screen/Alarm.tsx:68
+msgid "Stop alarm"
+msgstr "Detener alarma"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:23
+msgid "Sun"
+msgstr "Dom"
+
+#: src/screen/Calendar/DetailBox.tsx:55
+msgid "TOTAL STARS EARNED"
+msgstr "TOTAL DE ESTRELLAS GANADAS"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:44
+#: src/component/FeedbackQuestion/feedback_questions.tsx:74
+msgid "Terrible"
+msgstr "Terrible"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:27
+msgid "Thu"
+msgstr "Ju"
+
+#: src/component/SoundDetectionBlockedDialog.tsx:6
+msgid "To detect sensor sound, enable access to the microphone from App Settings."
+msgstr "Para detectar el sonido del sensor, permita el acceso al micrófono desde la configuración de la App."
+
+#: src/screen/RegisterEmail.tsx:39
+msgid "To start using Oopsie Heroes, we first need your email address."
+msgstr "Para utilizar Oopsie Héroes, necesitamos su dirección de correo electrónico."
+
+#: src/component/VoiceRecording/VoiceRecordingBlockedDialog.tsx:10
+msgid "To use the voice recording feature, enable access to the microphone and to write to storage from App Settings"
+msgstr "Para grabar la voz, habilite el acceso al micrófono y a los archivos en la Configuración de la App"
+
+#: src/component/VoiceRecording/VoiceRecordingBlockedDialog.tsx:9
+msgid "To use the voice recording feature, enable access to the microphone from App Settings"
+msgstr "Para grabar la voz, habilite el acceso al micrófono en la Configuración de la App"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:25
+msgid "Tue"
+msgstr "Ma"
+
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:82
+msgid "Voice recording"
+msgstr "Grabar voz"
+
+#: src/component/AlertVolumeLow.tsx:5
+msgid "Volume too low"
+msgstr "Volumen muy bajo"
+
+#: src/screen/Night.tsx:41 src/screen/Night.tsx:139
+#: src/services/triggerAlarmTask.ts:20
+msgid "Wake up"
+msgstr "Despierta"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:48
+msgid "Was it clear how to use the stickers?"
+msgstr "¿Fue claro cómo utilizar las calcomanías?"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:64
+msgid "We don't use it"
+msgstr "No lo utilizamos"
+
+#: src/helper/utils.ts:102
+msgid "We need access to your microphone."
+msgstr "Necesitamos acceso a su micrófono."
+
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:122
+msgid "We need to write to your phone so we can save the recording."
+msgstr "Necesitamos permiso en su teléfono para guardar la grabación."
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:26
+msgid "Wed"
+msgstr "Mie"
+
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:121
+msgid "Write to storage"
+msgstr "Guardar"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:49
+#: src/component/FeedbackQuestion/feedback_questions.tsx:54
+#: src/component/FeedbackQuestion/feedback_questions.tsx:59
+#: src/component/FeedbackQuestion/feedback_questions.tsx:64
+#: src/component/FeedbackQuestion/feedback_questions.tsx:69
+#: src/screen/Home.tsx:41 src/screen/Home.tsx:142
+msgid "Yes"
+msgstr "Si"
+
+#: src/screen/Stars.tsx:12
+msgid "You received "
+msgstr "Recibiste "
+
+#: src/screen/Feedback.tsx:177
+msgid "Your feedback will help us to improve our product."
+msgstr "Sus comentarios nos ayudan a mejorar el producto."
+
+#: src/screen/Calendar/DetailBox.tsx:43
+msgid ""
+"You’re a superstar!\n"
+"No wet events this day"
+msgstr ""
+"¡Eres super! \n"
+"Hoy no hubo ningún evento"
+
+#: src/screen/Stars.tsx:12
+msgid "one star!"
+msgstr "¡una estrella!"
+
+#~ msgid "How are you doing?"
+#~ msgstr "Hoe gaat het?"
+
+#~ msgid "Take 2 minutes to share your thoughts."
+#~ msgstr "Neem 2 minuutjes om je mening te delen."

@@ -1,0 +1,150 @@
+{
+  "Continue" : "Continue",
+  "SettingsScreen" :  {
+    "Alarm" : "Alarm",
+    "Stop alarm" : "Stop alarm",
+    "Choose your alarm sound" : "Choose your alarm sound",
+    "Alarm Settings" : "Alarm Settings",
+    "Record the voice of one of your parents:" : "Record the voice of one of your parents",
+    "Are you sure you want to reset your user?" : "Are you sure you want to reset your user?",
+    "Cancel" : "Cancel",
+    "Go to Settings" : "Go to Settings",
+    "Harsh alarm" : "HARSH",
+    "Increase the volume to hear the sound " : "Increase the volume to hear the sound",
+    "Listen to microphone" : "Listen to microphone",
+    "OK" : "OK",
+    "Phone-like" : "PHONE-LIKE",
+    "Please record a personal message first" : "Please record a personal message first",
+    "Recording…" : "Recording…",
+    "Remember the alarm sound" : "Remember the alarm sound",
+    "Reset" : "Reset",
+    "Reset user" : "Reset user",
+    "Rooster" : "ROOSTER",
+    "Select Sensor" : "Select Sensor",
+    "Sensor" : "Sensor",
+    "Settings" : "Settings",
+    "Smooth & Gentle" : "SMOOTH", 
+    "Oopsie Heroes" : "OOPSIE HEROES",
+    "To detect sensor sound, enable access to the microphone from App Settings." : "To detect sensor sound, enable access to the microphone from App Settings.",
+    "To use the voice recording feature, enable access to the microphone and to write to storage from App Settings" : " To use the voice recording feature, enable access to the microphone and to write to storage from App Settings ",
+    "To use the voice recording feature, enable access to the microphone from App Settings" : "To use the voice recording feature, enable access to the microphone from App Settings ",
+    "Voice recording" : "VOICE RECORDING",
+    "Volume too low" : "Volume too low",
+    "We need access to your microphone." : "We need access to your microphone.",
+    "We need to write to your phone so we can save the recording." : "We need to write to your phone so we can save the recording.",
+    "Write to storage" : "Write to storage"
+
+
+  },
+ 
+  "HomeScreen" : { 
+    "The progress will be available after the 2nd measuring day" : "The progress will be available after the 2nd measuring day",
+    "Did you have a dry night?" : "Did you have a dry night?",
+    "Do it later" : "Do it later",
+    "Do you want first to leave a review on ThrustPilot?" : "Do you want first to leave a review on ThrustPilot?",
+    "Feedback sent!" : "Feedback sent!",
+    "Give feedback" : "Give feedback",
+    "Go to sleep" : "Go to sleep",
+    "How are you doing?" : "How are you doing?",
+    "No" : "No",
+    "Oops, little interruption" : "Oops, little interruption",
+    "Resume" : "Resume",
+    "Resume sensor sound detection." : "Resume sensor sound detection.",
+    "Take 2 minutes to share your thoughts." : "Take 2 minutes to share your thoughts.",
+    "Wake up" : "Wake up",
+    "Yes" : "Yes",
+	 "Alarm" : "Alarm"
+
+  },
+
+   
+  "OnboardingScreen" : { 
+    "Hi!" : "Hi!",
+    "How old are you?" : "How old are you?",
+    "To start using Oopsie Heroes, we first need your email address." : " To start using Oopsie Heroes, we first need your email address.",
+    "I agree to the" : "I agree to the",
+    "Privacy Policy" : "Privacy Policy",
+    "Email" : "Email",
+    "Email or phone number" : "Email or phone number",
+    "Pick your hero!" : "Pick your hero!",
+	"Next" : "Next",
+	"Let’s go!" : "Let’s go!",
+	"Start" : "Start"
+  },
+
+
+  "CalendarScreen" : { 
+    "April" : "April",
+    "August" : "August",
+    "Calendar" : "Calendar",
+    "December" : "December",
+    "Delete" : "Delete",
+    "Do you really want delete this event?" : "Do you really want delete this event?",
+    "February" : "February",
+    "Fri" : "Fri",
+    "January" : "January",
+    "July" : "July",
+    "June" : "June",
+    "March" : "March",
+    "May" : "May",
+    "Mon" : "Mon",
+    "November" : "November",
+    "October" : "October",
+    "PERCENTAGE DRY NIGHTS" : "PERCENTAGE DRY NIGHTS",
+    "Sat" : "Sat",
+    "September" : "September",
+    "Sun" : "Sun",
+    "TOTAL STARS EARNED" : "TOTAL STARS EARNED",
+    "Thu" : "Thu",
+    "Tue" : "Tue",
+    "Wed" : "Wed",
+    "You received " : "You received",
+    "You’re a superstar!" : "You’re a superstar !",
+    "No wet events this day" : "No wet events this day",
+    "one star" : "one star"
+  },
+  
+"feedback_questions" : {
+"Are the stickers strong enough?" : "Are the stickers strong enough?",
+
+"Any thoughts or suggestions you would like to share?" : "Any thoughts or suggestions you would like to share?",
+"Ask Me Later" : "Ask Me Later",
+"Awesome!" : "Awesome!",
+"Bad" : "Bad",
+"Comments" : "Comments",
+"Do Pee-Rest-Pee" : "Do Pee-Rest-Pee",
+"Do you wake up sooner with the voice recording than with the standard alarm sound?" : "Do you wake up sooner with the voice recording than with the standard alarm sound?",
+"Does the alarm wake you up ?" : "Does the alarm wake you up ?",
+"Done" : "Done",
+
+"Feedback" : "Feedback",
+"Good night" : "Good night",
+"Great" : "Great",
+"How was your experience opening the Oopsie Heroes packaging?" : "How was your experience opening the Oopsie Heroes packaging?",
+"How was your general experience using Oopsie Heroes?" : "How was your general experience using Oopsie Heroes?",
+"Is the alarm easy to turn off " :  "Is the alarm easy to turn off ",
+"Leave" : "Leave",
+"Leaving already?" : "Leaving already?",
+
+"Listening to your sensor" : "Listening to your sensor",
+"No Internet connection" : "No Internet connection",
+"Not yet" : "Not yet",
+
+"Oopsie Heroes Plus" : "Oopsie Heroes Plus",
+
+"Sensor detection" : "Sensor detection",
+"Sometimes" : "Sometimes",
+"Start" : "Start",
+
+"Terrible" :"Terrible" ,
+"Was it clear how to use the stickers?" : "Was it clear how to use the stickers?",
+"We don't use it" : "We don't use it",
+"Your feedback will help us to improve our product." : "Your feedback will help us to improve our product."
+
+
+
+
+
+
+}
+}

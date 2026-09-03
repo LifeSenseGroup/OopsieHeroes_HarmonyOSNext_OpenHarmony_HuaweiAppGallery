@@ -1,0 +1,154 @@
+{
+    "Continue" : "Continue",
+    "SettingsScreen" :  {
+      "Alarm" : "Alarme",
+      "Choose your alarm sound" : "Choisissez le son de votre alarme",
+      "Alarm Settings" : "Paramètres de l'alarme",
+      "Record the voice of one of your parents:" : "Enregistrez la voix de l'un de vos parents",
+      "Are you sure you want to reset your user?" : "Êtes-vous sûr de vouloir réinitialiser votre utilisateur ?",
+      "Cancel" :  "Annuler",
+      "Go to Settings" : "Aller dans les paramètres",
+      "Harsh alarm" : "Alarme brutale",
+      "Increase the volume to hear the sound " : "Augmenter le volume pour entendre le son",
+
+      "Listen to microphone" : "Écouter le microphone",
+      "OK" : "OK",
+      "Phone-like" : "Comme un téléphone",
+      "Please record a personal message first" :  "Veuillez d'abord enregistrer un message personnel",
+      "Recording…" : "Enregistrement...",
+      "Remember the alarm sound" : "Mémoriser le son de l'alarme",
+  
+      "Reset" : "Réinitialiser",
+      "Reset user" : "Réinitialiser l'utilisateur",
+      "Rooster":  "Coq",
+      "Select Sensor" : "Sélectionner capteur",
+      "Sensor" : "Capteur",
+      "Settings" : "Paramètres",
+      "Smooth & Gentle": "Lisse et doux",
+  
+      "To detect sensor sound, enable access to the microphone from App Settings." : "Pour détecter le son du capteur, activez l'accès au microphone dans les paramètres de l'application.",
+      "To use the voice recording feature, enable access to the microphone and to write to storage from App Settings" : "Pour utiliser la fonction d'enregistrement vocal, activez l'accès au microphone et écrivez dans le stockage à partir des paramètres de l'application",
+      "To use the voice recording feature, enable access to the microphone from App Settings" : "Pour utiliser la fonction d'enregistrement vocal, activez l'accès au microphone à partir des paramètres de l'application",
+      "Voice recording" : "Enregistrement vocal",
+      "Volume too low" : "Volume trop faible",
+      "We need access to your microphone." : "Nous avons besoin d'accéder à votre microphone",
+      "We need to write to your phone so we can save the recording." : "Nous devons écrire sur votre téléphone pour pouvoir sauvegarder l'enregistrement.",
+      "Write to storage" : "Ecrire dans la mémoire"
+  
+  },
+   
+    "HomeScreen" : { 
+      "The progress will be available after the 2nd measuring day" : "Le progrès sera disponible après le 2e jour de mesure", 
+      "Did you have a dry night?" :  "Avez-vous passé une nuit sèche ?" ,
+      "Do it later" :    "Faites-le plus tard" ,
+      "Do you want first to leave a review on ThrustPilot?" :  "Voulez-vous d'abord laisser un commentaire sur ThrustPilot ?" , 
+      "Feedback sent!" :  "Feedback envoyé !" ,
+      "Give feedback" :   "Donnez votre avis" ,
+      "Go to sleep" :    "Dormir" ,
+      "How are you doing?" :   "Comment allez-vous ?" ,
+      "No" :  "Non" ,
+      "Oops, little interruption" : "Oups, petite interruption" , 
+      "Resume" :  "Reprendre",
+      "Resume sensor sound detection." : "Reprendre la détection du son du capteur." , 
+      "Take 2 minutes to share your thoughts." :  "Prenez 2 minutes pour partager vos pensées." , 
+      "Wake up" :    "Réveil" , 
+      "Yes" : "Oui" ,
+      "Alarm" : "Alarme" 
+  
+  
+    },
+  
+     
+    "OnboardingScreen" : { 
+        "Hi!" : "Salut!",
+        "How old are you?" : "Quel âge avez-vous ?",
+        "To start using Oopsie Heroes, we first need your email address." :    "Pour commencer à utiliser Oopsie Heroes, nous avons d'abord besoin de votre adresse e-mail.", 
+        "I agree to the" : " J'accepte les conditions d'utilisation ",
+        "Privacy Policy" : "Politique de confidentialité",
+        "Email" : "Email",
+        "Pick your hero!" : "Choisis ton héros !",
+        "Next" : "Suivant",
+        "Let’s go!" : "Allons-y !",
+        "Start" : "Démarrage"
+
+    },
+  
+  
+    "CalendarScreen" : { 
+        "April" : "April",
+        "August" : "Août", 
+        "Calendar" :  "CALENDAR", 
+        "December" :  "Décembre", 
+        "Delete" : "Supprimer",
+        "Do you really want delete this event?" : "Voulez-vous vraiment supprimer cet événement ?", 
+        "February" : "Février",
+        "Fri" : "Ven",
+        "January" : "Janvier", 
+        "July" : "Juillet", 
+        "June" : "Juin", 
+        "March" : "Mars", 
+        "Mon" : "Lun",
+        "November" : "Novembre", 
+        "October" : "Octobre", 
+        "PERCENTAGE DRY NIGHTS" : "POURCENTAGE DE NUITS SÈCHES", 
+        "Sat" : "Sam",
+        "September" : "Septembre", 
+        "Sun" : "Dim",
+        "TOTAL STARS EARNED" : "NOMBRE TOTAL D'ÉTOILES GAGNÉES", 
+        "Thu" : "Jeu", 
+        "Tue" : "Mar", 
+        "Wed" : "Mer", 
+        "You received " : "Vous avez reçu", 
+        "You’re a superstar!" : "Vous êtes une superstar!", 
+        "No wet events this day" : "Pas d'événement humide ce jour", 
+        "one star" : "une étoile" 
+    },
+
+
+
+    
+  "feedback_questions" : { 
+ "Are the stickers strong enough?" : "Les autocollants sont-ils assez résistants ?", 
+  "Any thoughts or suggestions you would like to share?" : "Vous avez des idées ou des suggestions à partager ?", 
+  "Ask Me Later" : "Demandez-moi plus tard", 
+  "Awesome!" : "Génial !",
+  "Bad" : "Mauvais",
+  "Comments" : "Commentaires", 
+  "Do Pee-Rest-Pee" : "Faites pipi-caca",
+  "Do you wake up sooner with the voice recording than with the standard alarm sound?" : "Vous réveillez-vous plus tôt avec l'enregistrement vocal qu'avec le son de l'alarme standard ?", 
+  "Does the alarm wake you up ?" : "L'alarme vous réveille-t-elle ?", 
+  "Done" : "Terminé", 
+  
+  "Feedback" : "Retour d'information",
+  "Good night" : "Bonne nuit",
+  "Great" : "Super", 
+  "How was your experience opening the Oopsie Heroes packaging?" : "Comment s'est passée l'ouverture de l'emballage d'Oopsie Heroes ?",
+  "How was your general experience using Oopsie Heroes?" : "Comment s'est déroulée votre expérience générale d'utilisation de Oopsie Heroes ?", 
+  "Is the alarm easy to turn off " : "L'alarme est-elle facile à éteindre?",
+  "Leaving already?" : "Vous partez déjà ?",
+  
+  "Listening to your sensor" : "Écoute de votre capteur", 
+  "No Internet connection" : "Pas de connexion Internet",
+  "Not yet" : "Pas encore",
+  "Oopsie Heroes" : "Oopsie Heroes", 
+  "Oopsie Heroes Plus" : "Oopsie Heroes Plus", 
+  
+  "Sensor detection" : "Détection par capteur", 
+  "Sometimes" : "Parfois", 
+  "Start" : "Démarrer", 
+  "Stop alarm" : "Arrêt de l'alarme", 
+  "Terrible" : "Terrible", 
+  "Was it clear how to use the stickers?" : "La manière d'utiliser les autocollants était-elle claire ?", 
+  "We don't use it" : "Nous ne l'utilisons pas", 
+  "Your feedback will help us to improve our product." : "Vos commentaires nous aideront à améliorer notre produit." 
+
+
+
+
+  
+  
+  
+  
+  
+  }
+  }

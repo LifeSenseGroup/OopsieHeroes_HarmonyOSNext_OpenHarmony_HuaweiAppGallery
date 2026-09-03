@@ -1,0 +1,151 @@
+{
+    "Continue" : "continuar",
+    "SettingsScreen" :  {
+      "Alarm" : "Alarma",
+      "Stop alarm" : "Detener alarma",
+      "Choose your alarm sound" : "Seleccione la alarma",
+      "Alarm Settings" : "Configurar Alarma",
+      "Record the voice of one of your parents:" : "Registre la voz de uno de sus padres:",
+      "Are you sure you want to reset your user?" : "¿Está seguro que quiere reiniciar su usuario?",
+      "Cancel" : "Cancelar",
+      "Go to Settings" : "Vaya a Configuración",
+      "Harsh alarm" : "Alarma fuerte",
+      "Increase the volume to hear the sound " : "Aumente el volumen para escuchar el sonido.",
+      "Listen to microphone" : "Escuche el micrófono",
+      "OK" : "OK",
+      "Phone-like" : "Teléfono",
+      "Please record a personal message first" : "Por favor primero grabe un mensaje personal",
+      "Recording…" : "Grabando...",
+      "Remember the alarm sound" : "Recuerde el sonido de la alarma",
+      "Reset" : "Reiniciar",
+      "Reset user" : "Reiniciar usuario",
+      "Rooster" : "Gallo",
+      "Select Sensor" : "Selecciona Sensor",
+      "Sensor" : "Sensor",
+      "Settings" : "Configuración",
+      "Smooth & Gentle" : "Suave y gentil", 
+      "To detect sensor sound, enable access to the microphone from App Settings." : "Para detectar el sonido del sensor, permita el acceso al micrófono desde la configuración de la App.",
+      "To use the voice recording feature, enable access to the microphone and to write to storage from App Settings" : "Para grabar la voz, habilite el acceso al micrófono y a los archivos en la Configuración de la App",
+      "To use the voice recording feature, enable access to the microphone from App Settings" : "Para grabar la voz, habilite el acceso al micrófono en la Configuración de la App",
+      "Voice recording" : "Grabar voz",
+      "Volume too low" : "Volumen muy bajo",
+      "We need access to your microphone." : "Necesitamos acceso a su micrófono.",
+      "We need to write to your phone so we can save the recording." : "Necesitamos permiso en su teléfono para guardar la grabación.",
+      "Write to storage" : "Guardar"
+  
+  
+    },
+   
+    "HomeScreen" : { 
+      "The progress will be available after the 2nd measuring day" : "The progress will be available after the 2nd measuring day",
+      "Did you have a dry night?" : "¿Pasaste la noche sin mojarte?",
+      "Do it later" : "Hazlo más tarde",
+      "Do you want first to leave a review on ThrustPilot?" : "¿Quiéres primero dejar una evaluación en ThrustPilot?",
+      "Feedback sent!" : "Comentarios enviados!",
+      "Give feedback" : "Deje sus comentarios",
+      "Go to sleep" : "Ir a dormir",
+      "How are you doing?" : "Hoe gaat het?",
+      "No" : "No",
+      "Oops, little interruption" : "Oops, pequeña interrupción",
+      "Resume" : "Reanudar",
+      "Resume sensor sound detection." : "Reanudar la detección del sonido del sensor.",
+      "Take 2 minutes to share your thoughts." : "Neem 2 minuutjes om je mening te delen.",
+      "Wake up" : "Despierta",
+      "Yes" : "Si"
+  
+    },
+
+    "OnboardingScreen" : { 
+      "Hi!" : "¡Hola!",
+      "How old are you?" : "¿Cuántos años tienes?",
+      "To start using Oopsie Heroes, we first need your email address." : "Para utilizar Oopsie Héroes, necesitamos su dirección de correo electrónico.",
+      "I agree to the" : "Estoy de acuerdo con",
+      "Privacy Policy" : "Política de Privacidad",
+      "Email" : "Correo Electrónico",
+      "Pick your hero!" : "¡Elije a tu héroe!",
+      "Next" : "Siguiente",
+      "Let’s go!" : "¡Vamos",
+      "Start" : "Iniciar"
+    },
+  
+  
+  
+    "CalendarScreen" : { 
+      "April" : "Abril",
+      "August" : "Agosto",
+      "Calendar" : "Calendario",
+      "December" : "Diciembre",
+      "Delete" : "Eliminar",
+      "Do you really want delete this event?" : "¿De verdad quieres eliminar este evento?",
+      "February" : "Febrero",
+      "Fri" : "Vi",
+      "January" : "Enero",
+      "July" : "Julio",
+      "June" : "Junio",
+      "March" : "Marzo",
+      "May" : "Mayo",
+      "Mon" : "Lun",
+      "November" : "Noviembre",
+      "October" : "Octubre",
+      "PERCENTAGE DRY NIGHTS" : "PORCENTAJE DE NOCHES SECAS",
+      "Sat" : "Sab",
+      "September" : "Septiembre",
+      "Sun" : "Dom",
+      "TOTAL STARS EARNED" : "TOTAL DE ESTRELLAS GANADAS",
+      "Thu" : "Ju",
+      "Tue" : "Ma",
+      "Wed" : "Mie",
+      "You received " : "Recibiste ",
+      "You’re a superstar!" : "¡Eres super ",
+      "No wet events this day" : "Hoy no hubo ningún evento",
+      "one star" : "¡una estrella"
+    },
+    
+  "feedback_questions" : {
+  "Are the stickers strong enough?" : "¿Son las calcomanías suficientemente fuertes?",
+  
+  "Any thoughts or suggestions you would like to share?" : "¿Sugerencias a compartir?",
+  "Ask Me Later" : "Preguntar más tarde",
+  "Awesome!" : "¡Asombroso!",
+  "Bad" : "Mal",
+  "Comments" : "Comentarios",
+  "Do Pee-Rest-Pee" : "Hacer Pipí-Descansar-Pipí",
+  "Do you wake up sooner with the voice recording than with the standard alarm sound?" : "¿Despiertas más rápido con la voz grabada que con la alarma normal?",
+  "Does the alarm wake you up ?" : "¿Te despertó la alarma?",
+  "Done" : "Hecho",
+ 
+  "Feedback" : "Comentarios",
+  "Good night" : "Buenas noches",
+  "Great" : "Grandioso",
+  
+  "How was your experience opening the Oopsie Heroes packaging?" : "¿Cómo fue su experiencia abriendo el paquete Oopsie Héroes?",
+  "How was your general experience using Oopsie Heroes?" : "¿En general cómo fue su experiencia utilizando Oopsie Héroes?",
+ 
+  "Is the alarm easy to turn off " :  "¿Es fácil de apagar la alarma?",
+  "Leave" : "Salir",
+  "Leaving already?" : "¿Listo para salir?",
+ 
+  "Listening to your sensor" : "Escuchando tu sensor",
+ 
+  "No Internet connection" : "Sin conexión a internet",
+  "Not yet" : "Aun no",
+  "Oopsie Heroes" : "Oopsie Heroes",
+  "Oopsie Heroes Plus" : "Oopsie Heroes Plus",
+ 
+  "Sensor detection" : "Detección de sensor",
+  "Sometimes" : "Algunas veces",
+ 
+ 
+  "Terrible" :"Terrible" ,
+  
+  "Was it clear how to use the stickers?" : "¿Fue claro cómo utilizar las calcomanías?",
+  "We don't use it" : "No lo utilizamos",
+  "Your feedback will help us to improve our product." : "Sus comentarios nos ayudan a mejorar el producto."
+  
+  
+  
+  
+  
+  
+  }
+  }

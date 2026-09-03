@@ -1,0 +1,162 @@
+{
+    "Continue" : "Devam",
+    "SettingsScreen" :  {
+      "Alarm" : "Alarm",
+      "Choose your alarm sound" : "Alarm sesinizi seçin",
+      "Alarm Settings" : "Alarm Ayarları",
+      "Record the voice of one of your parents" : "Ebeveynlerinizden birinin sesini kaydedin",
+      "Are you sure you want to reset your user?" : "Kullanıcınızı sıfırlamak istediğinizden emin misiniz?",
+      "Cancel" : "İptal",
+      "Go to Settings" : "Ayarlara Git",
+      "Harsh alarm" : "SERT",
+      "Increase the volume to hear the sound " : "Sesi duymak için sesi artırın ",
+      "Listen to microphone" : "Mikrofonu dinle",
+      "OK" : "TAMAM",
+      "Phone-like" : "Telefon benzeri",
+      "Please record a personal message first" : "Lütfen önce kişisel bir mesaj kaydedin",
+      "Recording…" : "Kaydediliyor...",
+      "Remember the alarm sound" : "Alarm sesini hatırla",
+  
+      "Reset" : "Sıfırla",
+      "Reset user" : "Kullanıcıyı sıfırla",
+      "Rooster": "kılavuz",
+      "Select Sensor" : "Sensör Seçin",
+      "Sensor" : "Sensör",
+      "Settings" : "Ayarlar",
+      "Smooth & Gentle": "Pürüzsüz ve Nazik",
+  
+      "To detect sensor sound, enable access to the microphone from App Settings." : "Sensör sesini algılamak için Uygulama Ayarları'ndan mikrofona erişimi etkinleştirin.",
+      "To use the voice recording feature, enable access to the microphone and to write to storage from App Settings" : "Ses kayıt özelliğini kullanmak için Uygulama Ayarlarından mikrofona erişimi ve depolama alanına yazmayı etkinleştirin",
+      "Voice recording" : "Ses kaydı",
+      "Volume too low" : "Ses seviyesi çok düşük",
+      "We need access to your microphone." : "Mikrofonunuza erişmemiz gerekiyor.",
+      "We need to write to your phone so we can save the recording." : "Kaydı kaydedebilmemiz için telefonunuza yazmamız gerekiyor.",
+      "Write to storage" : "Depoya yaz"
+  
+  },
+   
+    "HomeScreen" : { 
+      "The progress will be available after the 2nd measuring day" : "The progress will be available after the 2nd measuring day", 
+      "Did you have a dry night?" : "Kuru bir gece geçirdin mi?",
+      "Do it later" : "Sonra yap",
+      "Do you want first to leave a review on ThrustPilot?" : "ThrustPilot'a ilk siz mi yorum bırakmak istiyorsunuz?" ,
+      "Feedback sent!" : "Geri bildirim gönderildi!",
+      "Give feedback" : "Geri bildirim ver",
+      "Go to sleep" : "Uyumaya git",
+      "How are you doing?" : "Nasılsın?",
+      "No" : "Hayır",
+      "Oops, little interruption" : "Oops, küçük kesinti",
+  
+      "Resume" : "Özgeçmiş",
+      "Resume sensor sound detection." : "Sensör ses algılamasını sürdür.",
+  
+      "Take 2 minutes to share your thoughts." : "Düşüncelerinizi paylaşmak için 2 dakika ayırın.",
+      "Wake up" : "Uyan",
+      "Yes" : "Evet",
+       "Alarm" : "Alarm"
+  
+    },
+  
+     
+    "OnboardingScreen" : { 
+      "Hi!" : "Merhaba!",
+      "How old are you?": "Kaç yaşındasın?",
+      "To start using Oopsie Heroes, we first need your email address." : "Oopsie Heroes'u kullanmaya başlamak için önce e-posta adresinize ihtiyacımız var." ,
+  
+      "I agree to the" : "Kabul ediyorum",
+      "Privacy Policy" : "Gizlilik Politikası",
+      "Email" : "E-posta",
+      "Pick your hero!" : "Kahramanını seç!",
+      "Next" : "Sonraki",
+      "Let’s go " : "Hadi gidelim",
+      "Start" : "Başlat"
+    },
+  
+  
+    "CalendarScreen" : { 
+      "April" :"Nisan",
+      "August" :  "Ağustos",
+      "CALENDAR" : "TAKVIM",
+      "December" : "Aralık",
+      "Delete" : "Sil",
+      "Do you really want delete this event?" :  "Bu etkinliği gerçekten silmek istiyor musunuz?",
+      "February" : "Şubat",
+      "Fri" : "Cuma",
+      "January" : "Ocak",
+      "July" : "Temmuz",
+      "June" : "Haziran",
+      "March" : "Mart",
+      "May" : "Mayıs",
+      "Mon" : "Pzt",
+      "November" : "Kasım",
+      "October" : "Ekim",
+      "PERCENTAGE DRY NIGHTS" : "KURU GECELERIN YÜZDESI",
+      "Sat" : "Cmt",
+      "September" : "Eylül",
+      "Sun" : "Paz",
+      "TOTAL STARS EARNED" : "KAZANILAN TOPLAM YILDIZLAR",
+      "Thu" : "Per",
+      "Tue" :  "Salı",
+      "Wed" : "Car",
+      "You received " : "Teslim aldınız",
+      "You’re a superstar " : "Sen bir süperstarsın",
+      "No wet events this day" : "Bu gün kaza yok",
+      "one star" : "bir yıldız"
+    },
+    
+  "feedback_questions" : { 
+  "Are the stickers strong enough?" : "Çıkartmalar yeterince güçlü mü?",
+  
+  "Any thoughts or suggestions you would like to share?": "Paylaşmak istediğiniz herhangi bir düşünce veya öneri var mı?",
+  
+  "Ask Me Later" : "Sonra Sor",
+  "Awesome!" : "Müthiş!",
+  "Bad" : "Kötü",
+  "Comments" : "Yorumlar",
+  "Do Pee-Rest-Pee" : "çiş yap dinlenme çişi", 
+  "Do you wake up sooner with the voice recording than with the standard alarm sound?" : "Ses kaydı ile standart alarm sesinden daha mı erken uyanıyorsunuz?",
+  
+  "Does the alarm wake you up ?" : "Alarm sizi uyandırıyor mu?",
+  
+  "Done" : "Bitti",
+  
+  "Feedback" : "Geri bildirim",
+  "Good night" : "İyi geceler",
+  "Great" : "Harika",
+  
+  "How was your experience opening the Oopsie Heroes packaging?" :  "Oopsie Heroes ambalajını açma deneyiminiz nasıldı?",
+  
+  "How was your general experience using Oopsie Heroes?" : "Oopsie Heroes'u kullanırken genel deneyiminiz nasıldı?",
+  
+  "Is the alarm easy to turn off " :  "Alarmın kapatılması kolay mı?",
+  "Leave" : "Ayrıl",
+  "Leaving already?" : "Şimdiden ayrılıyor musun?",
+  
+  "Listening to your sensor" : "Sensörünüzü dinliyor",
+  
+  "No Internet connection" : "İnternet bağlantısı yok",
+  
+  "Not yet" :  "Henüz değil",
+  "Oopsie Heroes" : "Oopsie Heroes",
+  "Oopsie Heroes Plus" : "Oopsie Heroes Plus",
+  
+  "Sensor detection" : "Sensör algılama",
+  "Sometimes" : "Bazen",
+  "Start" : "Başlat",
+  "Stop alarm" : "Alarmı durdur",
+  "Terrible" : "Korkunç"
+  ,
+  
+  "Was it clear how to use the stickers?" : "Çıkartmaların nasıl kullanılacağı açık mıydı?",
+  
+  "We don't use it" : "Biz kullanmıyoruz",
+  
+  "Your feedback will help us to improve our product." : "Geri bildiriminiz ürünümüzü geliştirmemize yardımcı olacaktır."
+  
+  
+  
+  
+  
+  
+  }
+  }

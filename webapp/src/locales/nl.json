@@ -1,0 +1,153 @@
+{
+  "Continue" : "Continue",
+  "No" : "Nee",
+  "Yes" : "Ja",
+  
+  "SettingsScreen" :  {
+    "Alarm" : "Alarm",
+    "Stop alarm" : "Stop alarm",
+    "Choose your alarm sound" : "Selecteer je alarm geluid",
+    "Alarm Settings" : "ALARM  INSTELLINGEN",
+    "Record the voice of one of your parents:" : "Neem de stem van een van je ouders op",
+    "Are you sure you want to reset your user?" : "Weet je zeker dat je de gebruiker wilt resetten?",
+    "Cancel" : "Annuleer",
+    "Go to Settings" : "Ga naar Instellingen",
+    "Harsh alarm" : "LUID ALARM",
+    "Increase the volume to hear the sound " : "Verhoog het volume om het geluid te horen ",
+    "Listen to microphone" : "Luister naar de microfoon",
+    "OK" : "Oke",
+    "Phone-like" : "TELEFOONGELUID",
+    "Please record a personal message first" : "Je moet eerst een persoonlijk bericht inspreken",
+    "Recording…" : "Opnemen…",
+    "Remember the alarm sound" : "Herinner het alarm geluid",
+    "Reset" : "Reset",
+    "Reset user" : "Reset gebruiker",
+    "Rooster" : "HAAN",
+    "Select Sensor" : "Selecteer Sensor",
+    "Sensor" : "Sensor",
+    "Settings" : "Instellingen",
+    "Smooth & Gentle" : "ZACHT EN RUSTIG", 
+    "To detect sensor sound, enable access to the microphone from App Settings." : "Om het geluid van de sensor te kunnen detecteren, geef toegang tot de microfoon in de app instellingen.",
+    "To use the voice recording feature, enable access to the microphone and to write to storage from App Settings" : "Om de stemopname functie te kunnen gebruiken, geef toestemmingen voor de microfoon en om te schrijven in de App Instellingen",
+    "To use the voice recording feature, enable access to the microphone from App Settings" : "Om de stemopname functie te kunnen gebruiken, geef toestemmingen voor de microfoon in de App Instellingen",
+    "Voice recording" : "STEMOPNAME",
+    "Volume too low" : "Volume te laag",
+    "We need access to your microphone." : "We hebben toegang tot de microfoon nodig.",
+    "We need to write to your phone so we can save the recording." : "We moeten naar je telefoon schrijven om de opname op te slaan.",
+    "Write to storage" : "Schrijven naar opslag"
+
+
+  },
+ 
+  "HomeScreen" : { 
+    "The progress will be available after the 2nd measuring day" : "The progress will be available after the 2nd measuring day",
+    "Did you have a dry night?" : "Heb je een droge nacht?",
+    "Do it later" : "Doe het later",
+    "Do you want first to leave a review on ThrustPilot?" : "Wilt u als eerste een beoordeling achterlaten over ThrustPilot ?",
+    "Feedback sent!" : "Feedback opgestuurd!",
+    "Give feedback" : "Geef feedback",
+    "Go to sleep" : "Gaan slapen",
+    "How are you doing?" : "Hoe gaat het?",
+    
+    "Oops, little interruption" : "Oops, kleine onderbreking",
+    "Resume" : "Verder gaan",
+    "Resume sensor sound detection." : "Verder gaan met sensorgeluid detectie.",
+    "Take 2 minutes to share your thoughts." : "Neem 2 minuutjes om je mening te delen.",
+    "Wake up" : "Wakker worden"
+    
+
+  },
+
+  "OnboardingScreen" : { 
+    "Hi!" : "Hi!",
+    "How old are you?" : "Hoe oud ben je?",
+    "To start using Oopsie Heroes, we first need your email address." : " Om Oopsie Heroes te kunnen gebruiken, hebben we eerst je email adres nodig.",
+    "I agree to the" : "Ik ga akkoord met",
+    "Privacy Policy" : "Privacybeleid",
+    "Email" : "Email",
+    "Pick your hero!" : "Kies je held!",
+	  "Next" : "Volgende",
+	  "Let’s go!" : "Laten we beginnen !"
+  },
+
+
+  "CalendarScreen" : { 
+    "April" : "April",
+    "August" : "Augustus",
+    "Calendar" : "Kalender",
+    "December" : "December",
+    "Delete" : "Wissen",
+    "Do you really want delete this event?" : "Wil je dit event echt wissen?",
+    "February" : "Februari",
+    "Fri" : "Vr",
+    "January" : "Januari",
+    "July" : "Juli",
+    "June" : "Juni",
+    "March" : "Maart",
+    "May" : "Mei",
+    "Mon" : "Ma",
+    "November" : "November",
+    "October" : "Oktober",
+    "PERCENTAGE DRY NIGHTS" : "PERCENTAGE DROGE NACHTEN",
+    "Sat" : "Za",
+    "September" : "September",
+    "Sun" : "Zo",
+    "TOTAL STARS EARNED" : "TOTALE AANTAL STERREN",
+    "Thu" : "Do",
+    "Tue" : "Di",
+    "Wed" : "Wo",
+    "You received " : "Je hebt een ster",
+    "You’re a superstar!" : "Je bent een held ",
+    "No wet events this day" : "Geen Oopsie moment vandaag",
+    "one star" : "verdiend"
+  },
+  
+"feedback_questions" : {
+"Are the stickers strong enough?" : "Zijn de stickers sterk genoeg?",
+"Privacy Policy" : "Privacybeleid",
+"Any thoughts or suggestions you would like to share?" : "Heb je nog bevindingen of verbeteringen voor ons?",
+"Ask Me Later" : "Later nog eens vragen",
+"Awesome!" : "Geweldig!",
+"Bad" : "Slecht",
+"Comments" : "Commentaar",
+"Do Pee-Rest-Pee" : "Doe Plas-Rust-Plas",
+"Do you wake up sooner with the voice recording than with the standard alarm sound?" : "Word je eerder wakker door de stem van je ouders dan met het standaard alarm?",
+"Does the alarm wake you up ?" : "Word je wakker van het alarm ?",
+"Done" : "Klaar",
+"Email" : "Email",
+"Feedback" : "Feedback",
+"Good night" : "Welterusten",
+"Great" : "Goed",
+"Hi!" : "Hi!",
+"How old are you?" : "Hoe oud ben je?",
+"How was your experience opening the Oopsie Heroes packaging?" : "Hoe was je ervaring met het openen van de verpakking?",
+"How was your general experience using Oopsie Heroes?" : "Hoe was je algemene ervaring met Oopsie Heroes?",
+"I agree to the" : "Ik ga akkoord met:",
+"Is the alarm easy to turn off " :  "Kan het alarm makkelijk uitgezet worden ",
+"Leave" : "Verlaten",
+"Leaving already?" : "Ga je nu al?",
+
+"Listening to your sensor" : "Luisteren naar de sensor",
+"Next" : "Volgende",
+"No Internet connection" : "Geen internetverbinding",
+"Not yet" : "Nog niet",
+"Oopsie Heroes" : "Oopsie Heroes",
+"Oopsie Heroes Plus" : "Oopsie Heroes Plus",
+"Pick your hero!" : "Kies je held!",
+"Sensor detection" : "Sensor detectie",
+"Sometimes" : "Soms",
+"Start" : "Start",
+
+"Terrible" :"Erg slecht" ,
+"To start using Oopsie Heroes, we first need your email address." : "Om Oopsie Heroes te kunnen gebruiken, hebben we eerst je email adres nodig.",
+"Was it clear how to use the stickers?" : "Was het duidelijk hoe de stickers te gebruiken?",
+"We don't use it" : "We gebruiken het niet",
+"Your feedback will help us to improve our product." : "Opslaan naar lokale opslag."
+
+
+
+
+
+
+}
+}

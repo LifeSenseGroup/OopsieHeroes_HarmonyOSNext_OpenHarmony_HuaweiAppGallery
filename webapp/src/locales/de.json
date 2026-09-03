@@ -1,0 +1,153 @@
+{
+    "Continue" : "Weiter",
+    "SettingsScreen" :  {
+      "Alarm" : "Alarm",
+      "Stop alarm" : "Alarm stoppen",
+      "Choose your alarm sound" : "Wähle deinen Alarmton",
+      "Alarm Settings" : "ALARM EINSTELLUNGEN",
+      "Record the voice of one of your parents:" : "Nimm die Stimme eines deiner Eltern auf:",
+      "Are you sure you want to reset your user?" : "Möchten Sie den Benutzer wirklich zurücksetzen?",
+      "Cancel" : "Abbrechen",
+      "Go to Settings" : "Gehe zu den Einstellungen",
+      "Harsh alarm" : "Lauter Alarm",
+      "Increase the volume to hear the sound " : "Erhöhen Sie die Lautstärke, um den Ton zu hören.",
+      "Listen to microphone" : "Auf das Mikrofon hören",
+      "OK" : "In Ordung",
+      "Phone-like" : "Telefonalarme",
+      "Please record a personal message first" : "Bitte nehmen Sie zuerst eine persönliche Nachricht auf",
+      "Recording…" : "Aufnahme...",
+      "Remember the alarm sound" : "Erinnere dich an den Alarmton",
+      "Reset" : "Zurücksetzen",
+      "Reset user" : "Benutzer zurücksetzen",
+      "Rooster" : "Hahn",
+      "Select Sensor" : "Sensor auswählen",
+      "Sensor" : "Sensor",
+      "Settings" : "Einstellungen",
+      "Smooth & Gentle" : "Sanft und ruhig" , 
+      "To detect sensor sound, enable access to the microphone from App Settings." : "Um Sensortöne zu erkennen, aktivieren Sie den Zugriff auf das Mikrofon über die App-Einstellungen." ,
+      "To use the voice recording feature, enable access to the microphone and to write to storage from App Settings" : "Um die Stimmaufnahme zu verwenden, erlauben Sie den Zugriff auf das Mikrofon und den Speicher in den  App-Einstellungen",
+      "To use the voice recording feature, enable access to the microphone from App Settings" : "Um die Stimmaufnahme zu verwenden, erlauben Sie den Zugriff auf das Mikrofon in den  App-Einstellungen",
+      "Voice recording" : "Stimmaufnahme",
+      "Volume too low" : "Lautstärke zu niedrig",
+      "We need access to your microphone." : "Wir benötigen Zugang zu ihrem Mikrofon.",
+      "We need to write to your phone so we can save the recording." : "Wir benötigen Zugang zu Ihrem Telefon, um die Aufzeichnung speichern zu können.",
+      "Write to storage" :"Speichern"
+  
+  
+    },
+   
+    "HomeScreen" : { 
+      "The progress will be available after the 2nd measuring day" : " ",
+      "Did you have a dry night?" : "Hattest sie eine trockene Nacht?",
+      "Do it later" : "Versuche, es herauszuzögern",
+      "Do you want first to leave a review on ThrustPilot?" : " ",
+      "Feedback sent!" : "Feedback gesendet!",
+      "Give feedback" : "Feedback geben",
+      "Go to sleep" : "Geh schlafen",
+      "How are you doing?" : "Wie geht es dir?",
+      "No" : "Nein",
+      "Oops, little interruption" : "Hoppla, kleine Unterbrechung",
+      "Resume" : "Verder gaan",
+      "Resume sensor sound detection." : "Setzen Sie die Sensorgeräuscherkennung fort.",
+      "Take 2 minutes to share your thoughts." : "Nehmen Sie sich bitte 2 Minuten Zeit, Ihre Gedanken mit uns zu teilen.",
+      "Wake up" : "Wach auf",
+      "Yes" : "Ja"
+  
+    },
+  
+  
+    "OnboardingScreen" : { 
+      "Hi!" : "Hallo!",
+      "How old are you?" : "Wie alt bist du?",
+      "To start using Oopsie Heroes, we first need your email address." : "Um Oopsie Heroes verwenden zu können, benötigen wir zunächst Ihre E-Mail-Adresse.",
+      "I agree to the" : "Ich stimme dem zu:",
+      "Privacy Policy" : "Datenschutz",
+      "Email" : "Email",
+      "Pick your hero!" : "Wähle deinen Helden!",
+      "Next" : "Nächster",
+      "Let’s go!" : "Los geht's!",
+      "Start" : "Start"
+    },
+
+
+    "CalendarScreen" : { 
+      "April" : "April",
+      "August" : "August",
+      "Calendar" : "Kalender",
+      "December" : "Dezember",
+      "Delete" : "Löschen",
+      "Do you really want delete this event?" : "Möchten Sie dieses Ereignis wirklich löschen?",
+      "February" : "Februar",
+      "Fri" : "Fr",
+      "January" : "Januar",
+      "July" : "Juli",
+      "June" : "Juni",
+      "March" : "März",
+      "May" : "Mai",
+      "Mon" : "Mo",
+      "November" : "November",
+      "October" : "Oktober",
+      "PERCENTAGE DRY NIGHTS" : "PROZENT TROCKENE NÄCHTE",
+      "Sat" : "Sa",
+      "September" : "September",
+      "Sun" : "So",
+      "TOTAL STARS EARNED" : "VERDIENTE STERNE",
+      "Thu" : "Do",
+      "Tue" : "Di",
+      "Wed" : "Mi",
+      "You received " : "Du hast eine star",
+      "You’re a superstar!" : "Du bist ein Superstar ",
+      "No wet events this day" : "Keine Oopsies an diesem Tag",
+      "one star" : "verdient"
+    },
+    
+  "feedback_questions" : {
+  "Are the stickers strong enough?" : "Sind die Aufkleber stark genug?",
+  "Privacy Policy" : "Datenschutz",
+  "Any thoughts or suggestions you would like to share?" : "Haben Sie Gedanken oder Anregungen, die Sie teilen möchten?",
+  "Ask Me Later" : "Frag mich später",
+  "Awesome!" : "Toll!",
+  "Bad" : "Schlecht",
+  "Comments" : "Kommentare",
+  "Do Pee-Rest-Pee" : "Gehe pinkeln, mache eine Pause, gehe pinkeln",
+  "Do you wake up sooner with the voice recording than with the standard alarm sound?" : "Wachen Sie mit der Stimmaufnahme früher auf als mit dem Standard-Alarmton?",
+  "Does the alarm wake you up ?" : "Werden Sie durch den Alarm geweckt?",
+  "Done" : "Erledigt",
+  "Email" : "Email",
+  "Feedback" : "Feedback",
+  "Good night" : "Gute Nacht",
+  "Great" : "Großartig",
+  "Hi!" : "Hallo!",
+  "How old are you?" : "Wie alt bist du?",
+  "How was your experience opening the Oopsie Heroes packaging?" : "Wie war Ihre Erfahrung beim Öffnen der Oopsie Heroes Verpackung?",
+  "How was your general experience using Oopsie Heroes?" : "Wie war Ihre allgemeine Erfahrung mit Oopsie Heroes?",
+  "I agree to the" : "Ich stimme dem zu:",
+  "Is the alarm easy to turn off " :  "Ist der Alarm einfach auszuschalten?",
+  "Leave" : "Schließen",
+  "Leaving already?" : "Wollen Sie uns schon verlassen?",
+  
+  "Listening to your sensor" : "Auf den Sensor hören",
+ 
+  "No Internet connection" : "Keine Internetverbindung",
+  "Not yet" : "Noch nicht",
+  "Oopsie Heroes" : "Oopsie Heroes",
+  "Oopsie Heroes Plus" : "Oopsie Heroes Plus",
+  "Pick your hero!" : "Wähle deinen Helden!",
+  "Sensor detection" : "Sensorerkennung",
+  "Sometimes" : "Manchmal",
+  
+ 
+  "Terrible" : "Furchtbar" ,
+  "To start using Oopsie Heroes, we first need your email address." : "Um Oopsie Heroes verwenden zu können, benötigen wir zunächst Ihre E-Mail-Adresse.",
+  "Was it clear how to use the stickers?" : "War es klar, wie die Aufkleber verwendet werden?",
+  "We don't use it" : "Wir benutzen es nicht",
+  "Your feedback will help us to improve our product." : "Ihr Feedback hilft uns, unser Produkt zu verbessern."
+  
+  
+  
+  
+  
+  
+  
+  }
+  }

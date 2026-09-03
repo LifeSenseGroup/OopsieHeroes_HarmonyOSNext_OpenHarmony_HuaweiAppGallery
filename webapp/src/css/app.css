@@ -1,0 +1,9 @@
+ /* some defines tobe used in different classes so we always have the same values */
+
+ body {
+
+  font-family: 'Rubik-Medium'
+}
+ 
+/* when scrolling is not needed anymore  enable next line */
+html, body {margin: 0; height: 100%; overflow: hidden} 

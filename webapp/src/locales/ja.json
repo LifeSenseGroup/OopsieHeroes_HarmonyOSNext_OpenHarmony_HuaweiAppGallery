@@ -1,0 +1,159 @@
+{
+
+  "Continue" : "次へ",
+  "activityScreen" :  {
+    "You have a leakage during" :  "漏れるのは",
+    "Exercising" : "運動している時",
+    "Sleeping" : "寝ている時",
+    "Standing still" : "じっとしている時",
+    "Sneezing" : "くしゃみした時",
+    "I have no leakage" : "ik heb geen verlies"
+  },
+
+  "howDidItGoScreen" :  {
+    "How did it go" :  "結果入力",
+    "How many jumps could you do until you had a leakage" : "何回ジャンプできましたか",
+    "How many seconds could you hold the contraction during the squat" : "スクワットの間何秒間引き締めていられましたか"
+  },
+
+  "SettingsScreen" :  {
+    "Alarm" : "アラーム",
+    "Alarm Settings" : "アラーム設定",
+    "Are you sure you want to reset your user?" : "ユーザーを変更しますか？",
+    "Ask Me Later" : "あとで",
+    "Cancel" : "変更しない",
+    "Choose your alarm sound" : "目覚まし音を選んでください",
+    "Go to Settings" : "設定を開く",
+    "Harsh alarm" : "警報音",
+    "Increase the volume to hear the sound." : "音量をあげてください",
+    "Listen to microphone" : "聴いて",
+    "Phone-like" : "電話の音",
+    "Please record a personal message first" : "まずメッセージを録音してください",
+    "Record the voice of one of your parents:" : "パパかママの声を録音しましょう",
+    "Recording…" : "録音中",
+    "Remember the alarm sound" : "目覚ましが鳴ったら起きること",
+    "Reset" : "変更する",
+    "Reset user" : "ユーザー変更",
+    "Resume" : "戻る",
+    "Resume sensor sound detection." : "センサー音検知に戻る",
+    "Rooster" : "コケコッコー",
+    "Select Sensor" : "どちらを使いますか？",
+    "Sensor" : "センサー",
+    "Sensor detection" : "センサー検知",
+    "Settings" : "設定",
+    "Smooth & Gentle" : "優しい音",
+    "Oopsie Heroes" : "ウープシーヒーローズ",
+    "Stop alarm" : "目覚まし停止",
+    "To detect sensor sound, enable access to the microphone from App Settings." : "センサー音を検知するにはマイクへのアクセスを許可してください。",
+    "To use the voice recording feature, enable access to the microphone and to write to storage from App Settings" : "録音するには「設定」でマイクへのアクセスとストレージへの書き込みを許可してください",
+    "To use the voice recording feature, enable access to the microphone from App Settings" : "録音するには「設定」でマイクへのアクセスを許可してください",
+    "Voice recording" : "録音した目覚まし音",
+    "Volume too low" : "音が小さすぎるよ",
+    "We need to write to your phone so we can save the recording." : "スマホに録音メッセージの書き込みをします",
+    "Write to storage" : "ストレージに書き込む"
+},
+
+  "HomeScreen" : { 
+    "Did you have a dry night?" : "昨日はおねしょを洩らしませんでしたね？",
+    "Do Pee-Rest-Pee" : "寝る前におしっこする-寝る-目を覚ましておしっこにいく",
+    "Do it later" : "あとで",
+    "Do you want first to leave a review on ThrustPilot ?" : "レビューをTrustpilotに書き込んでいただけますか？",
+    "Feedback sent!" : "送信！",
+    "Give feedback" : "評価する",
+    "Go to sleep" : "おやすみモードにする",
+    "Good night" : "おやすみなさい",
+    "How did we do?" : "感想をお寄せください",
+    "Let us know by leaving a review on TrustPilot" : "レビューをTrustpilotに書き込んでいただけますか",
+    "No" : "いいえ",
+    "Oops, little interruption" : "電話/メールが届きました",
+    "Wake up" : "おやすみモード終了",
+    "Yes" : "はい"
+},
+
+
+"OnboardingScreen" : { 
+    "Hi!" : "こんにちは！",
+    "How old are you?" : "年齢は？",
+    "To start using Oopsie Heroes, we first need your email address." : "まず、eメールアドレスを入力",
+    "I agree to the" : "同意します",
+    "Privacy Policy" : "個人情報の取り扱い",
+    "Email" : "Eメール",
+    "Pick your hero!" : "キャラクターを決めて！",
+    "Next" : "次",
+	  "Let’s go!" : "開始",
+	  "Start" : "スタート"
+  },
+
+
+  "CalendarScreen" : {
+    "April" : "4月",
+    "August" : "素晴らしい！",
+    "Calendar" : "カレンダー",
+    "December" : "12月",
+    "Delete" : "削除",
+    "Do you really want delete this event?" : "削除してもいいですか？",
+    "February" : "2月",
+    "Fri" : "金",
+    "January" : "1月",
+    "July" : "7月",
+    "June" : "6月",
+    "March" : "3月",
+    "May" : "5月",
+    "Mon" : "月",
+    "November" : "11月",
+    "October" : "10月",
+    "PERCENTAGE DRY NIGHTS" : "おねしょを洩らさなかった割合（%)",
+    "Sat" : "土",
+    "September" : "9月",
+    "Sun" : "日",
+    "TOTAL STARS EARNED" : "ごほうびにもらったスター印の数",
+    "Thu" : "木",
+    "Tue" : "火",
+    "Wed" : "水",
+    "You received " : "スター印をゲット!",
+    "You’re a superstar!" : "やったね！",
+    "No wet events this day" : "今朝はおねしょしてないね。",
+    "one star!" : "スター印一つ獲得です"
+  },
+
+  "feedback_questions" : {
+    "Any thoughts or suggestions you would like to share?" : "コメントや提案があればどうぞ",
+    "Are the stickers strong enough?" : "貼付けシールは丈夫でしたか？",
+    "Bad" : "悪い",
+    "Comments" : "変更しない",
+    "Do you wake up sooner with the voice recording than with the standard alarm sound?" : "録音メッセージの方がデフォルトのアラーム音より早く目覚めることができましたか？",
+    "Does the alarm wake you up?" : "アラームで起きられましたか？",
+    "Done" : "完了",
+    "Feedback" : "評価",
+    "Great" : "良い",
+    "How was your experience opening the Oopsie Heroes packaging?": "箱を開けたときの状態はどうでしたか？",
+    "How was your general experience using Oopsie Heroes?" : "ウープシーヒーローズを使ってみて全体的な評価を教えてください",
+    "Is the alarm easy to turn off?" : "アラームはすぐに止められましたか？",
+    "Leave" : "終了する",
+    "Leaving already?" : "もう終了しましたか？",
+    "Listening to your sensor" : "センサー音を聞く",
+    "No Internet connection" : "インターネットに接続していません",
+    "Not yet" : "まだです",
+    "OK" : "OK",
+    "Oopsie" : "ウープシーヒーローズがウープシーヒーローズのセンサー音を受信するために、マイクへのアクセスを求めています",
+    
+    "Oopsie Heroes Plus" : "ウープシーヒーローズ　プラス",
+    "Say to myself:" : "寝る前に自分に言うこと",
+    "\"If I wake up by myself, I go to the toilet to pee\"": "「ひとりでに目が覚めたらトイレに行く。」",
+    "\"If the alarm goes off, I get up immediately and go to the toilet\"" : "「目覚ましが鳴ったらすぐに起きてトイレに行く。」",
+    "Sometimes" : "時々",
+    
+    "Terrible" : "とても悪い",
+    "Was it clear how to use the stickers?" : "接着シールの貼り方はわかりやすかったですか？",
+    "We don't use it" : "録音メッセージ機能をつかいませんでした",
+    "We need access to your microphone." : "マイクへのアクセスを許可してください",
+    "Your feedback will help us to improve our product." : "ご意見は今後の当社製品改良に役立てます",
+    "How are you doing?" : "ウープシーヒーローズは気に入りましたか？",
+    "Take 2 minutes to share your thoughts." : "感想を聞かせてください。2分で答えられます"
+
+
+
+
+  }
+
+}

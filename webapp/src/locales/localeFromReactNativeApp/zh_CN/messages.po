@@ -1,0 +1,212 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Oopsie Heroes\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Continue"
+msgstr "继续"
+
+msgid "Yes"
+msgstr "是"
+
+msgid "No"
+msgstr "否"
+
+msgid "SettingsScreen.Alarm"
+msgstr "闹钟"
+
+msgid "SettingsScreen.Stop alarm"
+msgstr "停止闹钟"
+
+msgid "SettingsScreen.Choose your alarm sound"
+msgstr "选择闹钟声音"
+
+msgid "SettingsScreen.Alarm Settings"
+msgstr "闹钟设置"
+
+msgid "SettingsScreen.Cancel"
+msgstr "取消"
+
+msgid "SettingsScreen.Go to Settings"
+msgstr "前往设置"
+
+msgid "SettingsScreen.Harsh alarm"
+msgstr "急促"
+
+msgid "SettingsScreen.Listen to microphone"
+msgstr "监听麦克风"
+
+msgid "SettingsScreen.OK"
+msgstr "确定"
+
+msgid "SettingsScreen.Phone-like"
+msgstr "电话铃声"
+
+msgid "SettingsScreen.Recording…"
+msgstr "录音中……"
+
+msgid "SettingsScreen.Reset"
+msgstr "重置"
+
+msgid "SettingsScreen.Reset user"
+msgstr "重置用户"
+
+msgid "SettingsScreen.Rooster"
+msgstr "公鸡"
+
+msgid "SettingsScreen.Select Sensor"
+msgstr "选择传感器"
+
+msgid "SettingsScreen.Sensor"
+msgstr "传感器"
+
+msgid "SettingsScreen.Settings"
+msgstr "设置"
+
+msgid "SettingsScreen.Smooth & Gentle"
+msgstr "舒缓"
+
+msgid "SettingsScreen.Voice recording"
+msgstr "录音"
+
+msgid "SettingsScreen.Volume too low"
+msgstr "音量太低"
+
+msgid "SettingsScreen.Write to storage"
+msgstr "写入存储空间"
+
+msgid "HomeScreen.Did you have a dry night?"
+msgstr "昨晚睡得好吗？"
+
+msgid "HomeScreen.Do it later"
+msgstr "稍后再做"
+
+msgid "HomeScreen.Feedback sent!"
+msgstr "反馈已发送！"
+
+msgid "HomeScreen.Give feedback"
+msgstr "提供反馈"
+
+msgid "HomeScreen.Go to sleep"
+msgstr "去睡觉"
+
+msgid "HomeScreen.How are you doing?"
+msgstr "感觉怎么样？"
+
+msgid "HomeScreen.No"
+msgstr "否"
+
+msgid "HomeScreen.Resume"
+msgstr "继续"
+
+msgid "HomeScreen.Wake up"
+msgstr "起床"
+
+msgid "HomeScreen.Yes"
+msgstr "是"
+
+msgid "OnboardingScreen.Hi!"
+msgstr "嗨！"
+
+msgid "OnboardingScreen.How old are you?"
+msgstr "您几岁了？"
+
+msgid "OnboardingScreen.I agree to the"
+msgstr "我同意"
+
+msgid "OnboardingScreen.Privacy Policy"
+msgstr "隐私政策"
+
+msgid "OnboardingScreen.Email"
+msgstr "电子邮件"
+
+msgid "OnboardingScreen.Pick your hero!"
+msgstr "选择您的英雄！"
+
+msgid "OnboardingScreen.Next"
+msgstr "下一步"
+
+msgid "OnboardingScreen.Let’s go!"
+msgstr "开始吧！"
+
+msgid "OnboardingScreen.Start"
+msgstr "开始"
+
+msgid "CalendarScreen.Calendar"
+msgstr "日历"
+
+msgid "CalendarScreen.Delete"
+msgstr "删除"
+
+msgid "CalendarScreen.Do you really want delete this event?"
+msgstr "确定要删除此事件吗？"
+
+msgid "CalendarScreen.PERCENTAGE DRY NIGHTS"
+msgstr "干燥夜晚百分比"
+
+msgid "CalendarScreen.TOTAL STARS EARNED"
+msgstr "获得的星星总数"
+
+msgid "CalendarScreen.No wet events this day"
+msgstr "今天没有尿湿事件"
+
+msgid "feedback_questions.Are the stickers strong enough?"
+msgstr "贴纸足够牢固吗？"
+
+msgid "feedback_questions.Any thoughts or suggestions you would like to share?"
+msgstr "您有什么想法或建议想分享吗？"
+
+msgid "feedback_questions.Ask Me Later"
+msgstr "稍后再问"
+
+msgid "feedback_questions.Awesome!"
+msgstr "太棒了！"
+
+msgid "feedback_questions.Bad"
+msgstr "不好"
+
+msgid "feedback_questions.Comments"
+msgstr "评论"
+
+msgid "feedback_questions.Done"
+msgstr "完成"
+
+msgid "feedback_questions.Feedback"
+msgstr "反馈"
+
+msgid "feedback_questions.Good night"
+msgstr "晚安"
+
+msgid "feedback_questions.Great"
+msgstr "很好"
+
+msgid "feedback_questions.Leave"
+msgstr "离开"
+
+msgid "feedback_questions.Leaving already?"
+msgstr "已经要离开了吗？"
+
+msgid "feedback_questions.No Internet connection"
+msgstr "没有互联网连接"
+
+msgid "feedback_questions.Not yet"
+msgstr "还没有"
+
+msgid "feedback_questions.Sometimes"
+msgstr "有时"
+
+msgid "feedback_questions.Start"
+msgstr "开始"
+
+msgid "feedback_questions.Terrible"
+msgstr "很差"
+
+msgid "feedback_questions.We don't use it"
+msgstr "我们没有使用"
+
+msgid "feedback_questions.Your feedback will help us to improve our product."
+msgstr "您的反馈将帮助我们改进产品。"

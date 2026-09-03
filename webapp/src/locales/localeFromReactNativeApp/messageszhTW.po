@@ -1,0 +1,525 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2019-07-08 10:08+0200\n"
+"Mime-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.3\n"
+"Language: zh_TW\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+
+#: src/screen/RegisterEmail.tsx:49
+msgid " Privacy Policy."
+msgstr "隱私政策"
+
+#: src/screen/Settings.tsx:36
+#: src/services/triggerAlarmTask.ts:20
+msgid "Alarm"
+msgstr "警報"
+
+#: src/screen/AlarmSettings.tsx:49
+msgid "Alarm Settings"
+msgstr "鬧鐘設定"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:78
+msgid "Any thoughts or suggestions you would like to share?"
+msgstr "您有什麼建議想要分享嗎？"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:10
+msgid "April"
+msgstr "四月"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:53
+msgid "Are the stickers strong enough?"
+msgstr "貼紙使用上牢固嗎?"
+
+#: src/screen/Settings.tsx:60
+msgid "Are you sure you want to reset your user?"
+msgstr "確定要重置使用者嗎?"
+
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:123
+#: src/helper/utils.ts:103
+msgid "Ask Me Later"
+msgstr "等一會再問我"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:14
+msgid "August"
+msgstr "八月"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:44
+#: src/component/FeedbackQuestion/feedback_questions.tsx:74
+msgid "Awesome!"
+msgstr "太棒了!"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:44
+#: src/component/FeedbackQuestion/feedback_questions.tsx:74
+msgid "Bad"
+msgstr "糟糕"
+
+#: src/screen/Calendar/CalendarScreen.tsx:129
+msgid "Calendar"
+msgstr "行事曆"
+
+#: src/component/SoundDetectionBlockedDialog.tsx:7
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:124
+#: src/component/VoiceRecording/VoiceRecordingBlockedDialog.tsx:13
+#: src/helper/utils.ts:104
+#: src/screen/Calendar/CalendarScreen.tsx:120
+#: src/screen/Settings.tsx:62
+msgid "Cancel"
+msgstr "取消"
+
+#: src/component/SelectSounds.tsx:51
+msgid "Choose your alarm sound"
+msgstr "選擇鬧鈴聲音"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:80
+msgid "Comments"
+msgstr "註釋"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:18
+msgid "December"
+msgstr "十二月"
+
+#: src/screen/Calendar/CalendarScreen.tsx:120
+#: src/screen/Calendar/LeakEvent/LeakEvent.tsx:29
+msgid "Delete"
+msgstr "刪除"
+
+#: src/screen/Home.tsx:142
+msgid "Did you have a dry night?"
+msgstr ""
+
+#: src/helper/dryRules.ts:3
+msgid "Do Pee-Rest-Pee"
+msgstr "小便"
+
+#: src/screen/Home.tsx:132
+msgid "Do it later"
+msgstr "等會再做"
+
+#: src/screen/Calendar/CalendarScreen.tsx:120
+msgid "Do you really want delete this event?"
+msgstr "您確定要刪除嗎?"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:63
+msgid "Do you wake up sooner with the voice recording than with the standard alarm sound?"
+msgstr "與標準的警報鈴聲相比，使用自己的錄音會更容易叫醒小朋友嗎？"
+
+#: src/screen/Home.tsx:33
+msgid "Do you want first to leave a review on ThrustPilot ?"
+msgstr ""
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:58
+msgid "Does the alarm wake you up?"
+msgstr "警報聲音可以叫醒您嗎?"
+
+#: src/component/AlertVolumeLow.tsx:5
+#: src/screen/RegisterAge.tsx:35
+msgid "Done"
+msgstr "完成"
+
+#: src/screen/RegisterEmail.tsx:56
+msgid "Email"
+msgstr "電子郵件"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:8
+msgid "February"
+msgstr "二月"
+
+#: src/screen/Feedback.tsx:193
+msgid "Feedback"
+msgstr "意見"
+
+#: src/screen/Home.tsx:152
+msgid "Feedback sent!"
+msgstr "意見已發送"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:28
+msgid "Fri"
+msgstr "五"
+
+#: src/screen/Home.tsx:132
+msgid "Give feedback"
+msgstr "提供意見"
+
+#: src/component/SoundDetectionBlockedDialog.tsx:7
+#: src/component/VoiceRecording/VoiceRecordingBlockedDialog.tsx:13
+msgid "Go to Settings"
+msgstr "前往設定"
+
+#: src/screen/Home.tsx:117
+msgid "Go to sleep"
+msgstr "去睡覺"
+
+#: src/helper/freqAnalyzer.ts:30
+msgid "Good night"
+msgstr "晚安"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:44
+#: src/component/FeedbackQuestion/feedback_questions.tsx:74
+msgid "Great"
+msgstr "很棒"
+
+#: src/helper/alarmSound.ts:111
+msgid "Harsh alarm"
+msgstr "急促鈴聲"
+
+#: src/screen/RegisterEmail.tsx:35
+msgid "Hi!"
+msgstr "嗨!"
+
+#: src/screen/Home.tsx:130
+#~ msgid "How are you doing?"
+#~ msgstr "你好嗎?"
+
+#: src/screen/Home.tsx:132
+msgid "How did we do?"
+msgstr ""
+
+#: src/screen/RegisterAge.tsx:33
+msgid "How old are you?"
+msgstr "請問你幾歲了?"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:43
+msgid "How was your experience opening the Oopsie Heroes packaging?"
+msgstr "您覺得尿床守衛隊的包裝容易打開嗎？"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:73
+msgid "How was your general experience using Oopsie Heroes?"
+msgstr "您使用尿床守衛隊後的感覺如何？"
+
+#: src/screen/RegisterEmail.tsx:45
+msgid "I agree to the"
+msgstr "我同意："
+
+#: src/component/AlertVolumeLow.tsx:5
+msgid "Increase the volume to hear the sound."
+msgstr "增加音量讓聲音清楚"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:68
+msgid "Is the alarm easy to turn off?"
+msgstr "鬧鐘容易關閉嗎?"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:7
+msgid "January"
+msgstr "一月"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:13
+msgid "July"
+msgstr "七月"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:12
+msgid "June"
+msgstr "六月"
+
+#: src/screen/Feedback.tsx:176
+msgid "Leave"
+msgstr "離開"
+
+#: src/screen/Feedback.tsx:176
+msgid "Leaving already?"
+msgstr "確定要離開?"
+
+#: src/screen/Home.tsx:133
+msgid "Let us know by leaving a review on TrustPilot"
+msgstr ""
+
+#: src/screen/RegisterEmail.tsx:61
+msgid "Let’s go!"
+msgstr "開始囉!"
+
+#: src/helper/utils.ts:101
+msgid "Listen to microphone"
+msgstr "注意麥克風"
+
+#: src/helper/freqAnalyzer.ts:30
+msgid "Listening to your sensor"
+msgstr "注意感測器"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:9
+msgid "March"
+msgstr "三月"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:11
+msgid "May"
+msgstr "五月"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:24
+msgid "Mon"
+msgstr "一"
+
+#: src/screen/RegisterAge.tsx:39
+msgid "Next"
+msgstr "下一步"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:49
+#: src/component/FeedbackQuestion/feedback_questions.tsx:54
+#: src/component/FeedbackQuestion/feedback_questions.tsx:59
+#: src/component/FeedbackQuestion/feedback_questions.tsx:64
+#: src/component/FeedbackQuestion/feedback_questions.tsx:69
+#: src/screen/Home.tsx:35
+#: src/screen/Home.tsx:142
+msgid "No"
+msgstr "不"
+
+#: src/screen/Feedback.tsx:183
+msgid "No Internet connection"
+msgstr "沒有網路連結"
+
+#: src/screen/Feedback.tsx:176
+msgid "Not yet"
+msgstr "還沒有"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:17
+msgid "November"
+msgstr "十一月"
+
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:125
+#: src/helper/utils.ts:105
+msgid "OK"
+msgstr "OK"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:16
+msgid "October"
+msgstr "十月"
+
+#: src/screen/Night.tsx:52
+#: src/screen/Night.tsx:144
+msgid "Oops, little interruption"
+msgstr "糟糕, 有一點干擾"
+
+#: src/helper/SensorType.tsx:5
+msgid "Oopsie Heroes"
+msgstr "尿床守衛隊"
+
+#: src/helper/SensorType.tsx:9
+msgid "Oopsie Heroes Plus"
+msgstr "尿床守衛隊PLUS版"
+
+#: src/helper/alarmSound.ts:115
+msgid "OopsieHeroes"
+msgstr ""
+
+#: src/screen/Calendar/DetailBox.tsx:50
+msgid "PERCENTAGE DRY NIGHTS"
+msgstr ""
+
+#: src/helper/alarmSound.ts:103
+msgid "Phone-like"
+msgstr "手機鈴聲"
+
+#: src/screen/RegisterSex.tsx:87
+msgid "Pick your hero!"
+msgstr "選擇你/妳喜愛的英雄!"
+
+#: src/screen/Home.tsx:131
+#~ msgid "Please rate your experience on Trustpilot"
+#~ msgstr ""
+
+#: src/helper/alarmSound.ts:68
+msgid "Please record a personal message first"
+msgstr "請先輸入個人訊息"
+
+#: src/component/SelectSounds.tsx:61
+msgid "Record the voice of one of your parents:"
+msgstr "請錄製爸爸媽媽其中一人的聲音:"
+
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:82
+msgid "Recording…"
+msgstr "録音"
+
+#: src/helper/dryRules.ts:4
+msgid "Remember the alarm sound"
+msgstr "紀錄鬧鈴聲音"
+
+#: src/screen/Settings.tsx:67
+msgid "Reset"
+msgstr "重置"
+
+#: src/screen/Settings.tsx:60
+msgid "Reset user"
+msgstr "重置使用者"
+
+#: src/screen/Night.tsx:144
+msgid "Resume"
+msgstr "重新開始"
+
+#: src/screen/Night.tsx:52
+#: src/screen/Night.tsx:144
+msgid "Resume sensor sound detection."
+msgstr "重新偵測感測器聲音"
+
+#: src/helper/alarmSound.ts:107
+msgid "Rooster"
+msgstr "公雞啼叫"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:29
+msgid "Sat"
+msgstr "六"
+
+#: src/helper/dryRules.ts:6
+msgid ""
+"Say to myself:\n"
+"\"If I wake up by myself, I go to the toilet to pee\""
+msgstr ""
+"對自己說:\n"
+"\"如果我醒來了, 我會自己去廁所尿尿\""
+
+#: src/helper/dryRules.ts:5
+msgid ""
+"Say to myself:\n"
+"\"If the alarm goes off, I get up immediately and go to the toilet\""
+msgstr ""
+"對自己說:\n"
+"\"如果鬧鈴響起了, 我會馬上起床去廁所\""
+
+#: src/screen/AlarmSettings.tsx:39
+#: src/screen/SensorSettings.tsx:86
+msgid "Select Sensor"
+msgstr "選擇感測器"
+
+#: src/screen/Settings.tsx:41
+msgid "Sensor"
+msgstr "感測器"
+
+#: src/helper/freqAnalyzer.ts:30
+msgid "Sensor detection"
+msgstr "偵測感測器"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:15
+msgid "September"
+msgstr "九月"
+
+#: src/screen/Settings.tsx:51
+msgid "Settings"
+msgstr "設定"
+
+#: src/helper/alarmSound.ts:99
+msgid "Smooth & Gentle"
+msgstr "輕鬆緩和"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:59
+msgid "Sometimes"
+msgstr "偶爾"
+
+#: src/screen/RegisterSex.tsx:98
+msgid "Start"
+msgstr "開始"
+
+#: src/screen/Alarm.tsx:68
+msgid "Stop alarm"
+msgstr "停止鬧鈴"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:23
+msgid "Sun"
+msgstr "日"
+
+#: src/screen/Calendar/DetailBox.tsx:55
+msgid "TOTAL STARS EARNED"
+msgstr ""
+
+#: src/screen/Home.tsx:111
+#~ msgid "Take 2 minutes to share your thoughts."
+#~ msgstr "花兩分鐘分享您的意見"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:44
+#: src/component/FeedbackQuestion/feedback_questions.tsx:74
+msgid "Terrible"
+msgstr "可怕的"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:27
+msgid "Thu"
+msgstr "四"
+
+#: src/component/SoundDetectionBlockedDialog.tsx:6
+msgid "To detect sensor sound, enable access to the microphone from App Settings."
+msgstr "要偵測感測器的聲音，請先從“應用程序設置”中啟用麥克風的權限。"
+
+#: src/screen/RegisterEmail.tsx:39
+msgid "To start using Oopsie Heroes, we first need your email address."
+msgstr "開始使用Oopsie Heroes前, 需要先輸入您的電子郵件地址"
+
+#: src/component/VoiceRecording/VoiceRecordingBlockedDialog.tsx:10
+msgid "To use the voice recording feature, enable access to the microphone and to write to storage from App Settings"
+msgstr "要使用語音記錄功能，請先從“應用程序設置”啟用麥克風的權限"
+
+#: src/component/VoiceRecording/VoiceRecordingBlockedDialog.tsx:9
+msgid "To use the voice recording feature, enable access to the microphone from App Settings"
+msgstr "要使用錄音功能，請先從“應用程序設置”中啟用對麥克風的權限"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:25
+msgid "Tue"
+msgstr "二"
+
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:82
+msgid "Voice recording"
+msgstr "錄音"
+
+#: src/component/AlertVolumeLow.tsx:5
+msgid "Volume too low"
+msgstr "聲音太小聲了"
+
+#: src/screen/Night.tsx:41
+#: src/screen/Night.tsx:139
+#: src/services/triggerAlarmTask.ts:20
+msgid "Wake up"
+msgstr "起床囉"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:48
+msgid "Was it clear how to use the stickers?"
+msgstr "知道如何使用貼紙嗎?"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:64
+msgid "We don't use it"
+msgstr "我們沒有使用"
+
+#: src/helper/utils.ts:102
+msgid "We need access to your microphone."
+msgstr "請允許開啟麥克風權限"
+
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:122
+msgid "We need to write to your phone so we can save the recording."
+msgstr "請允許開啟錄音權限"
+
+#: src/screen/Calendar/CalendarLocalisation.tsx:26
+msgid "Wed"
+msgstr "三"
+
+#: src/component/VoiceRecording/SelectSoundsRecord.tsx:121
+msgid "Write to storage"
+msgstr "寫入並儲存"
+
+#: src/component/FeedbackQuestion/feedback_questions.tsx:49
+#: src/component/FeedbackQuestion/feedback_questions.tsx:54
+#: src/component/FeedbackQuestion/feedback_questions.tsx:59
+#: src/component/FeedbackQuestion/feedback_questions.tsx:64
+#: src/component/FeedbackQuestion/feedback_questions.tsx:69
+#: src/screen/Home.tsx:41
+#: src/screen/Home.tsx:142
+msgid "Yes"
+msgstr "是的"
+
+#: src/screen/Stars.tsx:12
+msgid "You received "
+msgstr ""
+
+#: src/screen/Feedback.tsx:177
+msgid "Your feedback will help us to improve our product."
+msgstr "您的意見對我們改進產品有很大的幫助"
+
+#: src/screen/Calendar/DetailBox.tsx:43
+msgid ""
+"You’re a superstar!\n"
+"No wet events this day"
+msgstr "你/妳表現的非常棒!\v今天沒有尿床喔 !"
+
+#: src/screen/Stars.tsx:12
+msgid "one star!"
+msgstr ""

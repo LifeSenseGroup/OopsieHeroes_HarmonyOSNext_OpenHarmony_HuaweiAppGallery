@@ -1,0 +1,42 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"mime-version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"POT-Creation-Date: 2022-01-06T09:06:04.616Z\n"
+"PO-Revision-Date: 2022-01-06T09:06:04.616Z\n"
+"Language: nl\n"
+
+msgid "Continue"
+msgstr "Verder"
+
+msgid "activityScreen##You have a leakage during"
+msgstr "Je druppeld tijdens"
+
+msgid "activityScreen##Jumping"
+msgstr "springen"
+
+msgid "activityScreen##Walking"
+msgstr "wandelen"
+
+msgid "activityScreen##Standing still"
+msgstr "still staan"
+
+msgid "activityScreen##Sneezing"
+msgstr "niezen"
+
+msgid "activityScreen##I have no leakage"
+msgstr "ik heb geen verlies"
+
+msgid "howDidItGoScreen##How did it go"
+msgstr "Hoe is het gegaan"
+
+msgid "howDidItGoScreen##How many jumps could you do until you had a leakage"
+msgstr "Hoeveel sprongen kon je doen voordat er urine verlies was"
+
+msgid ""
+"howDidItGoScreen##How many seconds could you hold the contraction during "
+"the squat"
+msgstr "Hoeveel seconden kon je de aanspanning volhouden"
