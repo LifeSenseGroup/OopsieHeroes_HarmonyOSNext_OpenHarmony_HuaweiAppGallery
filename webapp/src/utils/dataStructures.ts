@@ -3,6 +3,8 @@ export enum  eTypes{
   MEASURINGDAY_STARTED = "start",
   MEASURINGDAY_STOPPED = "stop", 
   LEAK = "leak",
+  /** Logged once when user dismisses a predictive-staircase / night alarm (resolution only). */
+  WAKE = "wake",
   APP_INSTALLED = "app_installed"
 }
 
@@ -32,6 +34,7 @@ export interface UserData{
   user_id   : string,
   email     : string, 
   country   : string,
+  os        : string,
   age       : number, 
   date      : Date,
 }

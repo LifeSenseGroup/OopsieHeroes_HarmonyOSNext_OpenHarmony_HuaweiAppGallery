@@ -59,10 +59,10 @@
     "OnboardingScreen" : { 
       "Hi!" : "Hallo!",
       "How old are you?" : "Wie alt bist du?",
-      "To start using Oopsie Heroes, we first need your email address." : "Um Oopsie Heroes verwenden zu können, benötigen wir zunächst Ihre E-Mail-Adresse.",
+      "To start using Oopsie Heroes, we first need your email address or phone number." : "Um Oopsie Heroes verwenden zu können, benötigen wir zunächst Ihre E-Mail-Adresse oder Telefonnummer.",
       "I agree to the" : "Ich stimme dem zu:",
       "Privacy Policy" : "Datenschutz",
-      "Email" : "Email",
+      "Email or phone number" : "E-Mail oder Telefonnummer",
       "Pick your hero!" : "Wähle deinen Helden!",
       "Next" : "Nächster",
       "Let’s go!" : "Los geht's!",
@@ -113,7 +113,7 @@
   "Do you wake up sooner with the voice recording than with the standard alarm sound?" : "Wachen Sie mit der Stimmaufnahme früher auf als mit dem Standard-Alarmton?",
   "Does the alarm wake you up ?" : "Werden Sie durch den Alarm geweckt?",
   "Done" : "Erledigt",
-  "Email" : "Email",
+  "Email or phone number" : "E-Mail oder Telefonnummer",
   "Feedback" : "Feedback",
   "Good night" : "Gute Nacht",
   "Great" : "Großartig",
@@ -138,7 +138,7 @@
   
  
   "Terrible" : "Furchtbar" ,
-  "To start using Oopsie Heroes, we first need your email address." : "Um Oopsie Heroes verwenden zu können, benötigen wir zunächst Ihre E-Mail-Adresse.",
+  "To start using Oopsie Heroes, we first need your email address or phone number." : "Um Oopsie Heroes verwenden zu können, benötigen wir zunächst Ihre E-Mail-Adresse oder Telefonnummer.",
   "Was it clear how to use the stickers?" : "War es klar, wie die Aufkleber verwendet werden?",
   "We don't use it" : "Wir benutzen es nicht",
   "Your feedback will help us to improve our product." : "Ihr Feedback hilft uns, unser Produkt zu verbessern."

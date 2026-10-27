@@ -61,10 +61,10 @@
   "OnboardingScreen" : { 
     "Hi!" : "Hi!",
     "How old are you?" : "Hoe oud ben je?",
-    "To start using Oopsie Heroes, we first need your email address." : " Om Oopsie Heroes te kunnen gebruiken, hebben we eerst je email adres nodig.",
+    "To start using Oopsie Heroes, we first need your email address or phone number." : "Om Oopsie Heroes te kunnen gebruiken, hebben we eerst je e-mailadres of telefoonnummer nodig.",
     "I agree to the" : "Ik ga akkoord met",
     "Privacy Policy" : "Privacybeleid",
-    "Email" : "Email",
+    "Email or phone number" : "E-mail of telefoonnummer",
     "Pick your hero!" : "Kies je held!",
 	  "Next" : "Volgende",
 	  "Let’s go!" : "Laten we beginnen !"
@@ -114,7 +114,7 @@
 "Do you wake up sooner with the voice recording than with the standard alarm sound?" : "Word je eerder wakker door de stem van je ouders dan met het standaard alarm?",
 "Does the alarm wake you up ?" : "Word je wakker van het alarm ?",
 "Done" : "Klaar",
-"Email" : "Email",
+"Email or phone number" : "E-mail of telefoonnummer",
 "Feedback" : "Feedback",
 "Good night" : "Welterusten",
 "Great" : "Goed",
@@ -139,7 +139,7 @@
 "Start" : "Start",
 
 "Terrible" :"Erg slecht" ,
-"To start using Oopsie Heroes, we first need your email address." : "Om Oopsie Heroes te kunnen gebruiken, hebben we eerst je email adres nodig.",
+"To start using Oopsie Heroes, we first need your email address or phone number." : "Om Oopsie Heroes te kunnen gebruiken, hebben we eerst je e-mailadres of telefoonnummer nodig.",
 "Was it clear how to use the stickers?" : "Was het duidelijk hoe de stickers te gebruiken?",
 "We don't use it" : "We gebruiken het niet",
 "Your feedback will help us to improve our product." : "Opslaan naar lokale opslag."

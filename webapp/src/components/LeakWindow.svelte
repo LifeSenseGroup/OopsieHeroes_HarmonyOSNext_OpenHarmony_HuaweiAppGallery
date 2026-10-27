@@ -154,6 +154,9 @@ function closePopup() {
       {dryNrNights}
     </div>
   </div>
+  <div class="stats-outlook-wrap">
+    <slot name="after-stats"></slot>
+  </div>
 
   <ul>
     {#each list as item, i}
@@ -263,7 +266,7 @@ function closePopup() {
   }
 
   .containerGrid {
-    margin-top: 1vh;
+    margin-top: 0.5vh;
     text-align: center;
     /*font-size: 1.2rem;*/
     display: grid;
@@ -285,6 +288,12 @@ function closePopup() {
   .aantal {
     grid-area: aantal;
     color: white;
+  }
+
+  .stats-outlook-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .containerLeak {

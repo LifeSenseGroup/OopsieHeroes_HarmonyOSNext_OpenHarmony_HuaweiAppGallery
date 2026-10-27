@@ -1,5 +1,6 @@
 <script>
 	import {createEventDispatcher, onMount} from 'svelte';
+	import { _ } from 'svelte-i18n';
 
 	export var headers = [];
 	export let days = [];
@@ -29,17 +30,19 @@
 			class="task {item.className}"
       style="grid-column: {item.startCol} / span {item.len};      
       grid-row: {item.startRow};  
-      align-self: {item.isBottom?'end':'center'};"
+      align-self: {item.isBottom ? 'end' : 'stretch'};"
 			>
 
       {#if item.title == "star"}
-      <img src = "build/images/star_icon.svg" style="height:90%; width:90%"alt="star"/>
+      <img class="task-icon" src="build/images/star_icon.svg" alt={$_("a11y.star")}/>
       {/if}
 
       {#if item.title == "leak"}
-      <svg style="height:90%; width:90% ; max-width:100px" fill="#FFFFFF" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+      <svg class="task-icon" fill="#FFFFFF" version="1.1" xmlns="http://www.w3.org/2000/svg"
 	      viewBox="0 0 100 100"
-	      xml:space="preserve">
+	      xml:space="preserve"
+	      role="img"
+	      aria-label={$_("a11y.leak")}>
         <g>
 	        <circle cx="50" cy="50" r="40" stroke="white" stroke-width="2" fill="blue" />
         </g>
@@ -47,7 +50,7 @@
        {/if}
 
        {#if item.title == "circle"}
-       <svg style="height:90%; width:90% ; max-width:100px" fill="#FFFFFF" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+       <svg class="task-icon" fill="#FFFFFF" version="1.1" xmlns="http://www.w3.org/2000/svg"
          viewBox="0 0 100 100"
          xml:space="preserve">
          <g>
@@ -72,10 +75,11 @@
   display: grid;
   width: 100%;
   height: 40vh;
-  grid-template-columns:  repeat(7, minmax(12px, 1fr));
-  grid-template-rows: minmax(20px, 0.3fr) repeat(5, minmax(12px, 1fr));
-  grid-auto-rows: minmax(12px, 1fr);
-  overflow: auto;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  /* Header + up to 6 date rows (6-week months). minmax(0,1fr) lets rows shrink instead of overflowing. */
+  grid-template-rows: minmax(20px, 0.3fr) repeat(6, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  overflow: hidden;
   font-family: Arial;
 }
 
@@ -114,26 +118,29 @@
 .day:nth-of-type(n + 36):nth-of-type(-n + 42) {
   grid-row: 6;
 }
+.day:nth-of-type(n + 43):nth-of-type(-n + 49) {
+  grid-row: 7;
+}
 .day:nth-of-type(7n + 1) {
-  grid-column: 1/1;
+  grid-column: 1 / span 1;
 }
 .day:nth-of-type(7n + 2) {
-  grid-column: 2/2;
+  grid-column: 2 / span 1;
 }
 .day:nth-of-type(7n + 3) {
-  grid-column: 3/3;
+  grid-column: 3 / span 1;
 }
 .day:nth-of-type(7n + 4) {
-  grid-column: 4/4;
+  grid-column: 4 / span 1;
 }
 .day:nth-of-type(7n + 5) {
-  grid-column: 5/5;
+  grid-column: 5 / span 1;
 }
 .day:nth-of-type(7n + 6) {
-  grid-column: 6/6;
+  grid-column: 6 / span 1;
 }
 .day:nth-of-type(7n + 7) {
-  grid-column: 7/7;
+  grid-column: 7 / span 1;
 }
 .day-name {
   font-size: 12px;
@@ -153,17 +160,32 @@
 
 .task {
   border-left-width: 3px;
-  padding: 1px 2px;
-  margin: 1px;
+  padding: 0;
+  margin: 0;
   border-left-style: solid;
   font-size: 14px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  align-self: center;
-	z-index:1;
+  align-self: stretch;
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+	z-index: 1;
 	border-radius: 1px;
+}
+
+.task-icon {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  flex-shrink: 1;
+  min-height: 0;
+  min-width: 0;
 }
 .task--warning {
   border-left-color: #fdb44d;

@@ -1,5 +1,6 @@
 {
   "Continue" : "Continue",
+  "appTitle" : "oopsie app",
   "SettingsScreen" :  {
     "Alarm" : "Alarm",
     "Stop alarm" : "Stop alarm",
@@ -61,15 +62,16 @@
   "OnboardingScreen" : { 
     "Hi!" : "Hi!",
     "How old are you?" : "How old are you?",
-    "To start using Oopsie Heroes, we first need your email address." : " To start using Oopsie Heroes, we first need your email address.",
+    "To start using Oopsie Heroes, we first need your email address or phone number." : "To start using Oopsie Heroes, we first need your email address or phone number.",
     "I agree to the" : "I agree to the",
     "Privacy Policy" : "Privacy Policy",
-    "Email" : "Email",
     "Email or phone number" : "Email or phone number",
     "Pick your hero!" : "Pick your hero!",
 	"Next" : "Next",
 	"Let’s go!" : "Let’s go!",
-	"Start" : "Start"
+	"Start" : "Start",
+	"Invalid email address or phone number" : "Enter an email address or phone number.",
+	"Please enter your age" : "Please enter your age"
   },
 
 
@@ -146,5 +148,84 @@
 
 
 
-}
+},
+
+  "Yes" : "Yes",
+  "No" : "No",
+
+  "a11y" : {
+    "back" : "back arrow",
+    "microphone" : "microphone",
+    "boy" : "boy",
+    "girl" : "girl",
+    "light" : "Light Icon",
+    "star" : "star",
+    "leak" : "leak"
+  },
+
+  "mission" : {
+    "eyebrow" : "Hero Mission Control",
+    "prefix" : "Mission:",
+    "toiletVisit" : "Toilet visit ~{offset}",
+    "afterSleep" : "after going to sleep",
+    "activate" : "Activate alarm",
+    "deactivate" : "Deactivate alarm",
+    "close" : "Close mission prediction",
+    "open" : "Open mission prediction",
+    "predictionTitle" : "Mission prediction",
+    "minutes" : "{n} min",
+    "oneHour" : "1 hour",
+    "hours" : "{n} hours",
+    "hoursMinutes" : "{hours}h {mins}m"
+  },
+
+  "trustpilot" : {
+    "title" : "Loving Oopsie?",
+    "body" : "“ Leave us a quick review and help other families get started.”",
+    "review" : "Write a Review",
+    "later" : "Maybe Later",
+    "verifiedBy" : "Verified by"
+  },
+
+  "heroNudge" : {
+    "title" : "Hero Nudge Setup",
+    "close" : "Close Hero Nudge setup",
+    "instructions" : "Record in a soft whisper to help your hero transition to a lighter sleep stage.",
+    "line1" : "Shhh... you're doing so well tonight.",
+    "line2" : "You are a real Hero, sleeping so deeply and comfortably.",
+    "line3" : "Everything is safe and warm. Let's keep the bed nice and dry and cozy, just like it is right now.",
+    "line4" : "I'm so proud of you for being a Hero.",
+    "line5" : "Sweet dreams... I'll see you in the morning.",
+    "stop" : "Stop",
+    "record" : "Record",
+    "preview" : "Play Preview",
+    "save" : "Save"
+  },
+
+  "coach" : {
+    "N01" : "Oopsie learned a lot last night.",
+    "N02" : "One Oopsie moment last night. Another night of learning!",
+    "N03" : "Oopsie noticed your Oopsie moment was later in the night. Keep going, Hero!",
+    "N04" : "One Oopsie moment last night, fewer than before! Oopsie keeps learning.",
+    "N05" : "Oopsie noticed your Oopsie moment was later in the night. Keep going, Hero!",
+    "N06" : "A dry night! Great job doing your Hero routine!",
+    "N07" : "Oopsie learned a lot last night.",
+    "N08" : "An Oopsie moment again. Your body and Oopsie are learning. Tonight is a new Hero Mission!",
+    "N09" : "One Oopsie moment last night, no problem! You are doing great with your Hero routine.",
+    "N10" : "Two dry nights in a row! Keep doing the same Hero routine tonight.",
+    "N11" : "{dry_streak} dry nights in a row. Keep your Hero routine going!",
+    "N12" : "One whole week of dry nights! Keep your Hero routine going, Oopsie is looking out for you.",
+    "N13" : "{dry_streak} dry nights. Keep up your Hero routine!",
+    "N14" : "14 dry nights in a row, great job doing your Hero routine. Your grown-up can check the next Hero step.",
+    "N15" : "Less Oopsie moments last night. That's an encouraging change!",
+    "N16" : "Oopsie noticed your Oopsie moment was later in the night. Keep going, Hero!",
+    "N17" : "Less Oopsie moments last night, and later during the night! You got this, Hero!",
+    "N18" : "More Oopsie moments last night. No problem, your body and Oopsie are learning!",
+    "N19" : "Your Oopsie moment came earlier last night. No problem, your body and Oopsie are learning!",
+    "N20" : "More Oopsie moments last night. No problem, your body and Oopsie are learning!",
+    "N21" : "Oopsie stayed quiet all night! Keep doing your Hero routine just like you practised.",
+    "N22" : "Every night can be different. Keep up your Hero routine!",
+    "N23" : "Hero training takes practice. Stick to your Hero routine!",
+    "N24" : "Keep your Hero routine tonight. Your grown-up has an extra Oopsie check-in."
+  }
 }

@@ -61,11 +61,11 @@
   "OnboardingScreen" : { 
     "Hi!" : "Merhaba!",
     "How old are you?": "Kaç yaşındasın?",
-    "To start using Oopsie Heroes, we first need your email address." : "Oopsie Heroes'u kullanmaya başlamak için önce e-posta adresinize ihtiyacımız var." ,
+    "To start using Oopsie Heroes, we first need your email address or phone number." : "Oopsie Heroes'u kullanmaya başlamak için önce e-posta adresinize veya telefon numaranıza ihtiyacımız var.",
 
     "I agree to the" : "Kabul ediyorum",
     "Privacy Policy" : "Gizlilik Politikası",
-    "Email" : "E-posta",
+    "Email or phone number" : "E-posta veya telefon",
     "Pick your hero!" : "Kahramanını seç!",
     "Next" : "Sonraki",
     "Let’s go!" : "Hadi gidelim !",

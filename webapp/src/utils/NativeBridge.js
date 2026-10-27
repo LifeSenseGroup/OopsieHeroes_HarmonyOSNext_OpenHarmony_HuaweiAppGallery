@@ -1,6 +1,8 @@
 //document.body.style.backgroundColor = 'red';
 import {store_alarm, txtSndfilename, txtVibrate, store_nativeSystemType } from '../stores.js'
-import {set} from 'svelte/store'
+import { get } from 'svelte/store'
+import { _ } from 'svelte-i18n'
+import { shouldSuppressMoistureAlarm } from './moistureAlarmSuppress'
 
 let store_alarmValue;
 let store_nativeSystemTypeValue;
@@ -32,17 +34,18 @@ store_nativeSystemType.subscribe(value => {
 
 export function setSndFile(txtSndFile)
 {
-    if (TEST) console.log("setSndFile"+txtSndfilenameValue)
-    if (store_nativeSystemTypeValue=="ios")  window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"SETSNDFILE"+txtSndfilenameValue});
+    const file = txtSndFile || txtSndfilenameValue;
+    if (TEST) console.log("setSndFile"+file)
+    if (store_nativeSystemTypeValue=="ios")  window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"SETSNDFILE"+file});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
             type: "action",
             text: "SETSNDFILE",
-            value: txtSndfilenameValue
+            value: file
           };
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
     }
 }
 
@@ -50,7 +53,7 @@ export function setSndFile(txtSndFile)
 export function setVibrate(txtVibrate)
 {
     if (TEST) console.log("setVibrate"+txtVibrateVol)
-    if (store_nativeSystemTypeValue=="ios")  window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"SETVIBRATE"+txtVibrateVol});
+    if (store_nativeSystemTypeValue=="ios")  window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"SETVIBRATE"+txtVibrateVol});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
@@ -60,7 +63,7 @@ export function setVibrate(txtVibrate)
           };
 
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
     }
 }
 
@@ -69,7 +72,7 @@ export function setVibrate(txtVibrate)
 export function setSound1()
 {
     if (TEST) console.log("setsound1")
-    if (store_nativeSystemTypeValue=="ios")  window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"SND1"});
+    if (store_nativeSystemTypeValue=="ios")  window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"SND1"});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
@@ -78,7 +81,7 @@ export function setSound1()
             value: 1
           };
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
     }
     txtSndfilename.set("alarmsound1.mp3")
 }
@@ -86,7 +89,7 @@ export function setSound1()
 export function setSound2()
 {
     if (TEST) console.log("setsound2")
-    if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"SND2"});
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"SND2"});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
@@ -95,7 +98,7 @@ export function setSound2()
             value: 1
           };
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
     }
     txtSndfilename.set("alarmsound2.mp3")
    
@@ -104,7 +107,7 @@ export function setSound2()
 export function setSound3()
 {
     if (TEST) console.log("setsound3")
-    if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"SND3"});
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"SND3"});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
@@ -113,7 +116,7 @@ export function setSound3()
             value: 1
           };
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
     }
     txtSndfilename.set("alarmsound3.mp3")
     
@@ -122,7 +125,7 @@ export function setSound3()
 export function setSound4()
 {
     if (TEST) console.log("setsound4")
-    if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"SND4"});
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"SND4"});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
@@ -131,7 +134,7 @@ export function setSound4()
             value: 1
           };
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
     }
     txtSndfilename.set("alarmsound4.mp3")
    
@@ -140,7 +143,7 @@ export function setSound4()
 export function setSound5()
 {
     if (TEST) console.log("setsound5")
-    if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"SND5"});
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"SND5"});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
@@ -149,7 +152,7 @@ export function setSound5()
             value: 1
           };
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
     }
     txtSndfilename.set("alarmsound5.mp3")
    
@@ -158,7 +161,7 @@ export function setSound5()
 export function setSoundCustom()
 {
     if (TEST) console.log("setSoundCustom")
-    if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"SNDCUSTOM"});
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"SNDCUSTOM"});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
@@ -167,7 +170,7 @@ export function setSoundCustom()
             value: 1
           };
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
     }
     txtSndfilename.set("customSnd")
    
@@ -176,7 +179,7 @@ export function setSoundCustom()
 export function stopSound()
 {
     if (TEST) console.log("stopsound")
-    if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"SNDSTOP"});
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"SNDSTOP"});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
@@ -185,15 +188,55 @@ export function stopSound()
             value: 1
           };
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
     }
     
+}
+
+/**
+ * Play the user-selected alarm (txtSndfilename) with runtime volume control.
+ * No new audio assets — native layer reuses the already configured sound file.
+ */
+export function playSelectedAlarm(options = {})
+{
+    const volume = typeof options.volume === "number" ? options.volume : 1;
+    const durationMs = options.durationMs ?? null;
+    const loop = options.loop === true;
+    const soundFile = options.soundFile || txtSndfilenameValue;
+    const staircaseQuiet = options.staircaseQuiet === true;
+    const skipSetSndFile = options.skipSetSndFile === true;
+
+    if (soundFile && !skipSetSndFile) {
+        setSndFile(soundFile);
+    }
+
+    const payload = { volume, durationMs, loop, staircaseQuiet };
+
+    if (TEST) console.log("playSelectedAlarm", payload, soundFile);
+
+    if (store_nativeSystemTypeValue=="ios") {
+        window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"PLAYALARM", value: payload});
+    }
+    if (store_nativeSystemTypeValue == "android")
+    {
+        var msg = {
+            type: "action",
+            text: "PLAYALARM",
+            value: payload
+          };
+      window.Android?.setActivities(JSON.stringify(msg))
+    }
+}
+
+export function stopSelectedAlarm()
+{
+    stopSound();
 }
 
 export function recordSound()
 {
     if (TEST) console.log("recordSound")
-    if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"RECORDSND"});
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"RECORDSND"});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
@@ -202,7 +245,7 @@ export function recordSound()
             value: 1
           };
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
     }
     
 }
@@ -210,7 +253,7 @@ export function recordSound()
 export function stopRecordSound()
 {
     if (TEST) console.log("stopRecordSound")
-    if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"STOPRECORDSND"});
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"STOPRECORDSND"});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
@@ -219,14 +262,74 @@ export function stopRecordSound()
             value: 1
           };
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
+    }
+}
+
+export function recordHeroNudgeSound(fileName = "hero_nudge_voice.wav")
+{
+    if (TEST) console.log("recordHeroNudgeSound")
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"RECORDHERO", value:fileName});
+    if (store_nativeSystemTypeValue == "android")
+    {
+        var msg = {
+            type: "action",
+            text: "RECORDHERO",
+            value: fileName
+          };
+      window.Android?.setActivities(JSON.stringify(msg))
+    }
+}
+
+export function stopRecordHeroNudgeSound()
+{
+    if (TEST) console.log("stopRecordHeroNudgeSound")
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"STOPRECORDHERO"});
+    if (store_nativeSystemTypeValue == "android")
+    {
+        var msg = {
+            type: "action",
+            text: "STOPRECORDHERO",
+            value: 1
+          };
+      window.Android?.setActivities(JSON.stringify(msg))
+    }
+}
+
+export function playHeroNudgeSound(volume = 0.33)
+{
+    if (TEST) console.log("playHeroNudgeSound")
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"PLAYHERO", value: volume});
+    if (store_nativeSystemTypeValue == "android")
+    {
+        var msg = {
+            type: "action",
+            text: "PLAYHERO",
+            value: volume
+          };
+      window.Android?.setActivities(JSON.stringify(msg))
+    }
+}
+
+export function stopHeroNudgeSound()
+{
+    if (TEST) console.log("stopHeroNudgeSound")
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"STOPHERO"});
+    if (store_nativeSystemTypeValue == "android")
+    {
+        var msg = {
+            type: "action",
+            text: "STOPHERO",
+            value: 1
+          };
+      window.Android?.setActivities(JSON.stringify(msg))
     }
 }
 
 export function stopSoundDetection()
 {
     if (TEST) console.log("stopSoundDetection")
-    if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"STOP"});
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"STOP"});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
@@ -235,14 +338,14 @@ export function stopSoundDetection()
             value: 1
           };
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
     }
 }
 
 export function startSoundDetection()
 {
     if (TEST) console.log("startSoundDetection")
-    if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"START"});
+    if (store_nativeSystemTypeValue=="ios") window.webkit?.messageHandlers?.test?.postMessage({name:"test", cmd:"START"});
     if (store_nativeSystemTypeValue == "android")
     {
         var msg = {
@@ -251,7 +354,7 @@ export function startSoundDetection()
             value: 1
           };
       // Send the msg object as a JSON-formatted string.
-      Android.setActivities(JSON.stringify(msg))
+      window.Android?.setActivities(JSON.stringify(msg))
     }
 }
 
@@ -262,8 +365,12 @@ function beep() {
 //AlarmTriggered();
 function AlarmTriggered()
 {
+    if (shouldSuppressMoistureAlarm()) {
+        if (TEST) console.log('AlarmTriggered ignored (predictive staircase playback window)');
+        return;
+    }
     //beep(); -> this only works if user was interacting with screen
-    window.alert("alarm")
+    window.alert(get(_)("HomeScreen.Alarm"))
     store_alarm.set(1);  
 }
 window.AlarmTriggered = AlarmTriggered;

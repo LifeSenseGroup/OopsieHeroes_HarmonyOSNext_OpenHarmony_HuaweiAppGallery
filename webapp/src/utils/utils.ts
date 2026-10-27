@@ -102,11 +102,12 @@ export async function getDryNights(){
     var measuringNights = await getMeasuredNights();
     var leaksNights = await getWetNights();
 
-    // Extract the dates from leaksNights
-    var leaksDates = leaksNights.map(item => item.date.toDateString());
+    // Same custom-night key as getMeasuredNights / getWetNights (leak after midnight ≠ start calendar day).
+    var leaksDates = leaksNights.map((item) => getCustomDate(item.date));
 
-    // Filter out items from measuringNights that have dates not present in leaksDates
-    var filteredNights = measuringNights.filter(item => !leaksDates.includes(item.date.toDateString()));
+    var filteredNights = measuringNights.filter(
+      (item) => !leaksDates.includes(getCustomDate(item.date))
+    );
 
     // filteredNights now contains items from measuringNights with dates not present in leaksDates
  
@@ -245,19 +246,15 @@ export function parseLeaksIntoItems(leaks:EventOopsie[],month:number)
     return items
 }
 
-// Function to validate email format
+// Email, or a phone number of any length. A leading + is allowed for a country code.
 export function validateEmail(userEmail: string) {
+    const value = (userEmail ?? "").trim();
+    if (!value) return false;
 
-    var emailOK = false;
-
-    // Regular expression for validating email addresses
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  
-    if (emailRegex.test(userEmail)) {
-      // Email is valid
-      emailOK = true;  
-    }
-    return emailOK;
+    if (emailRegex.test(value)) return true;
+
+    return /^\+?\d+$/.test(value);
   }
 
 

@@ -75,7 +75,7 @@ export default {
 
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
-		livereload('dist'),
+		!production && livereload('dist'),
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
@@ -83,12 +83,6 @@ export default {
 		  copy({
 			targets: [
 				{ src: 'public/index.html', dest: 'dist' },
-				{ src: 'public/build/*', dest: 'dist/build' },
-				// copy to public/build the images also so npm run dev will find the images also
-				{ src: 'src/images/*', dest: 'public/build/images' },
-				{ src: 'src/images/*', dest: 'dist/build/images' },
-				
-				// You can add more copy targets here
 				],
 			})
 	],

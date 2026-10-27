@@ -67,7 +67,7 @@ svg { display: inline-block; }
     <span class="marges">
         {#if modeI === 1}
 	
-        <img src={light_icon} alt="Light Icon" class="m2"  />
+        <img src={light_icon} alt={$_("a11y.light")} class="m2"  />
         {$_("HomeScreen.Wake up")}
         {:else}
             {#if modeI === 4}

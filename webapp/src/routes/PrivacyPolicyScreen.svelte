@@ -4,7 +4,10 @@
   import { onMount, onDestroy } from "svelte";
   import {push, pop} from 'svelte-spa-router';
   import {store_smallOrLargeImageTxt} from '../stores';
-  import SimplifiedChinesePrivacyPolicy from './SimplifiedChinesePrivacyPolicy.svelte';
+  import PrivacyPolicyZhCN from './PrivacyPolicyZhCN.svelte';
+  import { isChineseLocale } from '../utils/locale';
+
+  $: showSimplifiedChinese = isChineseLocale($locale);
   
   var myScreenOrientation = window.screen.orientation;
  
@@ -66,38 +69,35 @@
   justify-content: center;
   width: 56px;
   height: 56px;
-  margin-top: max(12px, env(safe-area-inset-top));
-  margin-left: max(16px, env(safe-area-inset-left));
-  padding: 0;
+  padding: 8px;
   border: 0;
-  border-radius: 50%;
   background: transparent;
   cursor: pointer;
-  touch-action: manipulation;
 }
 
-.back-button img {
-  width: 30px;
-  height: 30px;
-  filter: brightness(0);
+.back-arrow {
+  display: block;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
 
 </style>
 
-{#if $locale === 'zh-CN'}
-  <SimplifiedChinesePrivacyPolicy />
-{:else}
 <div id="scrollable-content">
   <div class="Arrow center">
-    <button class="back-button" type="button" aria-label="Go back" on:click={() => pop()}>
-    <img src="build/images/Arrow_icon.svg" alt="" aria-hidden="true">
+    <button class="back-button" on:click={() => pop()} aria-label={$_("a11y.back")}>
+    <img class="back-arrow" src="build/images/Arrow_icon.svg" alt={$_("a11y.back")}>
     </button>  
   </div>
 
   <div class="Margin" style = "font-family: Arial;">
+  {#if showSimplifiedChinese}
+    <PrivacyPolicyZhCN />
+  {:else}
   <h1 class="text-with-margin navy-blue-text">PRIVACY POLICY</h1>
   <h2 class="text-with-margin">LifeSense Group Privacy Policy</h2>
-  <h3 class="text-with-margin unbold-text oblique">(Last updated 02.08.2026) </h3>
+  <h3 class="text-with-margin unbold-text oblique">(Last updated 02.07.2019) </h3>
     <h3 class="text-with-margin unbold-text">
    At LifeSense Group, we believe that wearable technology empowers people to understand and work on their health independently. We fully acknowledge the great responsibility that comes with safeguarding sensitive data, such as information about your urine loss. We are committed to achieving the highest standards of privacy and security, as well as to being transparent about how we process data.</h3>
    <h3 class="text-with-margin unbold-text"> We hope you will find this privacy policy clear, honest, and transparent. Do not hesitate to reach out to us at info@oopsieheroes.com if you have any questions.</h3>
@@ -234,16 +234,12 @@
   </h3>
 
 <h3 class="text-with-margin unbold-text"> ©2019 LifeSense Group B.V.</h3>
-
+  {/if}
 
 </div>
 
 
   </div>
-
-
-
-{/if}
 
 
 

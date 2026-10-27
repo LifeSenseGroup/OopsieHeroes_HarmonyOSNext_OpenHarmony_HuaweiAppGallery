@@ -74,10 +74,10 @@
 "OnboardingScreen" : { 
     "Hi!" : "こんにちは！",
     "How old are you?" : "年齢は？",
-    "To start using Oopsie Heroes, we first need your email address." : "まず、eメールアドレスを入力",
+    "To start using Oopsie Heroes, we first need your email address or phone number." : "まず、メールアドレスまたは電話番号を入力してください",
     "I agree to the" : "同意します",
     "Privacy Policy" : "個人情報の取り扱い",
-    "Email" : "Eメール",
+    "Email or phone number" : "メールまたは電話番号",
     "Pick your hero!" : "キャラクターを決めて！",
     "Next" : "次",
 	  "Let’s go!" : "開始",

@@ -62,10 +62,10 @@
     "OnboardingScreen" : { 
         "Hi!" : "Salut!",
         "How old are you?" : "Quel âge avez-vous ?",
-        "To start using Oopsie Heroes, we first need your email address." :    "Pour commencer à utiliser Oopsie Heroes, nous avons d'abord besoin de votre adresse e-mail.", 
+        "To start using Oopsie Heroes, we first need your email address or phone number." : "Pour commencer à utiliser Oopsie Heroes, nous avons d'abord besoin de votre adresse e-mail ou de votre numéro de téléphone.", 
         "I agree to the" : " J'accepte les conditions d'utilisation ",
         "Privacy Policy" : "Politique de confidentialité",
-        "Email" : "Email",
+        "Email or phone number" : "E-mail ou numéro de téléphone",
         "Pick your hero!" : "Choisis ton héros !",
         "Next" : "Suivant",
         "Let’s go!" : "Allons-y !",

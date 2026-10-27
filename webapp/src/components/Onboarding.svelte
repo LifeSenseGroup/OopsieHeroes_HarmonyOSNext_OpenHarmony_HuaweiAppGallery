@@ -5,66 +5,81 @@
   import { pop, push } from "svelte-spa-router";
 
   import {storeSettingsVal, storeVallocal, storeUserVal,writeUserToRemoteDB} from "../utils/dataStorage";
-  import {store_onBoardingDone,store_customer_email, store_customer_age, store_customer_sex, store_UserSavedToRemoteDB} from "../stores";
+  import {store_onBoardingDone,store_customer_email, store_customer_age, store_customer_sex, store_UserSavedToRemoteDB, store_customer_country, store_nativeSystemType} from "../stores";
   import { validateEmail } from "../utils/utils";
+  import { detectCountryCode } from "../utils/countryDetection";
   import PrivacyPolicy from '../routes/PrivacyPolicyScreen.svelte'
   export let section: number = 1; // there are 3 sessions, first the eamil then the age and then boy/girl
 
-  var contactIsValid = false;
+  var emailIsValid = false;
+  let emailValidationMessage = ""; // Initialize an empty string for email validation message
   
-  $: contactIsValid = validateContactIdentifier($store_customer_email);
+  $: emailIsValid = validateEmail($store_customer_email);
 
   onMount(() => {
     section = 1; // reset section
     //If 'Privacy policy' is clicked, then push ('#/PrivacyPolicyScreen');
   });
 
-  function next() {
-    // TODO
-    //storeSettingsVal("txtSndfilename",1)
+
+
+
+async function next() {
     if (section == 1) {
-      storeUserVal("age", 1); // if the value is not changed by the user it will not be written, so force write to DB here
-      // Email addresses must be valid emails. Phone numbers may use any
-      // formatting and length, as long as they contain a digit.
-      if (!checkContactIdentifier()) {
-        // Display an error message and do not proceed to the next section 2
+      // 1. Check if the email is valid
+      $store_customer_email = ($store_customer_email ?? "").trim();
+      if (!checkEmail()) {
+        emailValidationMessage = $_("OnboardingScreen.Invalid email address or phone number");
         return;
+      } else {
+        emailValidationMessage = "";
+
+        const detectedCountry = await detectCountryCode();
+        // Save to DB and Store
+        storeUserVal("country", detectedCountry);
+        store_customer_country.set(detectedCountry);
+        storeUserVal("os", $store_nativeSystemType);
+
+        // save the email to the database
+        storeUserVal("email", $store_customer_email);
       }
     }
 
-    if (section == 3) {
-      $store_onBoardingDone = 1;
-     // if (writeUserToRemoteDB())
-     // {
-     //   $store_UserSavedToRemoteDB = 1;
-     // }
+    if (section == 2) {
+      // save the actual age picked by the user
+      storeUserVal("age", $store_customer_age);
     }
+
+    if (section == 3) {
+      // save the hero choice (sex) to the database
+      storeUserVal("sex", $store_customer_sex);
+
+      $store_onBoardingDone = 1;
+    }
+
     section = section + 1;
   }
 
-  function validateContactIdentifier(value: string) {
-    const identifier = value.trim();
-
-    if (!identifier) return false;
-
-    // An @ sign means the user is entering an email address, so it must pass
-    // the email validation. Phone numbers are intentionally flexible.
-    return identifier.includes("@") ? validateEmail(identifier) : /\d/.test(identifier);
-  }
-
-  function checkContactIdentifier() {
-    contactIsValid = validateContactIdentifier($store_customer_email);
-    return contactIsValid;
-  }
-
-  $: $store_customer_email, checkContactIdentifier();
-
   function storeSexMale() {
     $store_customer_sex = "male";
+    storeUserVal("sex", "male");
   }
+
   function storeSexFemale() {
     $store_customer_sex = "female";
+    storeUserVal("sex", "female");
   }
+
+
+
+
+
+  function checkEmail() {
+    emailIsValid = validateEmail($store_customer_email);
+    return emailIsValid; // Return the result of email validation
+  }
+
+  $: $store_customer_email, checkEmail(); // if store_customer_email changes checkEmail is called
 
   function navigateToPrivacyPolicy() {
     push('#/PrivacyPolicyScreen');
@@ -87,16 +102,15 @@
 
         <p style = " font-family: Arial; font-size: 16px;">
           {$_(
-            "OnboardingScreen.To start using Oopsie Heroes, we first need your email address."
+            "OnboardingScreen.To start using Oopsie Heroes, we first need your email address or phone number."
           )}
         </p>
        
         <label style= "color: grey;" for="emailInput">{$_("OnboardingScreen.Email or phone number")}:</label>
         <input
-           class={contactIsValid ? "fontSize" : "grey fontSize"}
+           class={emailIsValid ? "fontSize" : "grey fontSize"}  
           type="text"
           id="emailInput"
-          inputmode="text"
           bind:value={$store_customer_email}
           style="border: none; border-bottom: 1px solid #ccc; padding: 5px; outline: none; width: 100%; height: 100%;" />
 
@@ -133,7 +147,7 @@
           style="border: none; border-bottom: 1px solid #ccc; padding: 5px; outline: none; width: 40%;"
         />
         <p id="ageError" style="color: red; display: none;">
-          Please enter your age
+          {$_("OnboardingScreen.Please enter your age")}
         </p>
         <br /> <br />
       </div>
@@ -150,7 +164,7 @@
           <button on:click={storeSexMale} style="border: none; outline: none;">
             <img
               src="build/images/boy.png"
-              alt="boy"
+              alt={$_("a11y.boy")}
               class="hero-image {$store_customer_sex === 'male'
                 ? ''
                 : 'transparent'}"
@@ -163,7 +177,7 @@
           >
             <img
               src="build/images/girl.png"
-              alt="girl"
+              alt={$_("a11y.girl")}
               class="hero-image {$store_customer_sex === 'female'
                 ? ''
                 : 'transparent'}"
@@ -179,7 +193,7 @@
 
         {#if section == 1}
         <button
-        style="font-family: Arial; background-color: {contactIsValid ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10px; padding: 10px 20px 10px 20px;   border-radius: 4vw; border: none; margin-top:10px; font-size: clamp(1rem, 4vw, 4rem);"
+        style="font-family: Arial; background-color: {emailIsValid ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10px; padding: 10px 20px 10px 20px;   border-radius: 4vw; border: none; margin-top:10px; font-size: clamp(1rem, 4vw, 4rem);"
         on:click={next}
       >
         {$_('OnboardingScreen.Let’s go!')}
@@ -188,7 +202,7 @@
 
         {#if section == 2}
         <button
-        style="font-family: Arial; background-color: {contactIsValid ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10%; width: 80px; height: 41px; border-radius: 12px; border: none; margin-top:20px;"
+        style="font-family: Arial; background-color: {emailIsValid ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10%; width: 80px; height: 41px; border-radius: 12px; border: none; margin-top:20px;"
         on:click={next}
       >
         {$_('OnboardingScreen.Next')}
@@ -200,7 +214,7 @@
 
         {#if section == 3}
         <button
-        style=" font-family: Arial; background-color: {contactIsValid ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10px; padding: 10px 20px 10px 20px;   border-radius: 4vw; border: none; margin-top:10px; font-size: clamp(1rem, 4vw, 4rem);"
+        style=" font-family: Arial; background-color: {emailIsValid ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10px; padding: 10px 20px 10px 20px;   border-radius: 4vw; border: none; margin-top:10px; font-size: clamp(1rem, 4vw, 4rem);"
         on:click={next}
       >
         {$_('OnboardingScreen.Start')}

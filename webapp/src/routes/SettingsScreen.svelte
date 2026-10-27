@@ -200,7 +200,7 @@ console.log("loading")
   <div class="Margin"></div>
   <div class="Arrow center">
     <button class="button" on:click={() => pop()}> 
-    <img  style="width:4vw" src="build/images/Arrow_icon.svg"  alt="back arrow" width=100%> 
+    <img  style="width:4vw" src="build/images/Arrow_icon.svg"  alt={$_("a11y.back")} width=100%> 
     </button>  
   </div>
 
@@ -298,12 +298,12 @@ console.log("loading")
       {/if}
      </button>
      {#if recording}
-        <img  class="iconSpace"  on:click={() => { recording= false ; stopRecordSound() }}  src="build/images/stop_recording.svg"  alt="microphone"> 
+        <img  class="iconSpace"  on:click={() => { recording= false ; stopRecordSound() }}  src="build/images/stop_recording.svg"  alt={$_("a11y.microphone")}> 
      {:else}
         <img  class="iconSpace"  on:click={() => { recording = true ;    setTimeout(() => {
           recording = false;
           console.log("Recording stopped");
-        }, 3000); recordSound(); }}  src="build/images/microphone.svg"  alt="microphone"> 
+        }, 3000); recordSound(); }}  src="build/images/microphone.svg"  alt={$_("a11y.microphone")}> 
      {/if}
 
  

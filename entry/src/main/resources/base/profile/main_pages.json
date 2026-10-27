@@ -1,5 +1,6 @@
 {
   "src": [
+    "pages/activity_oopsie_web",
     "pages/activity_splash_screen",
     "pages/activity_intro",
     "pages/activity_questions",
