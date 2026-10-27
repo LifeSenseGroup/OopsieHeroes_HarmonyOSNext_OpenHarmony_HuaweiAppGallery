@@ -24,6 +24,7 @@ export struct BirthdayQuestion {
         end: new Date(2030, 11, 31),
         selected: this.selectedDate,
       })
+
         .lunar(false)
         .margin({ bottom: 8, top: 8 })
     }

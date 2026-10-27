@@ -49,6 +49,31 @@ export function setSndFile(txtSndFile)
     }
 }
 
+/** Close the host app when the user declines the required privacy policy. */
+export function exitApp()
+{
+    if (store_nativeSystemTypeValue === "harmonyos" && window.OopsieHarmony?.exitApp) {
+        window.OopsieHarmony.exitApp();
+        return;
+    }
+
+    window.close();
+}
+
+function playHarmonySound(fileName, durationMs = 3000, loop = true)
+{
+    if (store_nativeSystemTypeValue === "harmonyos" && window.OopsieHarmony?.playSound) {
+        window.OopsieHarmony.playSound(fileName, Number.isFinite(durationMs) ? durationMs : 0, loop === true);
+    }
+}
+
+function stopHarmonySound()
+{
+    if (store_nativeSystemTypeValue === "harmonyos" && window.OopsieHarmony?.stopSound) {
+        window.OopsieHarmony.stopSound();
+    }
+}
+
 //export function setVibrate(txtVibarteVol)
 export function setVibrate(txtVibrate)
 {
@@ -83,6 +108,7 @@ export function setSound1()
       // Send the msg object as a JSON-formatted string.
       window.Android?.setActivities(JSON.stringify(msg))
     }
+    playHarmonySound("alarmsound1.mp3");
     txtSndfilename.set("alarmsound1.mp3")
 }
 
@@ -100,6 +126,7 @@ export function setSound2()
       // Send the msg object as a JSON-formatted string.
       window.Android?.setActivities(JSON.stringify(msg))
     }
+    playHarmonySound("alarmsound2.mp3");
     txtSndfilename.set("alarmsound2.mp3")
    
 }
@@ -118,6 +145,7 @@ export function setSound3()
       // Send the msg object as a JSON-formatted string.
       window.Android?.setActivities(JSON.stringify(msg))
     }
+    playHarmonySound("alarmsound3.mp3");
     txtSndfilename.set("alarmsound3.mp3")
     
 }
@@ -136,6 +164,7 @@ export function setSound4()
       // Send the msg object as a JSON-formatted string.
       window.Android?.setActivities(JSON.stringify(msg))
     }
+    playHarmonySound("alarmsound4.mp3");
     txtSndfilename.set("alarmsound4.mp3")
    
 }
@@ -154,6 +183,7 @@ export function setSound5()
       // Send the msg object as a JSON-formatted string.
       window.Android?.setActivities(JSON.stringify(msg))
     }
+    playHarmonySound("alarmsound5.mp3");
     txtSndfilename.set("alarmsound5.mp3")
    
 }
@@ -190,6 +220,7 @@ export function stopSound()
       // Send the msg object as a JSON-formatted string.
       window.Android?.setActivities(JSON.stringify(msg))
     }
+    stopHarmonySound();
     
 }
 
@@ -226,6 +257,9 @@ export function playSelectedAlarm(options = {})
           };
       window.Android?.setActivities(JSON.stringify(msg))
     }
+    if (store_nativeSystemTypeValue === "harmonyos") {
+        playHarmonySound(soundFile, durationMs, loop);
+    }
 }
 
 export function stopSelectedAlarm()
@@ -247,6 +281,9 @@ export function recordSound()
       // Send the msg object as a JSON-formatted string.
       window.Android?.setActivities(JSON.stringify(msg))
     }
+    if (store_nativeSystemTypeValue === "harmonyos") {
+        window.OopsieHarmony?.startRecording();
+    }
     
 }
 
@@ -263,6 +300,9 @@ export function stopRecordSound()
           };
       // Send the msg object as a JSON-formatted string.
       window.Android?.setActivities(JSON.stringify(msg))
+    }
+    if (store_nativeSystemTypeValue === "harmonyos") {
+        window.OopsieHarmony?.stopRecording();
     }
 }
 
@@ -340,6 +380,9 @@ export function stopSoundDetection()
       // Send the msg object as a JSON-formatted string.
       window.Android?.setActivities(JSON.stringify(msg))
     }
+    if (store_nativeSystemTypeValue === "harmonyos") {
+        window.OopsieHarmony?.stopSoundDetection();
+    }
 }
 
 export function startSoundDetection()
@@ -356,6 +399,9 @@ export function startSoundDetection()
       // Send the msg object as a JSON-formatted string.
       window.Android?.setActivities(JSON.stringify(msg))
     }
+    if (store_nativeSystemTypeValue === "harmonyos") {
+        window.OopsieHarmony?.startSoundDetection();
+    }
 }
 
 function beep() {
@@ -370,7 +416,7 @@ function AlarmTriggered()
         return;
     }
     //beep(); -> this only works if user was interacting with screen
-    window.alert(get(_)("HomeScreen.Alarm"))
+    // The in-app alarm screen is the visible alert; avoid a blocking WebView dialog.
     store_alarm.set(1);  
 }
 window.AlarmTriggered = AlarmTriggered;

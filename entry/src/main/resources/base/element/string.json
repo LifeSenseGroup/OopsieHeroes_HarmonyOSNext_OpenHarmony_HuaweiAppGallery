@@ -1,6 +1,7 @@
 {
   "string": [
     { "name": "app_short_name", "value": "Oopsie Heroes" },
+    { "name": "microphone_permission_reason", "value": "Allow Oopsie Heroes to use the microphone?" },
     { "name": "app_full_name", "value": "Oopsie Heroes" },
     { "name": "video_source", "value": "http://lifesense-group.com/wp-content/uploads/video_source_english.txt" },
     { "name": "carin_wear_website", "value": "carinwear.com" },

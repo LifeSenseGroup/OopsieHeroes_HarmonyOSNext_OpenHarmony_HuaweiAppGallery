@@ -23,7 +23,7 @@
   import { getMeasuredNights, getLevel, isSmallScreen, checkEventsAre_X_minApart  } from "../utils/utils";
   import { resolveHeroCoachMessage } from "../utils/bedtimeCoach";
   import { TEST_createSomeEventsThisMonthAndStoreInLocalDB } from "../utils/tests";
-  import { stopSound,startSoundDetection,stopSoundDetection, playSelectedAlarm } from "../utils/NativeBridge";
+  import { stopSound,startSoundDetection,stopSoundDetection, playSelectedAlarm, exitApp } from "../utils/NativeBridge";
   import { push } from "svelte-spa-router";
   import { RealmStoreUserIfNeeded, RealmStoreEvents  } from "../utils/accesRealm";
   import Trustpilot from '../components/Trustpilot.svelte';
@@ -40,6 +40,33 @@
   let syncTimer;
   /** Re-check staircase phase times (manual clock changes don't fire setTimeout early). */
   let staircaseTicker: ReturnType<typeof setInterval> | null = null;
+  let showPrivacyConsent = false;
+  const privacyConsentKey = "oopsiePrivacyPolicyAccepted";
+
+  function continueToOnboardingIfNeeded() {
+    if ($store_onBoardingDone == 1) return;
+
+    if (localStorage.getItem(privacyConsentKey) === "true") {
+      push("#/OnboardingScreen");
+      return;
+    }
+
+    showPrivacyConsent = true;
+  }
+
+  function agreeToPrivacyPolicy() {
+    localStorage.setItem(privacyConsentKey, "true");
+    showPrivacyConsent = false;
+    push("#/OnboardingScreen");
+  }
+
+  function openPrivacyPolicy() {
+    push("#/PrivacyPolicyScreen");
+  }
+
+  function disagreeAndExit() {
+    exitApp();
+  }
 
   function onStaircaseClockCheck() {
     resumePredictiveStaircaseIfNeeded();
@@ -188,9 +215,7 @@ onMount(() => {
     return storeGetSettingInfo();
   })
   .then(() => {
-    if ($store_onBoardingDone != 1) {
-      push("#/OnboardingScreen");
-    }
+    continueToOnboardingIfNeeded();
 
     // Now this will actually have data from storeGetUserInfo
     if ($store_customer_sex == "female") {
@@ -220,9 +245,7 @@ onMount(() => {
   })
   .catch((error) => {
     console.error("Initialization Error:", error);
-    if ($store_onBoardingDone != 1) {
-      push("#/OnboardingScreen");
-    }
+    continueToOnboardingIfNeeded();
   });
 });
 
@@ -392,8 +415,96 @@ onMount(() => {
     <HeroSpeechBubble text={coachText} imageSrc={image_url_boyGirl} />
   </div>
 </div>
+{#if showPrivacyConsent}
+  <div class="privacy-consent-backdrop">
+    <section
+      class="privacy-consent-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Please read our Privacy Policy for Oopsie Heroes"
+    >
+      <p>
+        Please read our <a href="#/PrivacyPolicyScreen" on:click|preventDefault={openPrivacyPolicy}>Privacy Policy</a> for Oopsie Heroes
+      </p>
+      <div class="privacy-consent-actions">
+        <button class="privacy-consent-disagree" on:click={disagreeAndExit}>
+          Disagree and Exit
+        </button>
+        <button class="privacy-consent-agree" on:click={agreeToPrivacyPolicy}>
+          Agree and Continue
+        </button>
+      </div>
+    </section>
+  </div>
+{/if}
 
 <style>
+  .privacy-consent-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(8, 21, 43, 0.62);
+  }
+
+  .privacy-consent-dialog {
+    width: 100%;
+    max-width: 420px;
+    padding: 24px;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #1c2b46;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
+    font-family: Arial, sans-serif;
+  }
+
+  .privacy-consent-dialog h2 {
+    margin: 0 0 14px;
+    font-size: 22px;
+    line-height: 1.3;
+  }
+
+  .privacy-consent-dialog p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .privacy-consent-dialog a {
+    color: #1769d2;
+    text-decoration: underline;
+  }
+
+  .privacy-consent-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .privacy-consent-actions button {
+    min-height: 48px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .privacy-consent-disagree {
+    background: #edf0f5;
+    color: #26354f;
+  }
+
+  .privacy-consent-agree {
+    background: #1769d2;
+    color: #ffffff;
+  }
+
   /* grid.layoutit.com?id=aTEqNdq */
   .bg {
     /* background-image: url({bg_bg_image_url}); done hardcoded in the html*/
