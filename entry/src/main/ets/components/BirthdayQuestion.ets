@@ -7,7 +7,7 @@ export struct BirthdayQuestion {
       // 🎂 Image (ic_birthday)
       Image($r('app.media.ic_birthday'))
         .width('50%')
-        .aspectRatio(1)
+        .aspectRatio(1)""
         .margin({ top: 50 })
         .fillColor($r('app.color.lifesense_dark_purple'))
         .objectFit(ImageFit.Contain)

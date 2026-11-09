@@ -60,6 +60,21 @@ export function exitApp()
     window.close();
 }
 
+/** Request microphone access before showing the first privacy-consent dialog. */
+export async function requestMicrophonePermission()
+{
+    if (store_nativeSystemTypeValue === "harmonyos") {
+        if (!window.OopsieHarmony?.requestMicrophonePermission) {
+            console.error("Harmony microphone permission bridge is unavailable");
+            return false;
+        }
+        return await new Promise((resolve) => {
+            window.OopsieHarmony.requestMicrophonePermission((granted) => resolve(granted === true));
+        });
+    }
+    return true;
+}
+
 function playHarmonySound(fileName, durationMs = 3000, loop = true)
 {
     if (store_nativeSystemTypeValue === "harmonyos" && window.OopsieHarmony?.playSound) {

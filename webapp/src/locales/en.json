@@ -54,7 +54,13 @@
     "Take 2 minutes to share your thoughts." : "Take 2 minutes to share your thoughts.",
     "Wake up" : "Wake up",
     "Yes" : "Yes",
-	 "Alarm" : "Alarm"
+	 "Alarm" : "Alarm",
+    "privacyConsentLabel": "Please read the Oopsie Heroes Privacy Policy",
+    "privacyConsentStart": "Please read the Oopsie Heroes ",
+    "Privacy Policy": "Privacy Policy",
+    "privacyConsentEnd": ".",
+    "Disagree and Exit": "Disagree and Exit",
+    "Agree and Continue": "Agree and Continue"
 
   },
 

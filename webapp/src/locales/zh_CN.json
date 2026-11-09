@@ -53,7 +53,13 @@
     "Take 2 minutes to share your thoughts.": "花两分钟分享您的想法。",
     "Wake up": "起床",
     "Yes": "是",
-    "Alarm": "闹钟"
+    "Alarm": "闹钟",
+    "privacyConsentLabel": "请阅读 Oopsie Heroes 隐私政策",
+    "privacyConsentStart": "请阅读 Oopsie Heroes 的",
+    "Privacy Policy": "隐私政策",
+    "privacyConsentEnd": "。",
+    "Disagree and Exit": "不同意并退出",
+    "Agree and Continue": "同意并继续"
   },
   "OnboardingScreen": {
     "Hi!": "嗨！",

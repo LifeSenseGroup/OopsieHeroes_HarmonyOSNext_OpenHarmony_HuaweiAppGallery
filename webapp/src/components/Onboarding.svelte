@@ -12,9 +12,11 @@
   export let section: number = 1; // there are 3 sessions, first the eamil then the age and then boy/girl
 
   var emailIsValid = false;
+  let privacyPolicyAccepted = false;
   let emailValidationMessage = ""; // Initialize an empty string for email validation message
   
   $: emailIsValid = validateEmail($store_customer_email);
+  $: canStartOnboarding = emailIsValid && privacyPolicyAccepted;
 
   onMount(() => {
     section = 1; // reset section
@@ -26,6 +28,8 @@
 
 async function next() {
     if (section == 1) {
+      if (!privacyPolicyAccepted) return;
+
       // 1. Check if the email is valid
       $store_customer_email = ($store_customer_email ?? "").trim();
       if (!checkEmail()) {
@@ -114,16 +118,12 @@ async function next() {
           bind:value={$store_customer_email}
           style="border: none; border-bottom: 1px solid #ccc; padding: 5px; outline: none; width: 100%; height: 100%;" />
 
-          <div style="display: flex; align-items: center;">
-            <p style="margin-right: 5px; font-family: Arial; font-size: 13.8px;">
-              {$_("OnboardingScreen.I agree to the")}:
-            </p>
-            <span style="font-family: Arial; color: blue;">
-              <a href="#/PrivacyPolicyScreen" on:click={navigateToPrivacyPolicy} style="color: blue; text-decoration: none;">
-                {$_("OnboardingScreen.Privacy Policy")}
-              </a>
-              </span>
-
+          <div class="privacy-checkbox-row">
+            <input id="privacyPolicyAccepted" type="checkbox" bind:checked={privacyPolicyAccepted} />
+            <label for="privacyPolicyAccepted">{$_("OnboardingScreen.I agree to the")}</label>
+            <a href="#/PrivacyPolicyScreen" on:click={navigateToPrivacyPolicy}>
+              {$_("OnboardingScreen.Privacy Policy")}
+            </a>
           </div>
       </div>
     {/if}
@@ -193,7 +193,8 @@ async function next() {
 
         {#if section == 1}
         <button
-        style="font-family: Arial; background-color: {emailIsValid ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10px; padding: 10px 20px 10px 20px;   border-radius: 4vw; border: none; margin-top:10px; font-size: clamp(1rem, 4vw, 4rem);"
+        disabled={!canStartOnboarding}
+        style="font-family: Arial; background-color: {canStartOnboarding ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10px; padding: 10px 20px 10px 20px; border-radius: 4vw; border: none; margin-top:10px; font-size: clamp(1rem, 4vw, 4rem);"
         on:click={next}
       >
         {$_('OnboardingScreen.Let’s go!')}
@@ -241,6 +242,28 @@ async function next() {
  
 .grey {
     color: grey;
+  }
+
+  .privacy-checkbox-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+
+  .privacy-checkbox-row input {
+    width: 18px;
+    height: 18px;
+    margin: 0 4px 0 0;
+    accent-color: #007BFF;
+  }
+
+  .privacy-checkbox-row a {
+    color: blue;
+    text-decoration: none;
   }
 
   .dialog-content {

@@ -1,6 +1,6 @@
 import { webview } from '@kit.ArkWeb';
 import { hilog } from '@kit.PerformanceAnalysisKit';
-import { abilityAccessCtrl } from '@kit.AbilityKit';
+import { abilityAccessCtrl, bundleManager } from '@kit.AbilityKit';
 import { fileIo } from '@kit.CoreFileKit';
 import { audio } from '@kit.AudioKit';
 import media from '@ohos.multimedia.media';
@@ -32,7 +32,7 @@ struct ActivityOopsieWeb {
         .javaScriptProxy({
           object: this,
           name: 'OopsieHarmony',
-          methodList: ['exitApp', 'playSound', 'stopSound', 'startRecording', 'stopRecording', 'startSoundDetection', 'stopSoundDetection'],
+          methodList: ['requestMicrophonePermission'],
           controller: this.controller,
           asyncMethodList: ['exitApp', 'playSound', 'stopSound', 'startRecording', 'stopRecording', 'startSoundDetection', 'stopSoundDetection']
         })
@@ -69,6 +69,49 @@ struct ActivityOopsieWeb {
       return Promise.resolve();
     }
     return (hostContext as common.UIAbilityContext).terminateSelf();
+  }
+
+  requestMicrophonePermission(onResult: (granted: boolean) => void): void {
+    const hostContext = this.getUIContext().getHostContext() as common.UIAbilityContext | undefined;
+    if (!hostContext) {
+      onResult(false);
+      return;
+    }
+    this.requestMicrophonePermissionResult(hostContext)
+      .then((granted: boolean) => onResult(granted))
+      .catch((error: Error) => {
+        hilog.error(DOMAIN, 'testTag', 'Microphone permission request failed: %{public}s', `${error}`);
+        onResult(false);
+      });
+  }
+
+  private async requestMicrophonePermissionResult(hostContext: common.UIAbilityContext): Promise<boolean> {
+    const permissionName = 'ohos.permission.MICROPHONE';
+    const atManager = abilityAccessCtrl.createAtManager();
+    try {
+      let status = await this.getMicrophonePermissionStatus(atManager, permissionName);
+      if (status === abilityAccessCtrl.GrantStatus.PERMISSION_GRANTED) {
+        hilog.info(DOMAIN, 'testTag', 'Microphone permission is already granted');
+        return true;
+      }
+
+      await atManager.requestPermissionsFromUser(hostContext, [permissionName]);
+      status = await this.getMicrophonePermissionStatus(atManager, permissionName);
+      const granted = status === abilityAccessCtrl.GrantStatus.PERMISSION_GRANTED;
+      if (!granted) {
+        hilog.warn(DOMAIN, 'testTag', 'Microphone permission was not granted');
+      }
+      return granted;
+    } catch (error) {
+      hilog.error(DOMAIN, 'testTag', 'Microphone permission request failed: %{public}s', `${error}`);
+      return false;
+    }
+  }
+
+  private async getMicrophonePermissionStatus(atManager: abilityAccessCtrl.AtManager,
+    permissionName: 'ohos.permission.MICROPHONE'): Promise<abilityAccessCtrl.GrantStatus> {
+    const appInfo = bundleManager.getBundleInfoForSelfSync(bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION);
+    return await atManager.checkAccessToken(appInfo.appInfo.accessTokenId, permissionName);
   }
 
   async playSound(fileName: string, durationMs: number, loop: boolean): Promise<void> {
