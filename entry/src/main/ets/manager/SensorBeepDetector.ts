@@ -2,49 +2,71 @@
 export class SensorBeepDetector {
   private readonly sampleRate: number = 44100;
   private readonly frameSamples: number = 2048;
-  private readonly firstBeepFrames: number = 22;
-  private readonly secondBeepFrames: number = 22;
+  // Android analyzes a 2048-sample window every 1024 samples. Keep the same
+  // overlap so a tone boundary is not skipped when it falls between windows.
+  private readonly hopSamples: number = 1024;
+  // The overlapped frames advance by 1024 samples, so one second is ~44 frames.
+  private readonly firstBeepFrames: number = Math.ceil(44100 / 1024);
+  private readonly secondBeepFrames: number = Math.ceil(44100 / 1024);
+  private readonly firstBin: number = Math.floor(3800 * 2048 / 44100);
+  private readonly lastBin: number = Math.floor(4300 * 2048 / 44100);
+  private readonly coefficients: number[] = [];
+  private readonly window: number[] = [];
+  private pending: Uint8Array = new Uint8Array(0);
   private patternState: number = 0;
   private toneFrames: number = 0;
   private elapsedFrames: number = 0;
   private sawFirstSilence: boolean = false;
 
+  constructor() {
+    for (let bin = this.firstBin; bin <= this.lastBin; bin++) {
+      this.coefficients.push(2 * Math.cos(2 * Math.PI * bin / this.frameSamples));
+    }
+    for (let sample = 0; sample < this.frameSamples; sample++) {
+      this.window.push(0.5 - 0.5 * Math.cos(2 * Math.PI * sample / (this.frameSamples - 1)));
+    }
+  }
+
   public process(buffer: ArrayBuffer): boolean {
     const frameBytes = this.frameSamples * 2;
-    if (buffer.byteLength < frameBytes) {
-      return false;
-    }
-
-    const view = new DataView(buffer);
-    for (let offset = 0; offset + frameBytes <= buffer.byteLength; offset += frameBytes) {
+    const hopBytes = this.hopSamples * 2;
+    const chunk = new Uint8Array(buffer);
+    const combined = new Uint8Array(this.pending.length + chunk.length);
+    combined.set(this.pending);
+    combined.set(chunk, this.pending.length);
+    const view = new DataView(combined.buffer);
+    let offset = 0;
+    while (offset + frameBytes <= combined.length) {
       if (this.advancePattern(this.hasFourKilohertzTone(view, offset))) {
         this.reset();
+        this.pending = new Uint8Array(0);
         return true;
       }
+      offset += hopBytes;
     }
+    // Keep the overlap tail and any short final read for the next call.
+    this.pending = combined.slice(offset);
     return false;
   }
 
   private hasFourKilohertzTone(view: DataView, byteOffset: number): boolean {
     const bins: number[] = [];
-    const firstBin = Math.floor(3800 * this.frameSamples / this.sampleRate);
-    const lastBin = Math.floor(4300 * this.frameSamples / this.sampleRate);
-    for (let bin = firstBin; bin <= lastBin; bin++) {
-      const omega = 2 * Math.PI * bin / this.frameSamples;
-      const coefficient = 2 * Math.cos(omega);
+    for (let index = 0; index < this.coefficients.length; index++) {
+      const coefficient = this.coefficients[index];
       let previous = 0;
       let previousPrevious = 0;
       for (let sample = 0; sample < this.frameSamples; sample++) {
         const raw = view.getInt16(byteOffset + sample * 2, true);
-        const window = 0.5 - 0.5 * Math.cos(2 * Math.PI * sample / (this.frameSamples - 1));
-        const current = raw * window + coefficient * previous - previousPrevious;
+        const current = raw * this.window[sample] + coefficient * previous - previousPrevious;
         previousPrevious = previous;
         previous = current;
       }
       bins.push(previous * previous + previousPrevious * previousPrevious - coefficient * previous * previousPrevious);
     }
 
-    const targetBin = Math.round(4000 * this.frameSamples / this.sampleRate) - firstBin;
+    // Match Android's bin4khz calculation (floor(4096 / binWidth)). The
+    // sensor's nominal "4 kHz" tone is analyzed around 4096 Hz there.
+    const targetBin = Math.floor(4096 * this.frameSamples / this.sampleRate) - this.firstBin;
     for (let center = Math.max(1, targetBin - 1); center <= Math.min(bins.length - 2, targetBin + 1); center++) {
       const peakEnergy = bins[center - 1] + bins[center] + bins[center + 1];
       let surroundingEnergy = 0;
@@ -88,7 +110,7 @@ export class SensorBeepDetector {
           this.toneFrames = 0;
         }
       }
-      if (this.elapsedFrames > 120) {
+      if (this.elapsedFrames > Math.ceil(4 * this.sampleRate / this.hopSamples)) {
         this.reset();
       }
       return false;
@@ -97,7 +119,7 @@ export class SensorBeepDetector {
     if (!hasTone) {
       return true;
     }
-    if (this.elapsedFrames > 120) {
+    if (this.elapsedFrames > Math.ceil(5 * this.sampleRate / this.hopSamples)) {
       this.reset();
     }
     return false;

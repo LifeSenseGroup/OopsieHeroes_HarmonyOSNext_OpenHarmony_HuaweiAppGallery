@@ -261,7 +261,10 @@ struct ActivityOopsieWeb {
           encodingType: audio.AudioEncodingType.ENCODING_TYPE_RAW
         },
         capturerInfo: {
-          source: audio.SourceType.SOURCE_TYPE_MIC,
+          // Keep the sensor's 4 kHz tone intact for analysis. The generic MIC
+          // source may apply voice processing; Android uses VOICE_RECOGNITION
+          // with AGC disabled for this same detector.
+          source: audio.SourceType.SOURCE_TYPE_UNPROCESSED,
           capturerFlags: 1
         }
       });
@@ -309,8 +312,14 @@ struct ActivityOopsieWeb {
         const buffer = await capturer.read(bufferSize, true);
         if (detector.process(buffer)) {
           hilog.info(DOMAIN, 'testTag', 'Sensor 4 kHz beep pattern detected');
+          // Queue the web alarm immediately, as the Android bridge does. Stopping
+          // the capturer first can delay the alarm while HarmonyOS tears down audio.
+          const alarmTrigger = this.controller.runJavaScript('window.AlarmTriggered && window.AlarmTriggered()')
+            .catch((error: Error) => {
+              hilog.error(DOMAIN, 'testTag', 'Could not deliver sensor alarm to WebView: %{public}s', `${error}`);
+            });
           await this.stopSoundDetection();
-          await this.controller.runJavaScript('window.AlarmTriggered && window.AlarmTriggered()');
+          await alarmTrigger;
           return;
         }
       }
