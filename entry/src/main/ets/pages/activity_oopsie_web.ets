@@ -1,9 +1,11 @@
 import { webview } from '@kit.ArkWeb';
 import { hilog } from '@kit.PerformanceAnalysisKit';
-import { abilityAccessCtrl, bundleManager } from '@kit.AbilityKit';
+import { abilityAccessCtrl, bundleManager, wantAgent, WantAgent } from '@kit.AbilityKit';
 import { fileIo } from '@kit.CoreFileKit';
 import { audio } from '@kit.AudioKit';
+import { backgroundTaskManager } from '@kit.BackgroundTasksKit';
 import media from '@ohos.multimedia.media';
+import promptAction from '@ohos.promptAction';
 import common from '@ohos.app.ability.common';
 import { SensorBeepDetector } from '../manager/SensorBeepDetector';
 
@@ -22,6 +24,8 @@ struct ActivityOopsieWeb {
   private recordingStopTimer?: number;
   private soundCapturer?: audio.AudioCapturer;
   private soundDetectionGeneration: number = 0;
+  private soundAlarmTriggered: boolean = false;
+  private backgroundRecordingTaskActive: boolean = false;
 
   build() {
     Column() {
@@ -148,6 +152,12 @@ struct ActivityOopsieWeb {
     player.fdSrc = { fd, offset, length };
     try {
       await initialized;
+      // Treat this as an alarm stream so it uses the system alarm volume and focus
+      // policy, including when the app is in the background.
+      player.audioRendererInfo = {
+        usage: audio.StreamUsage.STREAM_USAGE_ALARM,
+        rendererFlags: 0
+      };
       await player.prepare();
       player.loop = loop;
       await player.play();
@@ -287,9 +297,13 @@ struct ActivityOopsieWeb {
       return;
     }
     try {
-      const permission = await abilityAccessCtrl.createAtManager()
-        .requestPermissionsFromUser(hostContext, ['ohos.permission.MICROPHONE']);
-      if (permission.authResults.length === 0 || permission.authResults[0] !== 0) {
+      const atManager = abilityAccessCtrl.createAtManager();
+      let permissionStatus = await this.getMicrophonePermissionStatus(atManager, 'ohos.permission.MICROPHONE');
+      if (permissionStatus !== abilityAccessCtrl.GrantStatus.PERMISSION_GRANTED) {
+        await atManager.requestPermissionsFromUser(hostContext, ['ohos.permission.MICROPHONE']);
+        permissionStatus = await this.getMicrophonePermissionStatus(atManager, 'ohos.permission.MICROPHONE');
+      }
+      if (permissionStatus !== abilityAccessCtrl.GrantStatus.PERMISSION_GRANTED) {
         hilog.warn(DOMAIN, 'testTag', 'Microphone permission was not granted; sensor sound detection is off');
         return;
       }
@@ -317,10 +331,28 @@ struct ActivityOopsieWeb {
         await capturer.release();
         return;
       }
+
+      // Start and confirm the OS continuous recording task while the app is still
+      // foregrounded. HarmonyOS can suspend the capturer when the app is backgrounded
+      // unless this task is active.
+      if (!await this.startBackgroundRecordingTask(hostContext)) {
+        await capturer.stop();
+        await capturer.release();
+        promptAction.showToast({ message: 'Background sensor detection could not start. Keep the app open.' });
+        return;
+      }
+      if (requestGeneration !== this.soundDetectionGeneration) {
+        await capturer.stop();
+        await capturer.release();
+        await this.stopBackgroundRecordingTask(hostContext);
+        return;
+      }
+
       this.soundCapturer = capturer;
+      this.soundAlarmTriggered = false;
       const bufferSize = await capturer.getBufferSize();
       void this.readSensorSound(capturer, bufferSize, requestGeneration);
-      hilog.info(DOMAIN, 'testTag', 'Sensor beep detection started');
+      hilog.info(DOMAIN, 'testTag', 'Sensor beep detection and background recording task started');
     } catch (error) {
       hilog.error(DOMAIN, 'testTag', 'Could not start sensor sound detection: %{public}s', `${error}`);
       await this.stopSoundDetection();
@@ -345,6 +377,92 @@ struct ActivityOopsieWeb {
         // The capturer may already have released its resources.
       }
     }
+    this.soundAlarmTriggered = false;
+    const hostContext = this.getUIContext().getHostContext() as common.UIAbilityContext | undefined;
+    if (hostContext) {
+      await this.stopBackgroundRecordingTask(hostContext);
+    }
+  }
+
+  private async startBackgroundRecordingTask(hostContext: common.UIAbilityContext): Promise<boolean> {
+    if (this.backgroundRecordingTaskActive) {
+      return true;
+    }
+    try {
+      const wantAgentInfo: wantAgent.WantAgentInfo = {
+        wants: [
+          {
+            bundleName: 'com.oopsieheroes.app',
+            abilityName: 'EntryAbility'
+          }
+        ],
+        actionType: wantAgent.OperationType.START_ABILITY,
+        requestCode: 0,
+        actionFlags: [wantAgent.WantAgentFlags.UPDATE_PRESENT_FLAG]
+      };
+      const notificationAgent: WantAgent = await wantAgent.getWantAgent(wantAgentInfo);
+      await backgroundTaskManager.startBackgroundRunning(
+        hostContext,
+        backgroundTaskManager.BackgroundMode.AUDIO_RECORDING,
+        notificationAgent
+      );
+      this.backgroundRecordingTaskActive = true;
+      hilog.info(DOMAIN, 'testTag', 'Background audio recording task started');
+      return true;
+    } catch (error) {
+      hilog.error(DOMAIN, 'testTag', 'Could not start background audio recording task: %{public}s', `${error}`);
+      return false;
+    }
+  }
+
+  private async startBackgroundAlarmTask(hostContext: common.UIAbilityContext): Promise<void> {
+    try {
+      // Replace the recording-only task with a combined recording + playback task.
+      // The microphone capture stream stays active during this handoff.
+      if (this.backgroundRecordingTaskActive) {
+        await backgroundTaskManager.stopBackgroundRunning(hostContext);
+        this.backgroundRecordingTaskActive = false;
+      }
+      const wantAgentInfo: wantAgent.WantAgentInfo = {
+        wants: [
+          {
+            bundleName: 'com.oopsieheroes.app',
+            abilityName: 'EntryAbility'
+          }
+        ],
+        actionType: wantAgent.OperationType.START_ABILITY,
+        requestCode: 0,
+        actionFlags: [wantAgent.WantAgentFlags.UPDATE_PRESENT_FLAG]
+      };
+      const notificationAgent: WantAgent = await wantAgent.getWantAgent(wantAgentInfo);
+      await backgroundTaskManager.startBackgroundRunning(
+        hostContext,
+        ['audioRecording', 'audioPlayback'],
+        notificationAgent
+      );
+      this.backgroundRecordingTaskActive = true;
+      hilog.info(DOMAIN, 'testTag', 'Background recording and alarm playback task started');
+    } catch (error) {
+      hilog.error(DOMAIN, 'testTag', 'Could not enable background alarm playback task: %{public}s', `${error}`);
+      // Preserve sensor monitoring if the OS rejects the combined task request.
+      if (!this.backgroundRecordingTaskActive) {
+        await this.startBackgroundRecordingTask(hostContext);
+      }
+    }
+  }
+
+  private async stopBackgroundRecordingTask(hostContext: common.UIAbilityContext): Promise<void> {
+    if (!this.backgroundRecordingTaskActive) {
+      return;
+    }
+    try {
+      await backgroundTaskManager.stopBackgroundRunning(hostContext);
+      hilog.info(DOMAIN, 'testTag', 'Background audio recording task stopped');
+    } catch (error) {
+      hilog.error(DOMAIN, 'testTag', 'Could not stop background audio recording task: %{public}s', `${error}`);
+    } finally {
+      this.backgroundRecordingTaskActive = false;
+    }
   }
 
   private async readSensorSound(capturer: audio.AudioCapturer, bufferSize: number, generation: number): Promise<void> {
@@ -353,17 +471,19 @@ struct ActivityOopsieWeb {
       while (this.soundCapturer === capturer && this.soundDetectionGeneration === generation &&
         capturer.state === audio.AudioState.STATE_RUNNING) {
         const buffer = await capturer.read(bufferSize, true);
-        if (detector.process(buffer)) {
+        if (!this.soundAlarmTriggered && detector.process(buffer)) {
+          this.soundAlarmTriggered = true;
           hilog.info(DOMAIN, 'testTag', 'Sensor 4 kHz beep pattern detected');
-          // Queue the web alarm immediately, as the Android bridge does. Stopping
-          // the capturer first can delay the alarm while HarmonyOS tears down audio.
+          // Upgrade the recording task before asking the WebView to start alarm audio.
+          const hostContext = this.getUIContext().getHostContext() as common.UIAbilityContext | undefined;
+          if (hostContext) {
+            await this.startBackgroundAlarmTask(hostContext);
+          }
           const alarmTrigger = this.controller.runJavaScript('window.AlarmTriggered && window.AlarmTriggered()')
             .catch((error: Error) => {
               hilog.error(DOMAIN, 'testTag', 'Could not deliver sensor alarm to WebView: %{public}s', `${error}`);
             });
-          await this.stopSoundDetection();
           await alarmTrigger;
-          return;
         }
       }
     } catch (error) {

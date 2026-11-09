@@ -20,6 +20,10 @@
         "label": "$string:app_short_name",
         "startWindowIcon": "$media:app_icon",
         "startWindowBackground": "$color:start_window_background",
+        "backgroundModes": [
+          "audioRecording",
+          "audioPlayback"
+        ],
         "exported": true,
         "skills": [
           {
@@ -48,6 +52,9 @@
       }
     ],
     "requestPermissions": [
+      {
+        "name": "ohos.permission.KEEP_BACKGROUND_RUNNING"
+      },
       {
         "name": "ohos.permission.ACCESS_BLUETOOTH",
         "reason": "$string:app_name",
