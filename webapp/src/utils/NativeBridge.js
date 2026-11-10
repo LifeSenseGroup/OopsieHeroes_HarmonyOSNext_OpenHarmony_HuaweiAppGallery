@@ -75,10 +75,10 @@ export async function requestMicrophonePermission()
     return true;
 }
 
-function playHarmonySound(fileName, durationMs = 3000, loop = true)
+function playHarmonySound(fileName, durationMs = 3000, loop = true, volume = 1)
 {
     if (store_nativeSystemTypeValue === "harmonyos" && window.OopsieHarmony?.playSound) {
-        window.OopsieHarmony.playSound(fileName, Number.isFinite(durationMs) ? durationMs : 0, loop === true);
+        window.OopsieHarmony.playSound(fileName, Number.isFinite(durationMs) ? durationMs : 0, loop === true, volume);
     }
 }
 
@@ -273,7 +273,7 @@ export function playSelectedAlarm(options = {})
       window.Android?.setActivities(JSON.stringify(msg))
     }
     if (store_nativeSystemTypeValue === "harmonyos") {
-        playHarmonySound(soundFile, durationMs, loop);
+        playHarmonySound(soundFile, durationMs, loop, volume);
     }
 }
 

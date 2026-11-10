@@ -8,7 +8,11 @@ export enum SettingString {
   SensorAddress = 'SensorAddress',
   Email = 'Email',
   VideosWatched = 'Videos_watched',
-  LastTimeDidSensorSync = 'LastTimeDidSensorSync'
+  LastTimeDidSensorSync = 'LastTimeDidSensorSync',
+  PredictionCutoffMs = 'predictionHistoryCutoffMs',
+  PredictionActivationTargetMs = 'predictionAlarmActivationTargetMs',
+  PredictionStaircaseSchedule = 'predictiveStaircaseSchedule',
+  PredictionDismissedSignature = 'dismissedCalendarPredictionSignature'
 }
 
 

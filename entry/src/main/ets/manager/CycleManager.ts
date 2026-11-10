@@ -1,6 +1,7 @@
 import { DBManager } from './DBManager';
 import { SensorManager } from './SensorManager';
 import { SettingBoolean, SettingInt, SettingsManager } from './SettingsManager';
+import { PredictionSession } from '../prediction/PredictionSession';
 
 export class CycleManager {
   private static instance: CycleManager;
@@ -32,13 +33,15 @@ export class CycleManager {
     const lastCycle = await db.getLastCycle();
     const newNumber = (lastCycle?.number || 0) + 1;
 
-    await db.createCycle(newNumber, new Date());
-    await db.createDBEntry('MeasuringDayStarted', newNumber, new Date(), "");
+    const started = new Date();
+    await db.createCycle(newNumber, started);
+    await db.createDBEntry('MeasuringDayStarted', newNumber, started, "");
     await SettingsManager.getInstance().setInt(SettingInt.LastCycleNumber, newNumber);
     await SettingsManager.getInstance().setInt(SettingInt.ExpectedEvent, 1);
     await SettingsManager.getInstance().setBoolean(SettingBoolean.HasEverMeasured, true);
 
     SensorManager.getInstance().sendStartCommand();
+    await PredictionSession.onGoToSleep(started);
 
     console.info(`CycleManager: Started Cycle ${newNumber}`);
   }
@@ -47,8 +50,10 @@ export class CycleManager {
     await SensorManager.getInstance().sendStopCommand();
     const lastCycle = await DBManager.getInstance().getLastCycle();
     if (lastCycle && !lastCycle.isFinished) {
+      const ended = new Date();
       await DBManager.getInstance().finishCycle(lastCycle.number);
-      await DBManager.getInstance().createDBEntry('MeasuringDayFinished', lastCycle.number, new Date(), "");
+      await DBManager.getInstance().createDBEntry('MeasuringDayFinished', lastCycle.number, ended, "");
+      await PredictionSession.onWake(ended);
     }
   }
 
@@ -65,6 +70,7 @@ export class CycleManager {
         await db.finishCycle(cycle.number);
 
         await db.createDBEntry('MeasuringDayFinished', cycle.number, new Date(endTime), "");
+        await PredictionSession.onWake(new Date(endTime));
 
         console.info(`CycleManager: Auto-finished Cycle ${cycle.number}`);
       }

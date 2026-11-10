@@ -5,6 +5,7 @@ import { SensorCommand } from '../enum/SensorCommand';
 import { DBManager, Cycle } from './DBManager';
 import { SettingBoolean, SettingInt, SettingString, SettingsManager } from './SettingsManager';
 import { SensorEvent } from '../model/SensorEvent';
+import { PredictionSession } from '../prediction/PredictionSession';
 
 export const SENSOR_EVENT_ID = 1001;
 
@@ -702,6 +703,7 @@ export class SensorManager {
 
     await DBManager.getInstance().addLeakToCycle(cycle.number, date, activity, volume);
     await DBManager.getInstance().createDBEntry('Leak', 0, date, `Activity: ${activity} - Day: ${cycle.number}`);
+    await PredictionSession.onLeak(date);
     return true;
   }
 
