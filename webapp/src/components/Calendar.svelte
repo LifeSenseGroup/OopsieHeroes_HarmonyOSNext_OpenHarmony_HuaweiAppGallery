@@ -1,6 +1,5 @@
 <script>
 	import {createEventDispatcher, onMount} from 'svelte';
-	import { _ } from 'svelte-i18n';
 
 	export var headers = [];
 	export let days = [];
@@ -34,15 +33,13 @@
 			>
 
       {#if item.title == "star"}
-      <img class="task-icon" src="build/images/star_icon.svg" alt={$_("a11y.star")}/>
+      <img class="task-icon" src="build/images/star_icon.svg" alt="star"/>
       {/if}
 
       {#if item.title == "leak"}
       <svg class="task-icon" fill="#FFFFFF" version="1.1" xmlns="http://www.w3.org/2000/svg"
 	      viewBox="0 0 100 100"
-	      xml:space="preserve"
-	      role="img"
-	      aria-label={$_("a11y.leak")}>
+	      xml:space="preserve">
         <g>
 	        <circle cx="50" cy="50" r="40" stroke="white" stroke-width="2" fill="blue" />
         </g>

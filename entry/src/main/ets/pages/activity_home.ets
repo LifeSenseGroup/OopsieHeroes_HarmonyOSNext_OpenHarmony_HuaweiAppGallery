@@ -1,6 +1,9 @@
 import router from '@ohos.router';
 import promptAction from '@ohos.promptAction';
+import common from '@ohos.app.ability.common';
 import { CycleManager } from '../manager/CycleManager';
+import { PredictionBox } from '../components/PredictionBox';
+import { PredictionSession } from '../prediction/PredictionSession';
 
 // Define interface for dialog response
 interface DialogResponse {
@@ -25,6 +28,8 @@ struct ActivityHome {
 
   // --- LIFECYCLE ---
   aboutToAppear() {
+    const host = this.getUIContext().getHostContext() as common.UIAbilityContext;
+    void PredictionSession.prepare(host);
     // 1. Check Initial State
     this.checkStatus();
 
@@ -100,6 +105,8 @@ struct ActivityHome {
       }
       .width('100%')
       .height(56)
+
+      PredictionBox()
 
       // 2. MAIN CONTENT
       Column() {

@@ -1,5 +1,6 @@
 {
     "Continue" : "继续",
+    "OnboardingScreen.Phone number": "電話號碼",
     "SettingsScreen" :  {
       "Alarm" : "警報",
       "Stop alarm" : "停止鬧鈴",
@@ -38,7 +39,6 @@
       "The progress will be available after the 2nd measuring day" : "The progress will be available after the 2nd measuring day",
       "Did you have a dry night?" : "你/妳有個乾燥舒適的夜晚嗎?",
       "Do it later" : "等會再做",
-      "Do you want first to leave a review on ThrustPilot?" : "您有任何想發表的評論嗎?",
       "Feedback sent!" : "意見已發送!",
       "Give feedback" : "提供意見",
       "Go to sleep" : "去睡覺",

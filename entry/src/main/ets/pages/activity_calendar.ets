@@ -1,7 +1,10 @@
 import router from '@ohos.router';
+import common from '@ohos.app.ability.common';
 // FIX: Correct Import Path for Cycle interface
 import { DBManager, Cycle } from '../manager/DBManager';
 import { CycleManager } from '../manager/CycleManager';
+import { PredictionBox } from '../components/PredictionBox';
+import { PredictionSession } from '../prediction/PredictionSession';
 
 // --- VISUAL CONSTANTS ---
 const COLOR_PAST = '#D1C4E9';
@@ -28,6 +31,8 @@ struct ActivityCalendar {
   private cycles: Cycle[] = [];
 
   aboutToAppear() {
+    const host = this.getUIContext().getHostContext() as common.UIAbilityContext;
+    void PredictionSession.prepare(host);
     this.loadData();
   }
 
@@ -137,6 +142,8 @@ struct ActivityCalendar {
       }
       .height(56).width('100%').padding({ left: 16, right: 16 })
       .border({ width: { bottom: 1 }, color: '#D1C4E9' })
+
+      PredictionBox()
 
       // --- MONTH NAVIGATOR ---
       Row() {

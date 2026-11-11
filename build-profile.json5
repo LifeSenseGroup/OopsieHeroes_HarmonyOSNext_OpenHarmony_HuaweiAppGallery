@@ -5,26 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "C:/Users/nikie/.ohos/config/default_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_xiRAXxpX2yqaxg3eLnov9aancSXD3pu8J8EC-M1ISQM=.cer",
+          "certpath": "C:/Users/20232832/.ohos/config/default_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_hUYQxxckXp5c5VNl9SCUXgdybSCR-NuOPIPmEHKDv5U=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001A3BD57A4448D8A462D63A0F2B493E126A6988BB65DCD342EAED182B600CEF305949B62651E5CC",
-          "profile": "C:/Users/nikie/.ohos/config/default_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_xiRAXxpX2yqaxg3eLnov9aancSXD3pu8J8EC-M1ISQM=.p7b",
+          "keyPassword": "0000001A13F49602FD813A79F42B8259E1B44CF221256219454AEF5124AF721E00A17ABDB8E10FCD67ED",
+          "profile": "C:/Users/20232832/.ohos/config/default_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_hUYQxxckXp5c5VNl9SCUXgdybSCR-NuOPIPmEHKDv5U=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:/Users/nikie/.ohos/config/default_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_xiRAXxpX2yqaxg3eLnov9aancSXD3pu8J8EC-M1ISQM=.p12",
-          "storePassword": "0000001A4D348AF76A97E3C06536AF3DB1C4F07046913BE4BDBA0407A2407AB2EDF2E83900DFF3D2703C"
-        }
-      },
-      {
-        "name": "OhharmonyNext",
-        "type": "HarmonyOS",
-        "material": {
-          "storeFile": "C:/code/app_publishing_data/Users/frenkie/Desktop/app_publishing_data/oopsie_heroes/android_key/OH_HarmonyNext/KeyStoreFile/Oh_HarmonyNext.p12",
-          "storePassword": "0000001925FC16725C2A1A359C2005E0A01969D894ABDB72716B474AE56551BCCC7FE0343B73A74F64",
-          "keyAlias": "oopsieHeroes",
-          "keyPassword": "00000019F6449CDFD45BBE80E87FCF3CD534172A7959BDABA7ED46BB2516FF07A23461BC686B927007",
-          "signAlg": "SHA256withECDSA",
-          "profile": "C:/code/app_publishing_data/Users/frenkie/Desktop/app_publishing_data/oopsie_heroes/android_key/OH_HarmonyNext/KeyStoreFile/OhHarmonyNextRelease.p7b",
-          "certpath": "C:/code/app_publishing_data/Users/frenkie/Desktop/app_publishing_data/oopsie_heroes/android_key/OH_HarmonyNext/KeyStoreFile/OHHarmonyNext.cer"
+          "storeFile": "C:/Users/20232832/.ohos/config/default_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_hUYQxxckXp5c5VNl9SCUXgdybSCR-NuOPIPmEHKDv5U=.p12",
+          "storePassword": "0000001AAC119A945D65E353AD4075AE0082C726966EFEDD2FF7DC9639EF8FCDEDA233A934686854F21D"
         }
       }
     ],

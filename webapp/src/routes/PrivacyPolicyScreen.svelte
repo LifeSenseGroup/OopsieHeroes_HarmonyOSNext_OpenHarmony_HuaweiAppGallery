@@ -4,10 +4,6 @@
   import { onMount, onDestroy } from "svelte";
   import {push, pop} from 'svelte-spa-router';
   import {store_smallOrLargeImageTxt} from '../stores';
-  import PrivacyPolicyZhCN from './PrivacyPolicyZhCN.svelte';
-  import { isChineseLocale } from '../utils/locale';
-
-  $: showSimplifiedChinese = isChineseLocale($locale);
   
   var myScreenOrientation = window.screen.orientation;
  
@@ -61,44 +57,70 @@
 
 .Arrow {
   grid-area: Arrow;
-}
-
-.back-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  padding: 8px;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.back-arrow {
-  display: block;
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  filter: brightness(0);
+  
 }
 
 </style>
 
 <div id="scrollable-content">
   <div class="Arrow center">
-    <button class="back-button" on:click={() => pop()} aria-label={$_("a11y.back")}>
-    <img class="back-arrow" src="build/images/Arrow_icon.svg" alt={$_("a11y.back")}>
+    <button class="button" on:click={() => pop()}> 
+    <img  style="width:3vw;" src="build/images/Arrow_icon.svg"  alt="back arrow" width=100%> 
     </button>  
   </div>
 
   <div class="Margin" style = "font-family: Arial;">
-  {#if showSimplifiedChinese}
-    <PrivacyPolicyZhCN />
+  {#if $locale === 'zh-CN' || $locale === 'zh-TW'}
+  <h1 class="text-with-margin navy-blue-text">隐私政策</h1>
+  <h2 class="text-with-margin">LifeSense Group 隐私政策</h2>
   {:else}
   <h1 class="text-with-margin navy-blue-text">PRIVACY POLICY</h1>
   <h2 class="text-with-margin">LifeSense Group Privacy Policy</h2>
+  {/if}
   <h3 class="text-with-margin unbold-text oblique">(Last updated 02.07.2019) </h3>
+  {#if $locale === 'zh-CN' || $locale === 'zh-TW'}
+  <h3 class="text-with-margin unbold-text">LifeSense Group 相信，可穿戴技术能够帮助人们独立了解并改善自身健康。我们深知保护敏感数据（例如尿液渗漏信息）责任重大，并致力于以最高标准保护隐私和安全，透明地说明我们如何处理数据。</h3>
+  <h3 class="text-with-margin unbold-text">如对本政策有任何疑问，请联系 info@oopsieheroes.com。LifeSense Group 地址：High Tech Campus 32, 5656AE, Eindhoven, The Netherlands。数据保护负责人可通过上述邮箱联系。</h3>
+
+  <h3 class="text-with-margin">1. 我们如何处理您的个人数据</h3>
+  <h3 class="text-with-margin unbold-text">当您使用 LifeSense Group 的服务（例如 Oopsie Heroes、Carin Pelvic Floor Trainer 等应用或我们的网站）时，我们会使用内部工具及第三方工具收集、存储和分析部分个人数据及非个人数据。</h3>
+  <h3 class="text-with-margin oblique">1.1 了解您的需求并改进服务</h3>
+  <h3 class="text-with-margin unbold-text">无论您是否注册账户，使用我们的应用或网站时，我们都会处理部分数据，以了解您如何使用产品、分析并修复问题，以及改进功能和服务。用于此目的的数据不包括可直接识别您身份的个人信息（如姓名、电子邮件）或健康数据。我们可能收集设备型号、名称和标识符、设备及应用设置、崩溃信息、浏览器和操作系统信息、应用事件和使用情况，以及用于提供服务和估算大致位置的 IP 地址。我们会尽量减少收集的数据。若您不同意，可停止使用服务、删除账户并卸载应用。</h3>
+  <h3 class="text-with-margin oblique">1.2 提供个性化健康服务</h3>
+  <h3 class="text-with-margin unbold-text">您在 LifeSense Group 应用中记录的健康和活动数据属于敏感个人数据。只有在您创建账户并明确同意后，我们才会将这些数据与创建账户所需的个人信息一起存储在安全服务器上。账户资料可能包括姓名和电子邮件地址；健康数据可能包括年龄、性别以及过往和当前尿液渗漏事件的日期。麦克风音频仅用于识别 Oopsie Heroes 传感器信号，不会保存。您可以随时删除账户撤回同意；之后仍可不登录账户使用应用，数据仅存储在您的设备上。请定期备份，以免数据丢失。</h3>
+  <h3 class="text-with-margin oblique">1.3 推进尿液渗漏相关科学研究</h3>
+  <h3 class="text-with-margin unbold-text">LifeSense Group 致力于运用可穿戴技术改善健康，并与学术研究人员合作。我们谨慎选择研究合作方；只有在按照严格流程删除可用于识别个人的信息并完成匿名化后，才会提供研究数据。我们努力以易于理解的方式发布研究成果。您可随时删除账户，撤回将数据用于未来研究合作的同意。</h3>
+
+  <h3 class="text-with-margin">2. 您对处理健康及敏感数据的同意</h3>
+  <h3 class="text-with-margin unbold-text">创建 LifeSense Group 应用账户后，您的个人数据（包括健康和敏感数据）会保存在您的设备上，并由 LifeSense Group 服务器存储和处理，以便提供数据备份及其他功能。创建账户即表示您明确同意：LifeSense Group 为向您提供服务及改进功能而处理您提供的数据，包括通过应用或您提供的电子邮件地址发送信息和提醒；账户资料可能包括您输入的姓名、电子邮件地址、年龄和性别；尿液渗漏数据可在匿名化后用于学术和临床研究，且匿名数据无法与您个人关联。您可随时删除账户撤回同意。删除账户后仍可继续使用应用，但服务器不再保存您的数据；无账户用户丢失的数据无法恢复，请定期备份。</h3>
+
+  <h3 class="text-with-margin">3. 您的权利</h3>
+  <h3 class="text-with-margin unbold-text">隐私（包括数据隐私）是一项基本权利。我们尽量减少个人数据的使用，只为本政策所述目的处理数据，并定期请专家检查服务器安全。我们不会以可识别身份的形式保留超过提供服务所需期限的数据，也不会进行自动化决策或用户画像。您可以请求查询我们处理的个人数据、以可供其他组织读取的格式获取数据副本、更正应用中的个人资料和健康数据、通过删除账户或取消订阅撤回同意、请求删除数据（包括此前发送给用于追踪和分析的第三方的数据；请联系 info@oopsieheroes.com，删除将在 30 天内完成），或向相关监管机构提出投诉。</h3>
+
+  <h3 class="text-with-margin">4. 数据安全</h3>
+  <h3 class="text-with-margin unbold-text">我们采取安全措施，防止受我们控制的个人信息遭到滥用、丢失或更改，并遵循行业最佳实践传输和存储数据。尽管无法保证这些情况绝不会发生，我们会采取合理措施予以防范。</h3>
+  <h3 class="text-with-margin oblique">4.1 我们如何存储您的个人数据</h3>
+  <h3 class="text-with-margin unbold-text">账户个人资料与尿液渗漏记录及服务设置分开存储，以保护您的隐私。密码在相关功能实施后将通过单向加密（哈希和加盐）存储，我们无法读取。LifeSense Group 使用位于欧盟的服务器处理和存储个人数据。您的设备与服务器之间使用 HTTPS 加密传输。</h3>
+  <h3 class="text-with-margin oblique">4.2 保护数据的建议</h3>
+  <h3 class="text-with-margin unbold-text">如果他人取得您设备的访问权限，您的数据可能面临风险。请为设备启用 PIN、Touch ID 或 Face ID，并设置设备丢失或被盗时远程锁定或抹除数据的功能。iOS 用户可使用 iCloud 中的“查找我的 iPhone”和抹除设备功能；Android 用户可使用 Google 的“查找我的设备”。未注册账户时，所有数据仅保存在设备上；卸载应用或丢失设备可能导致数据丢失，请定期备份。iOS 用户可通过 iTunes 或 iCloud 备份。</h3>
+
+  <h3 class="text-with-margin">5. 向欧盟以外地区及第三方应用传输数据</h3>
+  <h3 class="text-with-margin unbold-text">向欧盟或欧洲经济区（EEA）以外国家传输个人数据时，接收地须遵守适用的隐私规定，并确保您的隐私权受到保护。</h3>
+  <h3 class="text-with-margin">6. Cookie 和追踪</h3>
+  <h3 class="text-with-margin unbold-text">我们的网站使用 Cookie（一种小型文本文件）来改善使用体验、保存偏好设置并支持分析服务（例如 Google Analytics）。您可以在浏览器中禁用 Cookie。应用和网站也可能使用第三方分析与追踪服务，以了解服务使用情况并改善安全性。LifeSense Group 或受托第三方可能使用分配给您的唯一标识符处理使用信息；在不再需要这些信息时会予以删除，向第三方分享前会进行匿名化（第 6.2 节所述情况除外）。</h3>
+  <h3 class="text-with-margin oblique">6.1 对追踪和分析的同意</h3>
+  <h3 class="text-with-margin unbold-text">使用应用或网站即表示您同意 LifeSense Group 为追踪、分析和改进服务而使用 Cookie、第三方服务及唯一标识符。您可通过禁用设备上的 Cookie，或按照各第三方提供商的说明分别撤回同意。</h3>
+  <h3 class="text-with-margin oblique">6.2 Google Analytics</h3>
+  <h3 class="text-with-margin unbold-text">我们的网站使用 Google Inc.（“Google”）运营的 Google Analytics。该服务使用存储在您设备上的 Cookie 分析网站访问和互动情况，相关信息会传输并存储在 Google 位于美国的服务器上。Google 使用这些信息向 LifeSense Group 提供网站及相关服务使用报告，也可能在法律要求或委托处理数据时向第三方传输信息。Google 不会将您的 IP 地址与其他个人数据关联。您可通过更改浏览器设置阻止 Cookie，但部分网站功能可能因此受到影响。使用网站即表示您同意 Google 按上述方式处理非个人数据；撤回同意仅对未来处理有效。</h3>
+  <h3 class="text-with-margin oblique">6.3</h3>
+  <h3 class="text-with-margin unbold-text">上述公司遵守欧盟—美国隐私保护框架。相关服务的隐私政策可在各服务的网站查阅。</h3>
+  <h3 class="text-with-margin">7. 通信和新闻通讯</h3>
+  <h3 class="text-with-margin unbold-text">LifeSense Group 可能使用您的个人信息（例如电子邮件地址）发送消息、电子邮件、推送通知、应用内消息、健康信息及不定期的推广内容。仅当您订阅新闻通讯或同意接收通知时，我们才会提供这些服务。您可通过邮件底部的退订链接取消订阅，并可在设备设置中关闭通知。为提供这些服务，我们可能将电子邮件地址等信息交给第三方服务商处理，包括位于美国亚特兰大的 Rocket Science Group LLC（“MailChimp”），用于发送信息及偶尔的商业内容。相关服务的隐私政策可在其网站查阅。</h3>
+  <h3 class="text-with-margin">8. 本隐私政策的变更</h3>
+  <h3 class="text-with-margin unbold-text">LifeSense Group 可能因法律、数据收集和使用方式、服务功能或技术发展而不时修订本政策。请定期查看此页面。如我们认为重大变更会影响您，将在本政策中发布通知。</h3>
+  <h3 class="text-with-margin unbold-text oblique">如您对本政策有疑问，请联系 info@oopsieheroes.com。</h3>
+  <h3 class="text-with-margin unbold-text">©2019 LifeSense Group B.V.</h3>
+  {:else}
     <h3 class="text-with-margin unbold-text">
    At LifeSense Group, we believe that wearable technology empowers people to understand and work on their health independently. We fully acknowledge the great responsibility that comes with safeguarding sensitive data, such as information about your urine loss. We are committed to achieving the highest standards of privacy and security, as well as to being transparent about how we process data.</h3>
    <h3 class="text-with-margin unbold-text"> We hope you will find this privacy policy clear, honest, and transparent. Do not hesitate to reach out to us at info@oopsieheroes.com if you have any questions.</h3>
@@ -235,8 +257,8 @@
   </h3>
 
 <h3 class="text-with-margin unbold-text"> ©2019 LifeSense Group B.V.</h3>
-  {/if}
 
+  {/if}
 </div>
 
 

@@ -1,31 +1,19 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { _ } from 'svelte-i18n';
   import type { GenerateHeatMapResult } from '../utils/heatmapLogic';
+  import { formatMinutesAfterSleep } from '../utils/PredictionEngine';
 
   type HeatMapStatsWithTotal = GenerateHeatMapResult & { totalAnalyzed?: number };
-  type Translate = (key: string, options?: { values?: Record<string, string | number> }) => string;
 
   export let heatMapStats: HeatMapStatsWithTotal;
   export let alarmActivated = false;
   const dispatch = createEventDispatcher<{ close: undefined; toggleAlarm: undefined }>();
 
-  function formatOffset(totalMinutes: number, t: Translate): string {
-    const rounded = Math.max(1, Math.round(totalMinutes));
-    if (rounded < 60) {
-      return t('mission.minutes', { values: { n: rounded } });
-    }
-    const hours = Math.floor(rounded / 60);
-    const mins = rounded % 60;
-    if (mins === 0) {
-      return hours === 1 ? t('mission.oneHour') : t('mission.hours', { values: { n: hours } });
-    }
-    return t('mission.hoursMinutes', { values: { hours, mins } });
-  }
-
   $: toiletVisitMinutesAfterSleep = heatMapStats?.toiletVisitMinutesAfterSleep ?? null;
   $: offsetLabel =
-    toiletVisitMinutesAfterSleep != null ? formatOffset(toiletVisitMinutesAfterSleep, $_) : '';
+    toiletVisitMinutesAfterSleep != null
+      ? formatMinutesAfterSleep(toiletVisitMinutesAfterSleep)
+      : '';
 </script>
 
 {#if toiletVisitMinutesAfterSleep != null}
@@ -33,19 +21,19 @@
     <button
       class="close-btn"
       type="button"
-      aria-label={$_('mission.close')}
+      aria-label="Close mission prediction"
       on:click={() => dispatch('close')}
     >
       ×
     </button>
-    <div class="eyebrow">{$_('mission.eyebrow')}</div>
+    <div class="eyebrow">Hero Mission Control</div>
 
     <div class="hero-tip" role="status" aria-live="polite">
       <div class="mission-lines">
-        <span class="mission-prefix">{$_('mission.prefix')}</span>
+        <span class="mission-prefix">Mission:</span>
         <div class="mission-body">
-          <span class="tip-line">{$_('mission.toiletVisit', { values: { offset: offsetLabel } })}</span>
-          <span class="tip-line">{$_('mission.afterSleep')}</span>
+          <span class="tip-line">Toilet visit ~{offsetLabel}</span>
+          <span class="tip-line">after going to sleep</span>
         </div>
       </div>
     </div>
@@ -54,7 +42,7 @@
       type="button"
       on:click={() => dispatch('toggleAlarm')}
     >
-      {alarmActivated ? $_('mission.deactivate') : $_('mission.activate')}
+      {alarmActivated ? 'Deactivate alarm' : 'Activate alarm'}
     </button>
   </div>
 {/if}

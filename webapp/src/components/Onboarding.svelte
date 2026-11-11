@@ -4,19 +4,20 @@
   import { onMount } from "svelte";
   import { pop, push } from "svelte-spa-router";
 
-  import {storeSettingsVal, storeVallocal, storeUserVal,writeUserToRemoteDB} from "../utils/dataStorage";
-  import {store_onBoardingDone,store_customer_email, store_customer_age, store_customer_sex, store_UserSavedToRemoteDB, store_customer_country, store_nativeSystemType} from "../stores";
+  import {storeSettingsVal, storeVallocal, storeUserVal} from "../utils/dataStorage";
+  import {store_onBoardingDone,store_customer_email, store_customer_age, store_customer_sex, store_customer_country, store_nativeSystemType} from "../stores";
   import { validateEmail } from "../utils/utils";
   import { detectCountryCode } from "../utils/countryDetection";
   import PrivacyPolicy from '../routes/PrivacyPolicyScreen.svelte'
   export let section: number = 1; // there are 3 sessions, first the eamil then the age and then boy/girl
 
-  var emailIsValid = false;
-  let privacyPolicyAccepted = false;
+  let contactType: 'email' | 'phone' = 'email';
+  let contactIsValid = false;
   let emailValidationMessage = ""; // Initialize an empty string for email validation message
   
-  $: emailIsValid = validateEmail($store_customer_email);
-  $: canStartOnboarding = emailIsValid && privacyPolicyAccepted;
+  $: contactIsValid = contactType === 'email'
+    ? validateEmail($store_customer_email)
+    : /^\+?\d+$/.test($store_customer_email.trim());
 
   onMount(() => {
     section = 1; // reset section
@@ -28,12 +29,9 @@
 
 async function next() {
     if (section == 1) {
-      if (!privacyPolicyAccepted) return;
-
       // 1. Check if the email is valid
-      $store_customer_email = ($store_customer_email ?? "").trim();
-      if (!checkEmail()) {
-        emailValidationMessage = $_("OnboardingScreen.Invalid email address or phone number");
+      if (!contactIsValid) {
+        emailValidationMessage = contactType === 'email' ? "Invalid email address" : "Invalid phone number";
         return;
       } else {
         emailValidationMessage = "";
@@ -78,13 +76,6 @@ async function next() {
 
 
 
-  function checkEmail() {
-    emailIsValid = validateEmail($store_customer_email);
-    return emailIsValid; // Return the result of email validation
-  }
-
-  $: $store_customer_email, checkEmail(); // if store_customer_email changes checkEmail is called
-
   function navigateToPrivacyPolicy() {
     push('#/PrivacyPolicyScreen');
 }
@@ -105,25 +96,49 @@ async function next() {
         <h1 style="font-family: Arial; font-size: 32px;">{$_("OnboardingScreen.Hi!")}</h1>
 
         <p style = " font-family: Arial; font-size: 16px;">
-          {$_(
-            "OnboardingScreen.To start using Oopsie Heroes, we first need your email address or phone number."
-          )}
+          {contactType === 'email'
+            ? $_("OnboardingScreen.To start using Oopsie Heroes, we first need your email address.")
+            : $_("OnboardingScreen.To start using Oopsie Heroes, we first need your phone number.")}
         </p>
-       
-        <label style= "color: grey;" for="emailInput">{$_("OnboardingScreen.Email or phone number")}:</label>
-        <input
-           class={emailIsValid ? "fontSize" : "grey fontSize"}  
-          type="text"
-          id="emailInput"
-          bind:value={$store_customer_email}
-          style="border: none; border-bottom: 1px solid #ccc; padding: 5px; outline: none; width: 100%; height: 100%;" />
 
-          <div class="privacy-checkbox-row">
-            <input id="privacyPolicyAccepted" type="checkbox" bind:checked={privacyPolicyAccepted} />
-            <label for="privacyPolicyAccepted">{$_("OnboardingScreen.I agree to the")}</label>
-            <a href="#/PrivacyPolicyScreen" on:click={navigateToPrivacyPolicy}>
-              {$_("OnboardingScreen.Privacy Policy")}
-            </a>
+        <div style="display:flex; gap:16px; margin: 8px 0; font-size:16px;">
+          <label><input type="radio" bind:group={contactType} value="email" /> {$_("OnboardingScreen.Email")}</label>
+          <label><input type="radio" bind:group={contactType} value="phone" /> {$_("OnboardingScreen.Phone number")}</label>
+        </div>
+        <label style= "color: grey;" for="emailInput">{contactType === 'email' ? $_("OnboardingScreen.Email") : $_("OnboardingScreen.Phone number")}:</label>
+        {#if contactType === 'phone'}
+          <input
+            class={contactIsValid ? "fontSize" : "grey fontSize"}
+            type="tel"
+            id="emailInput"
+            inputmode="tel"
+            autocomplete="tel"
+            bind:value={$store_customer_email}
+            style="border: none; border-bottom: 1px solid #ccc; padding: 5px; outline: none; width: 100%; height: 100%;" />
+        {:else}
+          <input
+            class={contactIsValid ? "fontSize" : "grey fontSize"}
+            type="email"
+            id="emailInput"
+            inputmode="email"
+            autocomplete="email"
+            bind:value={$store_customer_email}
+            style="border: none; border-bottom: 1px solid #ccc; padding: 5px; outline: none; width: 100%; height: 100%;" />
+        {/if}
+          {#if emailValidationMessage}
+            <p style="color:red; font-size:14px; margin:4px 0;">{contactType === 'email' ? $_("OnboardingScreen.Invalid email address") : $_("OnboardingScreen.Invalid phone number")}</p>
+          {/if}
+
+          <div style="display: flex; align-items: center;">
+            <p style="margin-right: 5px; font-family: Arial; font-size: 13.8px;">
+              {$_("OnboardingScreen.I agree to the")}:
+            </p>
+            <span style="font-family: Arial; color: blue;">
+              <a href="#/PrivacyPolicyScreen" on:click={navigateToPrivacyPolicy} style="color: blue; text-decoration: none;">
+                {$_("OnboardingScreen.Privacy Policy")}
+              </a>
+              </span>
+
           </div>
       </div>
     {/if}
@@ -147,7 +162,7 @@ async function next() {
           style="border: none; border-bottom: 1px solid #ccc; padding: 5px; outline: none; width: 40%;"
         />
         <p id="ageError" style="color: red; display: none;">
-          {$_("OnboardingScreen.Please enter your age")}
+          Please enter your age
         </p>
         <br /> <br />
       </div>
@@ -164,7 +179,7 @@ async function next() {
           <button on:click={storeSexMale} style="border: none; outline: none;">
             <img
               src="build/images/boy.png"
-              alt={$_("a11y.boy")}
+              alt="boy"
               class="hero-image {$store_customer_sex === 'male'
                 ? ''
                 : 'transparent'}"
@@ -177,7 +192,7 @@ async function next() {
           >
             <img
               src="build/images/girl.png"
-              alt={$_("a11y.girl")}
+              alt="girl"
               class="hero-image {$store_customer_sex === 'female'
                 ? ''
                 : 'transparent'}"
@@ -193,8 +208,7 @@ async function next() {
 
         {#if section == 1}
         <button
-        disabled={!canStartOnboarding}
-        style="font-family: Arial; background-color: {canStartOnboarding ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10px; padding: 10px 20px 10px 20px; border-radius: 4vw; border: none; margin-top:10px; font-size: clamp(1rem, 4vw, 4rem);"
+        style="font-family: Arial; background-color: {contactIsValid ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10px; padding: 10px 20px 10px 20px;   border-radius: 4vw; border: none; margin-top:10px; font-size: clamp(1rem, 4vw, 4rem);"
         on:click={next}
       >
         {$_('OnboardingScreen.Let’s go!')}
@@ -203,7 +217,7 @@ async function next() {
 
         {#if section == 2}
         <button
-        style="font-family: Arial; background-color: {emailIsValid ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10%; width: 80px; height: 41px; border-radius: 12px; border: none; margin-top:20px;"
+        style="font-family: Arial; background-color: {contactIsValid ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10%; width: 80px; height: 41px; border-radius: 12px; border: none; margin-top:20px;"
         on:click={next}
       >
         {$_('OnboardingScreen.Next')}
@@ -215,7 +229,7 @@ async function next() {
 
         {#if section == 3}
         <button
-        style=" font-family: Arial; background-color: {emailIsValid ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10px; padding: 10px 20px 10px 20px;   border-radius: 4vw; border: none; margin-top:10px; font-size: clamp(1rem, 4vw, 4rem);"
+        style=" font-family: Arial; background-color: {contactIsValid ? '#007BFF' : '#9e9e9e'}; color: white; bottom: 10px; padding: 10px 20px 10px 20px;   border-radius: 4vw; border: none; margin-top:10px; font-size: clamp(1rem, 4vw, 4rem);"
         on:click={next}
       >
         {$_('OnboardingScreen.Start')}
@@ -242,28 +256,6 @@ async function next() {
  
 .grey {
     color: grey;
-  }
-
-  .privacy-checkbox-row {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 12px;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-  }
-
-  .privacy-checkbox-row input {
-    width: 18px;
-    height: 18px;
-    margin: 0 4px 0 0;
-    accent-color: #007BFF;
-  }
-
-  .privacy-checkbox-row a {
-    color: blue;
-    text-decoration: none;
   }
 
   .dialog-content {

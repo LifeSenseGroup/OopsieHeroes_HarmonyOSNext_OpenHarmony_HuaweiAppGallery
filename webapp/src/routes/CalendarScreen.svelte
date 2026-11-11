@@ -446,15 +446,15 @@
   </div>
   <div class="Icon">
     <button class="button" on:click={handleBackNavigation}>
-      <img style="width: 5vw" src="build/images/Arrow_icon.svg" alt={$_('a11y.back')}>
+      <img style="width: 5vw" src="build/images/Arrow_icon.svg">
     </button>
   </div>
   <div class="PredictionIcon {heatMapStats?.toiletVisitMinutesAfterSleep != null ? '' : 'hidden'}">
     <button
       class="prediction-toggle {showPredictionBox ? '' : 'can-open'}"
       type="button"
-      aria-label={$_('mission.open')}
-      title={$_('mission.predictionTitle')}
+      aria-label="Open mission prediction"
+      title="Mission prediction"
       disabled={heatMapStats?.toiletVisitMinutesAfterSleep == null}
       bind:this={predictionIconButton}
       on:click={openPredictionBox}

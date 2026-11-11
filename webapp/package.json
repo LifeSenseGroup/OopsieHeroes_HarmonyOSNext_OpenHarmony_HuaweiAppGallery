@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "rollup -c && node scripts/integrate-harmony.js",
+    "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv dist --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json",

@@ -2,7 +2,9 @@ import type { EventOopsie } from './dataStructures';
 
 /**
  * Cases 2–8. Case 1 (the existing cluster alarm) lives in PredictionEngine and
- * wins whenever it qualifies. These cases use the same local nights only.
+ * wins whenever it qualifies. Case 9 is a separate fallback used only when
+ * Case 1 and Cases 2–8 all decline. Case 9 reads leak nights from the last 8
+ * days, including nights before an activated prediction. Cases 2–8 do not.
  * A night opens at Go to sleep and keeps later Go to sleep taps after Stop
  * alarm, until Wake up or the next evening. The event time is the first leak.
  *
@@ -765,6 +767,161 @@ function rankCandidates(
   return scored
     .filter((candidate) => candidate.mae - bestMae < MAE_GAP_MINUTES)
     .sort((a, b) => a.caseId - b.caseId)[0];
+}
+
+const CASE9_WINDOW_DAYS = 8;
+const CASE9_MIN_WET_EVENTS = 3;
+const CASE9_RESET_DRY_RUN = 3;
+const CASE9_HALF_LIFE_DAYS = 7;
+const CASE9_LAMBDA = 0.5;
+const CASE9_DISTANCE_C = 2;
+const CASE9_SCALE_FLOOR = 15;
+const CASE9_H_MIN = 5;
+const CASE9_H_MAX = 45;
+const CASE9_K = 0.25;
+const CASE9_ALPHA = 0.25;
+const CASE9_BISECTION_STEPS = 36;
+
+type Case9Event = { day: number; delay: number };
+
+function inCase9Window(night: TimingNight, tonight: Date): boolean {
+  const age = ageDays(night.onset, tonight);
+  return age >= 0 && age < CASE9_WINDOW_DAYS;
+}
+
+/**
+ * A leak night on or after an activated prediction, including the prediction
+ * night itself when that night had a leak. The cutoff is the time the cycle
+ * finished, which is often the morning wake, after the leak.
+ */
+function nightUnlocksPredictionPause(night: TimingNight, historyCutoffMs: number): boolean {
+  if (!night.wet) return false;
+  if (night.onset.getTime() >= historyCutoffMs) return true;
+  if (night.delayMin != null && night.delayMin > 0) {
+    const leakMs = night.onset.getTime() + night.delayMin * 60_000;
+    if (leakMs >= historyCutoffMs) return true;
+  }
+  if (night.durationMin != null) {
+    const stopMs = night.onset.getTime() + night.durationMin * 60_000;
+    if (stopMs >= historyCutoffMs) return true;
+  }
+  return false;
+}
+
+/**
+ * Leak nights in the last 8 days. Three recorded dry nights pause the offer
+ * until a later leak night, and so does an activated prediction that has
+ * finished. Neither pause deletes the leak nights. A night with no record is
+ * skipped, so it neither adds to the dry run nor starts it over.
+ */
+function retainCase9Events(
+  history: TimingNight[],
+  tonight: Date,
+  historyCutoffMs: number | null
+): Case9Event[] | null {
+  let dryRun = 0;
+  let awaitingLeakAfterDry = false;
+  let sawLeakAfterPrediction = historyCutoffMs == null;
+  const events: Case9Event[] = [];
+
+  for (const night of history) {
+    if (night.wet) {
+      dryRun = 0;
+      if (awaitingLeakAfterDry) awaitingLeakAfterDry = false;
+      if (historyCutoffMs != null && nightUnlocksPredictionPause(night, historyCutoffMs)) {
+        sawLeakAfterPrediction = true;
+      }
+      if (isTimingWet(night) && inCase9Window(night, tonight)) {
+        events.push({ day: calendarDayNumber(night.onset), delay: night.delayMin! });
+      }
+      continue;
+    }
+    if (night.durationMin == null) continue;
+    dryRun += 1;
+    if (dryRun >= CASE9_RESET_DRY_RUN) awaitingLeakAfterDry = true;
+  }
+
+  if (awaitingLeakAfterDry || !sawLeakAfterPrediction || events.length < CASE9_MIN_WET_EVENTS) {
+    return null;
+  }
+  return events;
+}
+
+function case9Logistic(x: number): number {
+  const exponent = Math.max(-40, Math.min(40, -x));
+  return 1 / (1 + Math.exp(exponent));
+}
+
+/** Event estimate in minutes after sleep. The staircase applies the 15-minute lead. */
+export function case9EventEstimate(delays: number[], days: number[]): number | null {
+  if (delays.length < CASE9_MIN_WET_EVENTS || delays.length !== days.length) return null;
+
+  const center = median(delays);
+  const scale = Math.max(
+    CASE9_SCALE_FLOOR,
+    median(delays.map((delay) => Math.abs(delay - center)))
+  );
+  const latestDay = Math.max(...days);
+  const unnormalized = delays.map((delay, index) => {
+    const age = latestDay - days[index];
+    const recency = Math.exp(Math.max(-700, (-Math.LN2 * age) / CASE9_HALF_LIFE_DAYS));
+    const distance = (delay - center) / (CASE9_DISTANCE_C * scale);
+    const reliability = 1 - CASE9_LAMBDA + CASE9_LAMBDA / (1 + distance * distance);
+    return recency * reliability;
+  });
+  const weightSum = unnormalized.reduce((sum, weight) => sum + weight, 0);
+  if (weightSum <= 0) return null;
+  const weights = unnormalized.map((weight) => weight / weightSum);
+
+  const meanDelay = delays.reduce((sum, delay, index) => sum + weights[index] * delay, 0);
+  const variance = delays.reduce(
+    (sum, delay, index) => sum + weights[index] * (delay - meanDelay) ** 2,
+    0
+  );
+  const spread = Math.sqrt(Math.max(0, variance));
+  const spreadRatio = spread + meanDelay > 0 ? spread / (spread + meanDelay) : 0;
+  const bandwidth = Math.max(
+    0.01,
+    Math.min(CASE9_H_MAX, Math.max(CASE9_H_MIN, CASE9_K * spread), meanDelay / 3)
+  );
+  const quantile = 0.5 - CASE9_ALPHA * spreadRatio;
+
+  const distribution = (minutes: number) =>
+    delays.reduce((sum, delay, index) => {
+      const upper = case9Logistic((minutes - delay) / bandwidth);
+      const lower = case9Logistic(-delay / bandwidth);
+      return sum + weights[index] * ((upper - lower) / (1 - lower));
+    }, 0);
+
+  let low = 0;
+  let high = Math.max(...delays) + 12 * bandwidth;
+  for (let step = 0; step < CASE9_BISECTION_STEPS; step += 1) {
+    const mid = (low + high) / 2;
+    if (distribution(mid) < quantile) low = mid;
+    else high = mid;
+  }
+  return (low + high) / 2;
+}
+
+/** Fallback used only after Cases 1–8 decline. Returns minutes after sleep, or null. */
+export function selectCase9Fallback(
+  starts: EventOopsie[],
+  leaks: EventOopsie[],
+  stops: EventOopsie[],
+  tonightOnset: Date,
+  historyCutoffMs: number | null = null
+): number | null {
+  if (Number.isNaN(tonightOnset.getTime())) return null;
+  const events = retainCase9Events(
+    buildTimingHistory(starts, leaks, stops, tonightOnset),
+    tonightOnset,
+    historyCutoffMs
+  );
+  if (!events) return null;
+  return case9EventEstimate(
+    events.map((event) => event.delay),
+    events.map((event) => event.day)
+  );
 }
 
 export function selectAlternateCase(

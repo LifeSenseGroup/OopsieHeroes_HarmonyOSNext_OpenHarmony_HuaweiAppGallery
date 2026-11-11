@@ -2,8 +2,8 @@
   import { _ } from "svelte-i18n";
   import { locale, locales } from "svelte-i18n";
   import { onMount, onDestroy } from "svelte";
-  import { store_alarm, store_onBoardingDone, store_smallOrLargeImageTxt, store_customer_sex, store_globalSyncLock } from "../stores.js";
-  import { setDataStorageBlockWriteToDB, storeGetSettingInfo, storeGetUserInfo, createAndStoreStart, createAndStoreStop, createAndStoreLeak, createAndStoreWake, getRemainingEvents, getLeaks, getStarts, getStops, getWakes, globalSyncLock  } from "../utils/dataStorage";
+  import { store_alarm, store_onBoardingDone, store_smallOrLargeImageTxt, store_customer_sex } from "../stores.js";
+  import { setDataStorageBlockWriteToDB, storeGetSettingInfo, storeGetUserInfo, createAndStoreStart, createAndStoreStop, createAndStoreLeak, createAndStoreWake, getLeaks, getStarts, getStops, getWakes } from "../utils/dataStorage";
   import { consumePredictionCycle, hadActivePredictionCycle, expirePredictionOfferForSleepStart } from "../utils/predictionLifecycle";
   import {
     cancelPredictiveStaircase,
@@ -25,8 +25,6 @@
   import { TEST_createSomeEventsThisMonthAndStoreInLocalDB } from "../utils/tests";
   import { stopSound,startSoundDetection,stopSoundDetection, playSelectedAlarm } from "../utils/NativeBridge";
   import { push } from "svelte-spa-router";
-  import { RealmStoreUserIfNeeded, RealmStoreEvents  } from "../utils/accesRealm";
-  import Trustpilot from '../components/Trustpilot.svelte';
 
   var smallOrLargeImageTxt = isSmallScreen() ? "Phone" : "Tablet"; // Phone or Tablet
   $store_smallOrLargeImageTxt = smallOrLargeImageTxt;
@@ -34,12 +32,10 @@
   let imagePrefix = "build/images/";
   let bg_image_url = imagePrefix + "Dag-oepsie" + ".svg";
   let image_url_boyGirl = imagePrefix + "boy.png";
-  let isSyncing = false;
   let isStopping = false; //added this for preventing multiple clicks on stop button which can cause multiple calls to stopSoundDetection and createAndStoreStop
-                          //(which can cause problems with the order of events in localDB and bridge)
-  let syncTimer;
   /** Re-check staircase phase times (manual clock changes don't fire setTimeout early). */
   let staircaseTicker: ReturnType<typeof setInterval> | null = null;
+
   function onStaircaseClockCheck() {
     resumePredictiveStaircaseIfNeeded();
   }
@@ -67,14 +63,12 @@
   let mode: eMode = eMode.WAKE;
     var latestEventDate: Date = new Date(0);
 
-  let coachId: string | null = null;
-  let coachDryStreak = 0;
   let coachText: string | null = null;
   let coachTicker: ReturnType<typeof setInterval> | null = null;
 
   async function refreshCoachMessage() {
     if (mode !== eMode.WAKE) {
-      coachId = null;
+      coachText = null;
       return;
     }
     try {
@@ -90,17 +84,12 @@
         now: new Date(),
         mode
       });
-      coachId = result?.id ?? null;
-      coachDryStreak = result?.dryStreak ?? 0;
+      coachText = result?.text ?? null;
     } catch (error) {
       console.error("coach message error:", error);
-      coachId = null;
+      coachText = null;
     }
   }
-
-  $: coachText = coachId
-    ? $_("coach." + coachId, { values: { dry_streak: coachDryStreak } })
-    : null;
 
   function startCoachWatch() {
     if (coachTicker) return;
@@ -115,7 +104,7 @@
       clearInterval(coachTicker);
       coachTicker = null;
     }
-    coachId = null;
+    coachText = null;
   }
 
   $: if (mode === eMode.WAKE) {
@@ -163,10 +152,6 @@
         if (predictionNight) {
           consumePredictionCycle(latestEventDate.getTime());
         }
-        setTimeout(async () => {
-              console.log("DEBUG: Running final night sync for Leak...");
-              await syncEventsToBridge();
-          }, 2000);
       }
     }
   }
@@ -189,7 +174,6 @@ onMount(() => {
   .then(() => {
     if ($store_onBoardingDone != 1) {
       push("#/OnboardingScreen");
-      return;
     }
 
     // Now this will actually have data from storeGetUserInfo
@@ -200,27 +184,12 @@ onMount(() => {
     }
 
     resumePredictiveStaircaseIfNeeded();
-
-    if ($store_onBoardingDone == 1) {
-      RealmStoreUserIfNeeded().then(() => {
-        let eventNR = localStorage.getItem("eventsSavedToMongDB") || "0";
-
-        getRemainingEvents(parseInt(eventNR))
-          .then((events) => {
-            console.log("remaining events", events);
-            if (events.length > 0) {
-              RealmStoreEvents(events, parseInt(eventNR));
-            }
-          })
-          .catch((error) => {
-            console.error("Sync Error:", error);
-          });
-      });
-    }
   })
   .catch((error) => {
     console.error("Initialization Error:", error);
-    push("#/OnboardingScreen");
+    if ($store_onBoardingDone != 1) {
+      push("#/OnboardingScreen");
+    }
   });
 });
 
@@ -228,31 +197,7 @@ onMount(() => {
   onDestroy(() => {
       stopStaircaseClockWatch();
       stopCoachWatch();
-      if (syncTimer) {
-        clearTimeout(syncTimer);
-        console.log("DEBUG: Component destroyed, cleared pending sync timer.");
-      }
     });
-
-
-  async function syncEventsToBridge() {
-    if ($store_globalSyncLock) {
-          console.log("DEBUG: Sync already in progress, skipping.");
-          return;
-    }
-
-    $store_globalSyncLock = true;
-    let eventNR = localStorage.getItem("eventsSavedToMongDB") || "0";
-
-    try {
-        const events = await getRemainingEvents(parseInt(eventNR));
-        if (events.length > 0) {
-            await RealmStoreEvents(events, parseInt(eventNR));
-        }
-    } finally {
-        $store_globalSyncLock = false;
-    }
-  }
 
   async function schedulePredictiveStaircaseForTonight(nightStartDate: Date) {
     try {
@@ -285,7 +230,6 @@ onMount(() => {
               stageReached: staircaseSnap.stageReached,
               predictedTime: staircaseSnap.predictedTime
             });
-            await syncEventsToBridge();
           } catch (e) {
             console.error("wake event / sync failed:", e);
           }
@@ -313,10 +257,6 @@ onMount(() => {
         await schedulePredictiveStaircaseForTonight(latestEventDate);
         resumePredictiveStaircaseIfNeeded();
         startSoundDetection();
-        setTimeout(async () => {
-              console.log("DEBUG: Running final night sync for Leak and Stop...");
-              await syncEventsToBridge();
-          }, 1000);
       });
     } else {
     isStopping = true;
@@ -342,9 +282,6 @@ onMount(() => {
 
       stopSoundDetection();
       cancelPredictiveStaircase();
-
-      console.log("DEBUG: Final night sync...");
-      await syncEventsToBridge();
 
       if (mode == eMode.SLEEPING) {
         if (isValidNight) {
@@ -390,6 +327,7 @@ onMount(() => {
     <HeroSpeechBubble text={coachText} imageSrc={image_url_boyGirl} />
   </div>
 </div>
+
 <style>
   /* grid.layoutit.com?id=aTEqNdq */
   .bg {
@@ -491,5 +429,3 @@ onMount(() => {
     display: block;
   }
 </style>
-
-<Trustpilot />

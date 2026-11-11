@@ -1,6 +1,3 @@
-const DEFAULT_BRIDGE_URL = "https://oopsieheroes-bridge.onrender.com";
-const COUNTRY_REQUEST_TIMEOUT_MS = 2500;
-
 function normalizeCountryCode(value: unknown): string | null {
   if (typeof value !== "string") return null;
   const normalized = value.trim().toLowerCase();
@@ -56,47 +53,7 @@ function getLocaleCountryCode(): string | null {
   return null;
 }
 
-function getBridgeBaseUrl(): string {
-  const envBridgeUrl = (import.meta as any)?.env?.VITE_BRIDGE_URL;
-  return typeof envBridgeUrl === "string" && envBridgeUrl.trim().length > 0
-    ? envBridgeUrl.trim()
-    : DEFAULT_BRIDGE_URL;
-}
-
-async function getIpCountryCodeFromBridge(): Promise<string | null> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), COUNTRY_REQUEST_TIMEOUT_MS);
-
-  try {
-    const bridgeBase = getBridgeBaseUrl();
-    const response = await fetch(`${bridgeBase}/detect-country`, {
-      method: "GET",
-      headers: {
-        "ngrok-skip-browser-warning": "true"
-      },
-      signal: controller.signal
-    });
-
-    if (!response.ok) return null;
-
-    const payload = await response.json();
-    return (
-      normalizeCountryCode(payload?.countryCode) ||
-      normalizeCountryCode(payload?.country) ||
-      normalizeCountryCode(payload?.iso2) ||
-      null
-    );
-  } catch (_error) {
-    return null;
-  } finally {
-    clearTimeout(timeoutId);
-  }
-}
-
 export async function detectCountryCode(): Promise<string> {
-  const ipCountry = await getIpCountryCodeFromBridge();
-  if (ipCountry) return ipCountry;
-
   const localeCountry = getLocaleCountryCode();
   if (localeCountry) return localeCountry;
 

@@ -8,6 +8,7 @@ import media from '@ohos.multimedia.media';
 import promptAction from '@ohos.promptAction';
 import common from '@ohos.app.ability.common';
 import { SensorBeepDetector } from '../manager/SensorBeepDetector';
+import { AlarmVolume } from '../prediction/AlarmVolume';
 
 const DOMAIN = 0x0000;
 
@@ -118,8 +119,9 @@ struct ActivityOopsieWeb {
     return await atManager.checkAccessToken(appInfo.appInfo.accessTokenId, permissionName);
   }
 
-  async playSound(fileName: string, durationMs: number, loop: boolean): Promise<void> {
+  async playSound(fileName: string, durationMs: number, loop: boolean, volumeFraction: number = 1): Promise<void> {
     await this.stopSound();
+    const fraction = Number.isFinite(volumeFraction) ? volumeFraction : 1;
     const hostContext = this.getUIContext().getHostContext() as common.UIAbilityContext | undefined;
     if (!hostContext) {
       return;
@@ -159,6 +161,7 @@ struct ActivityOopsieWeb {
         rendererFlags: 0
       };
       await player.prepare();
+      await AlarmVolume.applyFraction(fraction);
       player.loop = loop;
       await player.play();
       if (durationMs > 0) {
@@ -204,6 +207,7 @@ struct ActivityOopsieWeb {
     if (ringtoneFile) {
       fileIo.closeSync(ringtoneFile);
     }
+    await AlarmVolume.restore();
   }
 
   async startRecording(): Promise<void> {
@@ -471,6 +475,9 @@ struct ActivityOopsieWeb {
       while (this.soundCapturer === capturer && this.soundDetectionGeneration === generation &&
         capturer.state === audio.AudioState.STATE_RUNNING) {
         const buffer = await capturer.read(bufferSize, true);
+        if (AlarmVolume.isQuietPhase()) {
+          continue;
+        }
         if (!this.soundAlarmTriggered && detector.process(buffer)) {
           this.soundAlarmTriggered = true;
           hilog.info(DOMAIN, 'testTag', 'Sensor 4 kHz beep pattern detected');

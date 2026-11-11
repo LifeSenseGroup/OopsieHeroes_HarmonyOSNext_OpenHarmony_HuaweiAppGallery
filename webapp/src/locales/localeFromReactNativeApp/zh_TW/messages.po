@@ -110,10 +110,6 @@ msgstr "您確定要刪除嗎?"
 msgid "Do you wake up sooner with the voice recording than with the standard alarm sound?"
 msgstr "與標準的警報鈴聲相比，使用自己的錄音會更容易叫醒小朋友嗎？"
 
-#: src/screen/Home.tsx:33
-msgid "Do you want first to leave a review on ThrustPilot ?"
-msgstr "您有任何想發表的評論嗎?"
-
 #: src/component/FeedbackQuestion/feedback_questions.tsx:58
 msgid "Does the alarm wake you up?"
 msgstr "警報聲音可以叫醒您嗎?"
@@ -219,10 +215,6 @@ msgstr "離開"
 #: src/screen/Feedback.tsx:176
 msgid "Leaving already?"
 msgstr "確定要離開?"
-
-#: src/screen/Home.tsx:133
-msgid "Let us know by leaving a review on TrustPilot"
-msgstr "請留下評論讓我們知道"
 
 #: src/screen/RegisterEmail.tsx:61
 msgid "Let’s go!"
