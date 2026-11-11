@@ -369,6 +369,7 @@
   margin: 20px;
   margin-top: 34px;
   z-index: 2;
+  visibility: hidden;
 }
 
 .PredictionIcon.hidden {
@@ -483,4 +484,3 @@
 
 
   
-
