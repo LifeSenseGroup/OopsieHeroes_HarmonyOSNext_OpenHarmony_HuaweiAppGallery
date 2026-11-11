@@ -12,6 +12,7 @@ import {
   predictionBoxText
 } from './PredictionEngine';
 import { OopsieEvent } from './OopsieEvent';
+import { PredictionHooks, setPredictionHooks } from './PredictionHooks';
 
 const VISIBLE_KEY = 'predictionBoxVisible';
 const TEXT_KEY = 'predictionBoxText';
@@ -32,6 +33,7 @@ export class PredictionSession {
   private static betweenPhases: boolean = false;
 
   static publishDefaults(): void {
+    PredictionSession.bindHooks();
     AppStorage.SetOrCreate(VISIBLE_KEY, false);
     AppStorage.SetOrCreate(TEXT_KEY, '');
     AppStorage.SetOrCreate(ACTIVATED_KEY, false);
@@ -45,12 +47,22 @@ export class PredictionSession {
   }
 
   static async prepare(context: common.UIAbilityContext): Promise<void> {
+    PredictionSession.bindHooks();
     PredictionSession.context = context;
     AlarmPlayback.bind(context);
     await SettingsManager.getInstance().init(context);
     await DBManager.getInstance().init(context);
     await PredictionSession.resumeIfNeeded();
     await PredictionSession.refresh();
+  }
+
+  private static bindHooks(): void {
+    const hooks: PredictionHooks = {
+      onGoToSleep: (started: Date): Promise<void> => PredictionSession.onGoToSleep(started),
+      onWake: (ended: Date): Promise<void> => PredictionSession.onWake(ended),
+      onLeak: (at: Date): Promise<void> => PredictionSession.onLeak(at)
+    };
+    setPredictionHooks(hooks);
   }
 
   static async refresh(): Promise<void> {

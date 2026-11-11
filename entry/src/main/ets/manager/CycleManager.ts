@@ -1,7 +1,7 @@
 import { DBManager } from './DBManager';
 import { SensorManager } from './SensorManager';
 import { SettingBoolean, SettingInt, SettingsManager } from './SettingsManager';
-import { PredictionSession } from '../prediction/PredictionSession';
+import { notifyGoToSleep, notifyWake } from '../prediction/PredictionHooks';
 
 export class CycleManager {
   private static instance: CycleManager;
@@ -41,7 +41,7 @@ export class CycleManager {
     await SettingsManager.getInstance().setBoolean(SettingBoolean.HasEverMeasured, true);
 
     SensorManager.getInstance().sendStartCommand();
-    await PredictionSession.onGoToSleep(started);
+    await notifyGoToSleep(started);
 
     console.info(`CycleManager: Started Cycle ${newNumber}`);
   }
@@ -53,7 +53,7 @@ export class CycleManager {
       const ended = new Date();
       await DBManager.getInstance().finishCycle(lastCycle.number);
       await DBManager.getInstance().createDBEntry('MeasuringDayFinished', lastCycle.number, ended, "");
-      await PredictionSession.onWake(ended);
+      await notifyWake(ended);
     }
   }
 
@@ -70,7 +70,7 @@ export class CycleManager {
         await db.finishCycle(cycle.number);
 
         await db.createDBEntry('MeasuringDayFinished', cycle.number, new Date(endTime), "");
-        await PredictionSession.onWake(new Date(endTime));
+        await notifyWake(new Date(endTime));
 
         console.info(`CycleManager: Auto-finished Cycle ${cycle.number}`);
       }
