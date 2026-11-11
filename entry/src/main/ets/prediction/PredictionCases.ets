@@ -11,20 +11,155 @@ import { OopsieEvent } from './OopsieEvent';
  * predicted leak (T). The staircase already wakes 15 minutes earlier.
  */
 
-export type AlternatePrediction = {
+export interface AlternatePrediction {
   caseId: number;
   delayMin: number;
   confidence: number;
-};
+}
 
-type TimingNight = {
+interface TimingNight {
   onset: Date;
   /** First leak after bedtime, when it falls inside (0, 12 hours]. */
   delayMin: number | null;
   wet: boolean;
   /** Wake-up stop minus bedtime, when a stop was recorded before the next sleep. */
   durationMin: number | null;
-};
+}
+
+interface WeightedValue {
+  value: number;
+  w: number;
+}
+
+interface RiskResult {
+  passes: boolean;
+  p: number;
+}
+
+interface DayPoint {
+  d: number;
+  t: number;
+}
+
+interface LineFit {
+  slope: number;
+  intercept: number;
+}
+
+interface ReplayScore {
+  maeModel: number;
+  maeBase: number;
+  n: number;
+}
+
+interface DelaySplit {
+  older: TimingNight[];
+  newer: TimingNight[];
+  sse: number;
+}
+
+interface RecentSplit {
+  older: TimingNight[];
+  recent: TimingNight[];
+  sse: number;
+}
+
+interface GroupMeans {
+  selected: number;
+  other: number;
+}
+
+interface DeltaWeight {
+  delta: number;
+  w: number;
+}
+
+interface CaseSpec {
+  caseId: number;
+  strict: () => number | null;
+  point: (prior: TimingNight[], at: Date) => number | null;
+}
+
+interface CaseCandidate {
+  caseId: number;
+  delayMin: number;
+  point: (prior: TimingNight[], at: Date) => number | null;
+  mae: number;
+}
+
+function weightedItem(value: number, w: number): WeightedValue {
+  const item: WeightedValue = { value: value, w: w };
+  return item;
+}
+
+function dayPoint(d: number, t: number): DayPoint {
+  const point: DayPoint = { d: d, t: t };
+  return point;
+}
+
+function delaySplit(older: TimingNight[], newer: TimingNight[], sse: number): DelaySplit {
+  const split: DelaySplit = { older: older, newer: newer, sse: sse };
+  return split;
+}
+
+function recentSplit(older: TimingNight[], recent: TimingNight[], sse: number): RecentSplit {
+  const split: RecentSplit = { older: older, recent: recent, sse: sse };
+  return split;
+}
+
+function groupMeans(selected: number, other: number): GroupMeans {
+  const means: GroupMeans = { selected: selected, other: other };
+  return means;
+}
+
+function deltaWeight(delta: number, w: number): DeltaWeight {
+  const sample: DeltaWeight = { delta: delta, w: w };
+  return sample;
+}
+
+function makeSpec(
+  caseId: number,
+  strict: () => number | null,
+  point: (prior: TimingNight[], at: Date) => number | null
+): CaseSpec {
+  const spec: CaseSpec = { caseId: caseId, strict: strict, point: point };
+  return spec;
+}
+
+function makeCandidate(
+  caseId: number,
+  delayMin: number,
+  point: (prior: TimingNight[], at: Date) => number | null,
+  mae: number
+): CaseCandidate {
+  const candidate: CaseCandidate = { caseId: caseId, delayMin: delayMin, point: point, mae: mae };
+  return candidate;
+}
+
+function riskResult(passes: boolean, p: number): RiskResult {
+  const result: RiskResult = { passes: passes, p: p };
+  return result;
+}
+
+function lineFit(slope: number, intercept: number): LineFit {
+  const fit: LineFit = { slope: slope, intercept: intercept };
+  return fit;
+}
+
+function replayScore(maeModel: number, maeBase: number, n: number): ReplayScore {
+  const score: ReplayScore = { maeModel: maeModel, maeBase: maeBase, n: n };
+  return score;
+}
+
+function timingNight(onset: Date, delayMin: number | null, wet: boolean, durationMin: number | null): TimingNight {
+  const night: TimingNight = { onset: onset, delayMin: delayMin, wet: wet, durationMin: durationMin };
+  return night;
+}
+
+function alternatePrediction(caseId: number, delayMin: number, confidence: number): AlternatePrediction {
+  const prediction: AlternatePrediction = { caseId: caseId, delayMin: delayMin, confidence: confidence };
+  return prediction;
+}
 
 const MAX_EVENT_MINUTES = 12 * 60;
 const MIN_ALARM_DELAY_MINUTES = 75;
@@ -120,7 +255,7 @@ function nEff(weights: number[]): number {
   return sumSq > 0 ? (sum * sum) / sumSq : 0;
 }
 
-function weightedMean(items: { value: number; w: number }[]): number | null {
+function weightedMean(items: WeightedValue[]): number | null {
   let weightSum = 0;
   let valueSum = 0;
   for (const item of items) {
@@ -131,7 +266,7 @@ function weightedMean(items: { value: number; w: number }[]): number | null {
   return weightSum > 0 ? valueSum / weightSum : null;
 }
 
-function weightedStd(items: { value: number; w: number }[]): number {
+function weightedStd(items: WeightedValue[]): number {
   const center = weightedMean(items);
   if (center == null) return 0;
   let weightSum = 0;
@@ -252,20 +387,15 @@ function buildTimingHistory(starts: OopsieEvent[], leaks: OopsieEvent[], stops: 
       const minutes = (stopMs - onsetMs) / 60_000;
       if (minutes > 0) durationMin = minutes;
     }
-    nights.push({
-      onset: new Date(onsetMs),
-      delayMin,
-      wet: nightLeaks.length > 0,
-      durationMin
-    });
+    nights.push(timingNight(new Date(onsetMs), delayMin, nightLeaks.length > 0, durationMin));
   }
   return nights;
 }
 
-function riskAssessment(history: TimingNight[], tonight: Date): { passes: boolean; p: number } {
+function riskAssessment(history: TimingNight[], tonight: Date): RiskResult {
   const informative = history.filter((night) => inWindow(night, tonight, RISK_WINDOW_DAYS));
   const weights = informative.map((night) => weightOf(night, tonight));
-  if (nEff(weights) < RISK_MIN_N_EFF) return { passes: false, p: 0 };
+  if (nEff(weights) < RISK_MIN_N_EFF) return riskResult(false, 0);
   let weightSum = 0;
   let wetSum = 0;
   informative.forEach((night, index) => {
@@ -273,7 +403,7 @@ function riskAssessment(history: TimingNight[], tonight: Date): { passes: boolea
     if (night.wet) wetSum += weights[index];
   });
   const p = (1 + wetSum) / (2 + weightSum);
-  return { passes: p >= RISK_MIN_P, p };
+  return riskResult(p >= RISK_MIN_P, p);
 }
 
 function wetPool(history: TimingNight[], tonight: Date, days: number): TimingNight[] {
@@ -286,7 +416,7 @@ function case2Baseline(history: TimingNight[], tonight: Date): number | null {
     .sort((a, b) => b.onset.getTime() - a.onset.getTime())
     .slice(0, 7);
   if (pool.length < 3) return null;
-  return weightedMean(pool.map((night) => ({ value: night.delayMin!, w: weightOf(night, tonight) })));
+  return weightedMean(pool.map((night) => weightedItem(night.delayMin!, weightOf(night, tonight))));
 }
 
 function case2Raw(history: TimingNight[], tonight: Date): number | null {
@@ -300,7 +430,7 @@ function case2Raw(history: TimingNight[], tonight: Date): number | null {
   const tonightBed = bedtimeMinutes(tonight);
   const nearBedtime = pool.some((night) => Math.abs(bedtimeMinutes(night.onset) - tonightBed) <= 90);
   if (!nearBedtime) return null;
-  return weightedMean(pool.map((night) => ({ value: night.delayMin!, w: weightOf(night, tonight) })));
+  return weightedMean(pool.map((night) => weightedItem(night.delayMin!, weightOf(night, tonight))));
 }
 
 function case3Raw(history: TimingNight[], tonight: Date): number | null {
@@ -310,8 +440,8 @@ function case3Raw(history: TimingNight[], tonight: Date): number | null {
   if (nEff(weights) < 5) return null;
   const beds = pool.map((night) => bedtimeMinutes(night.onset));
   if (valueRange(beds) < 90) return null;
-  const bedItems = pool.map((night, index) => ({ value: beds[index], w: weights[index] }));
-  const delayItems = pool.map((night, index) => ({ value: night.delayMin!, w: weights[index] }));
+  const bedItems = beds.map((bed, index) => weightedItem(bed, weights[index]));
+  const delayItems = pool.map((night, index) => weightedItem(night.delayMin!, weights[index]));
   const bedCenter = weightedMean(bedItems);
   const delayCenter = weightedMean(delayItems);
   if (bedCenter == null || delayCenter == null) return null;
@@ -331,7 +461,7 @@ function case3Raw(history: TimingNight[], tonight: Date): number | null {
   return delayCenter + beta * (tonightBed - bedCenter);
 }
 
-function theilSen(points: { d: number; t: number }[]): { slope: number; intercept: number } | null {
+function theilSen(points: DayPoint[]): LineFit | null {
   const slopes: number[] = [];
   for (let i = 0; i < points.length; i++) {
     for (let j = i + 1; j < points.length; j++) {
@@ -343,7 +473,7 @@ function theilSen(points: { d: number; t: number }[]): { slope: number; intercep
   if (!slopes.length) return null;
   const slope = median(slopes);
   const intercept = median(points.map((point) => point.t - slope * point.d));
-  return { slope, intercept };
+  return lineFit(slope, intercept);
 }
 
 function case4Raw(history: TimingNight[], tonight: Date): number | null {
@@ -354,10 +484,7 @@ function case4Raw(history: TimingNight[], tonight: Date): number | null {
   const latest = pool.reduce((best, night) => (night.onset.getTime() > best.onset.getTime() ? night : best));
   if (ageDays(latest.onset, tonight) > 3) return null;
   const origin = minOf(days);
-  const points = pool.map((night) => ({
-    d: calendarDayNumber(night.onset) - origin,
-    t: night.delayMin!
-  }));
+  const points = pool.map((night) => dayPoint(calendarDayNumber(night.onset) - origin, night.delayMin!));
   const fit = theilSen(points);
   if (!fit || fit.slope < 3 || fit.slope > 20) return null;
   const close = points.filter((point) => Math.abs(point.t - (fit.intercept + fit.slope * point.d)) <= 30).length;
@@ -421,7 +548,7 @@ function replayMae(
   history: TimingNight[],
   predict: (prior: TimingNight[], at: Date) => number | null,
   baseline: (prior: TimingNight[], at: Date) => number | null
-): { maeModel: number; maeBase: number; n: number } | null {
+): ReplayScore | null {
   const modelErrors: number[] = [];
   const baseErrors: number[] = [];
   for (const target of history) {
@@ -434,7 +561,7 @@ function replayMae(
     baseErrors.push(Math.abs(base - target.delayMin));
   }
   if (modelErrors.length < REPLAY_MIN_NIGHTS) return null;
-  return { maeModel: mean(modelErrors), maeBase: mean(baseErrors), n: modelErrors.length };
+  return replayScore(mean(modelErrors), mean(baseErrors), modelErrors.length);
 }
 
 function improvesOn(history: TimingNight[], predict: (prior: TimingNight[], at: Date) => number | null, baseline: (prior: TimingNight[], at: Date) => number | null): boolean {
@@ -459,28 +586,28 @@ function case4Delay(history: TimingNight[], tonight: Date, pointOnly: boolean): 
 }
 
 function weightedSse(nights: TimingNight[], tonight: Date): number {
-  const items = nights.map((night) => ({ value: night.delayMin!, w: weightOf(night, tonight) }));
+  const items = nights.map((night) => weightedItem(night.delayMin!, weightOf(night, tonight)));
   const center = weightedMean(items);
   if (center == null) return Infinity;
   return items.reduce((sum, item) => sum + item.w * (item.value - center) ** 2, 0);
 }
 
-function case5Detail(history: TimingNight[], tonight: Date): { selected: number; other: number } | null {
+function case5Detail(history: TimingNight[], tonight: Date): GroupMeans | null {
   const pool = wetPool(history, tonight, 28);
   if (pool.length < 12) return null;
   const sseOne = weightedSse(pool, tonight);
   const sorted = [...pool].sort((a, b) => a.delayMin! - b.delayMin!);
-  let best: { older: TimingNight[]; newer: TimingNight[]; sse: number } | null = null;
+  let best: DelaySplit | null = null;
   for (let cut = 4; cut <= sorted.length - 4; cut++) {
     const low = sorted.slice(0, cut);
     const high = sorted.slice(cut);
     const sse = weightedSse(low, tonight) + weightedSse(high, tonight);
-    if (!best || sse < best.sse) best = { older: low, newer: high, sse };
+    if (!best || sse < best.sse) best = delaySplit(low, high, sse);
   }
   if (!best || best.sse > 0.6 * sseOne) return null;
 
-  const lowMean = weightedMean(best.older.map((night) => ({ value: night.delayMin!, w: weightOf(night, tonight) })));
-  const highMean = weightedMean(best.newer.map((night) => ({ value: night.delayMin!, w: weightOf(night, tonight) })));
+  const lowMean = weightedMean(best.older.map((night) => weightedItem(night.delayMin!, weightOf(night, tonight))));
+  const highMean = weightedMean(best.newer.map((night) => weightedItem(night.delayMin!, weightOf(night, tonight))));
   if (lowMean == null || highMean == null || Math.abs(highMean - lowMean) < 90) return null;
   if (valueRange(best.older.map((night) => night.delayMin!)) > 60) return null;
   if (valueRange(best.newer.map((night) => night.delayMin!)) > 60) return null;
@@ -489,8 +616,8 @@ function case5Detail(history: TimingNight[], tonight: Date): { selected: number;
   const recentHigh = best.newer.filter((night) => inWindow(night, tonight, 14)).length;
   if (recentLow < 2 || recentHigh < 2) return null;
 
-  const lowBed = weightedMean(best.older.map((night) => ({ value: bedtimeMinutes(night.onset), w: weightOf(night, tonight) })));
-  const highBed = weightedMean(best.newer.map((night) => ({ value: bedtimeMinutes(night.onset), w: weightOf(night, tonight) })));
+  const lowBed = weightedMean(best.older.map((night) => weightedItem(bedtimeMinutes(night.onset), weightOf(night, tonight))));
+  const highBed = weightedMean(best.newer.map((night) => weightedItem(bedtimeMinutes(night.onset), weightOf(night, tonight))));
   if (lowBed == null || highBed == null || Math.abs(highBed - lowBed) < 60) return null;
 
   const tonightBed = bedtimeMinutes(tonight);
@@ -501,7 +628,7 @@ function case5Detail(history: TimingNight[], tonight: Date): { selected: number;
   const otherMean = pickLow ? highMean : lowMean;
   if (Math.abs(tonightBed - selectedBed) > 60) return null;
 
-  const bandwidth = Math.max(30, weightedStd(selectedNights.map((night) => ({ value: bedtimeMinutes(night.onset), w: weightOf(night, tonight) }))));
+  const bandwidth = Math.max(30, weightedStd(selectedNights.map((night) => weightedItem(bedtimeMinutes(night.onset), weightOf(night, tonight)))));
   const context = history.filter(
     (night) => inWindow(night, tonight, 28) && Math.abs(bedtimeMinutes(night.onset) - selectedBed) <= bandwidth
   );
@@ -515,7 +642,7 @@ function case5Detail(history: TimingNight[], tonight: Date): { selected: number;
   });
   const pContext = (1 + wetSum) / (2 + weightSum);
   if (pContext < 0.8) return null;
-  return { selected: selectedMean, other: otherMean };
+  return groupMeans(selectedMean, otherMean);
 }
 
 function case5Raw(history: TimingNight[], tonight: Date): number | null {
@@ -617,7 +744,7 @@ function case1Point(history: TimingNight[], tonight: Date): number | null {
   const sigma = populationStd(delays);
   if (sigma == null || sigma > 60) return null;
 
-  const samples = streak.map((night, index) => ({ delta: night.delayMin!, w: index < 3 ? 2 : 1 }));
+  const samples = streak.map((night, index) => deltaWeight(night.delayMin!, index < 3 ? 2 : 1));
   const sorted = [...samples].sort((a, b) => a.delta - b.delta);
   let bestStart = sorted[0].delta;
   let bestWeight = -1;
@@ -658,8 +785,8 @@ function case7Raw(history: TimingNight[], tonight: Date): number | null {
   if (valueRange(weekendNights.map((night) => night.delayMin!)) > 60) return null;
   if (valueRange(weekdayNights.map((night) => night.delayMin!)) > 60) return null;
 
-  const weekendMean = weightedMean(weekendNights.map((night) => ({ value: night.delayMin!, w: weightOf(night, tonight) })));
-  const weekdayMean = weightedMean(weekdayNights.map((night) => ({ value: night.delayMin!, w: weightOf(night, tonight) })));
+  const weekendMean = weightedMean(weekendNights.map((night) => weightedItem(night.delayMin!, weightOf(night, tonight))));
+  const weekdayMean = weightedMean(weekdayNights.map((night) => weightedItem(night.delayMin!, weightOf(night, tonight))));
   if (weekendMean == null || weekdayMean == null || Math.abs(weekendMean - weekdayMean) < 45) return null;
 
   const tonightWeekend = isWeekendSession(tonight);
@@ -723,17 +850,17 @@ function case8Raw(history: TimingNight[], tonight: Date): number | null {
   if (matched.length < 8) return null;
 
   const sseOne = weightedSse(matched, tonight);
-  let best: { older: TimingNight[]; recent: TimingNight[]; sse: number } | null = null;
+  let best: RecentSplit | null = null;
   for (let cut = 4; cut <= matched.length - 4; cut++) {
     const older = matched.slice(0, cut);
     const recent = matched.slice(cut);
     const sse = weightedSse(older, tonight) + weightedSse(recent, tonight);
-    if (!best || sse < best.sse) best = { older, recent, sse };
+    if (!best || sse < best.sse) best = recentSplit(older, recent, sse);
   }
   if (!best || best.sse > 0.6 * sseOne) return null;
 
-  const recentMean = weightedMean(best.recent.map((night) => ({ value: night.delayMin!, w: weightOf(night, tonight) })));
-  const olderMean = weightedMean(best.older.map((night) => ({ value: night.delayMin!, w: weightOf(night, tonight) })));
+  const recentMean = weightedMean(best.recent.map((night) => weightedItem(night.delayMin!, weightOf(night, tonight))));
+  const olderMean = weightedMean(best.older.map((night) => weightedItem(night.delayMin!, weightOf(night, tonight))));
   if (recentMean == null || olderMean == null || Math.abs(recentMean - olderMean) < 60) return null;
   if (valueRange(best.recent.map((night) => night.delayMin!)) > 60) return null;
   if (valueRange(best.older.map((night) => night.delayMin!)) > 60) return null;
@@ -744,7 +871,7 @@ function case8Raw(history: TimingNight[], tonight: Date): number | null {
   if (best.recent.filter((night) => ageDays(night.onset, tonight) <= 10).length < 4) return null;
 
   const origin = calendarDayNumber(best.recent[0].onset);
-  const fit = theilSen(best.recent.map((night) => ({ d: calendarDayNumber(night.onset) - origin, t: night.delayMin! })));
+  const fit = theilSen(best.recent.map((night) => dayPoint(calendarDayNumber(night.onset) - origin, night.delayMin!)));
   if (fit && Math.abs(fit.slope) >= 3) return null;
   return recentMean;
 }
@@ -757,14 +884,11 @@ function case8Delay(history: TimingNight[], tonight: Date, pointOnly: boolean): 
   return raw;
 }
 
-function rankCandidates(
-  history: TimingNight[],
-  eligible: { caseId: number; delayMin: number; point: (prior: TimingNight[], at: Date) => number | null }[]
-): { caseId: number; delayMin: number } {
+function rankCandidates(history: TimingNight[], eligible: CaseCandidate[]): CaseCandidate {
   if (eligible.length === 1) return eligible[0];
 
   const errors = new Map<number, Map<number, number>>();
-  for (const candidate of eligible) errors.set(candidate.caseId, new Map());
+  for (const candidate of eligible) errors.set(candidate.caseId, new Map<number, number>());
 
   const targets = history.filter(isTimingWet);
   targets.forEach((target, index) => {
@@ -784,7 +908,7 @@ function rankCandidates(
 
   const scored = eligible.map((candidate) => {
     const mae = mean(shared.map((index) => errors.get(candidate.caseId)!.get(index)!));
-    return { ...candidate, mae };
+    return makeCandidate(candidate.caseId, candidate.delayMin, candidate.point, mae);
   });
   let bestMae = scored[0].mae;
   for (let i = 1; i < scored.length; i++) {
@@ -808,24 +932,26 @@ export function selectAlternateCase(
   const risk = riskAssessment(history, tonightOnset);
   if (!risk.passes) return null;
 
-  const specs: { caseId: number; strict: () => number | null; point: (prior: TimingNight[], at: Date) => number | null }[] = [
-    { caseId: 2, strict: () => case2Raw(history, tonightOnset), point: case2Raw },
-    { caseId: 3, strict: () => case3Delay(history, tonightOnset, false), point: (prior, at) => case3Delay(prior, at, true) },
-    { caseId: 4, strict: () => case4Delay(history, tonightOnset, false), point: (prior, at) => case4Delay(prior, at, true) },
-    { caseId: 5, strict: () => case5Delay(history, tonightOnset, false), point: case5Raw },
-    { caseId: 6, strict: () => case6Raw(history, tonightOnset), point: case6Raw },
-    { caseId: 7, strict: () => case7Delay(history, tonightOnset, false), point: (prior, at) => case7Delay(prior, at, true) },
-    { caseId: 8, strict: () => case8Delay(history, tonightOnset, false), point: case8Raw }
-  ];
+  const point3 = (prior: TimingNight[], at: Date): number | null => case3Delay(prior, at, true);
+  const point4 = (prior: TimingNight[], at: Date): number | null => case4Delay(prior, at, true);
+  const point7 = (prior: TimingNight[], at: Date): number | null => case7Delay(prior, at, true);
+  const specs: CaseSpec[] = [];
+  specs.push(makeSpec(2, (): number | null => case2Raw(history, tonightOnset), case2Raw));
+  specs.push(makeSpec(3, (): number | null => case3Delay(history, tonightOnset, false), point3));
+  specs.push(makeSpec(4, (): number | null => case4Delay(history, tonightOnset, false), point4));
+  specs.push(makeSpec(5, (): number | null => case5Delay(history, tonightOnset, false), case5Raw));
+  specs.push(makeSpec(6, (): number | null => case6Raw(history, tonightOnset), case6Raw));
+  specs.push(makeSpec(7, (): number | null => case7Delay(history, tonightOnset, false), point7));
+  specs.push(makeSpec(8, (): number | null => case8Delay(history, tonightOnset, false), case8Raw));
 
-  const eligible: { caseId: number; delayMin: number; point: (prior: TimingNight[], at: Date) => number | null }[] = [];
+  const eligible: CaseCandidate[] = [];
   for (const spec of specs) {
     const delayMin = acceptDelay(spec.strict());
     if (delayMin == null) continue;
-    eligible.push({ caseId: spec.caseId, delayMin, point: spec.point });
+    eligible.push(makeCandidate(spec.caseId, delayMin, spec.point, 0));
   }
   if (!eligible.length) return null;
 
   const chosen = rankCandidates(history, eligible);
-  return { caseId: chosen.caseId, delayMin: chosen.delayMin, confidence: Math.max(0, Math.min(1, risk.p)) };
+  return alternatePrediction(chosen.caseId, chosen.delayMin, Math.max(0, Math.min(1, risk.p)));
 }

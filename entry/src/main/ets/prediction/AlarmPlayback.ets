@@ -38,13 +38,15 @@ export class AlarmPlayback {
     const player = await media.createAVPlayer();
     AlarmPlayback.player = player;
     const initialized = AlarmPlayback.waitFor(player, 'initialized');
-    player.fdSrc = { fd: fd, offset: offset, length: length };
+    const fileSource: media.AVFileDescriptor = { fd: fd, offset: offset, length: length };
+    player.fdSrc = fileSource;
     try {
       await initialized;
-      player.audioRendererInfo = {
+      const rendererInfo: audio.AudioRendererInfo = {
         usage: audio.StreamUsage.STREAM_USAGE_ALARM,
         rendererFlags: 0
       };
+      player.audioRendererInfo = rendererInfo;
       await player.prepare();
       await AlarmVolume.applyFraction(volume);
       player.loop = loop;

@@ -15,7 +15,8 @@ export interface SleepHistoryEvents {
 }
 
 function event(type: OopsieEventType, date: Date): OopsieEvent {
-  return { type: type, value: 0, date: date, extraInfo: '' };
+  const created: OopsieEvent = { type: type, value: 0, date: date, extraInfo: '' };
+  return created;
 }
 
 /**
@@ -42,5 +43,6 @@ export function sleepEventsFromRecords(cycles: Cycle[], leaks: Leak[], logs: Sle
       stops.push(event(OopsieEventType.STOP, logs[i].date));
     }
   }
-  return { starts: starts, leaks: leakEvents, stops: stops };
+  const history: SleepHistoryEvents = { starts: starts, leaks: leakEvents, stops: stops };
+  return history;
 }

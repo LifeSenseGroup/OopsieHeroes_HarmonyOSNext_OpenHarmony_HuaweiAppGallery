@@ -209,10 +209,11 @@ export class PredictionSession {
       if (wait <= 0) {
         continue;
       }
-      const timer = setTimeout(() => {
+      const timerId = setTimeout(() => {
         void PredictionSession.fire(phase);
       }, wait);
-      PredictionSession.timers.push({ id: timer });
+      const timer: PhaseTimer = { id: timerId };
+      PredictionSession.timers.push(timer);
     }
   }
 

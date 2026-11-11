@@ -8,7 +8,8 @@ function atLocal(year: number, month: number, day: number, hour: number, minute:
 }
 
 function ev(type: OopsieEventType, date: Date): OopsieEvent {
-  return { type: type, value: 0, date: date, extraInfo: '' };
+  const created: OopsieEvent = { type: type, value: 0, date: date, extraInfo: '' };
+  return created;
 }
 
 function sleep(date: Date): OopsieEvent {

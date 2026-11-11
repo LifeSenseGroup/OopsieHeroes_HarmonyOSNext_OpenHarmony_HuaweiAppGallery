@@ -15,14 +15,35 @@ export interface PlannedPhase {
 export function planStaircase(bedtime: Date, delayMin: number, now: Date): PlannedPhase[] {
   const advanced = advanceOnsetUntilFutureTarget(bedtime, delayMin, now, 14);
   if (advanced == null) {
-    return [];
+    const none: PlannedPhase[] = [];
+    return none;
   }
-  const specs: PlannedPhase[] = [
-    { id: 'whisper', atMs: advanced.targetMs - 15 * 60000, volume: 0.25, durationMs: 15000, loop: false },
-    { id: 'nudge', atMs: advanced.targetMs - 7 * 60000, volume: 0.8, durationMs: 30000, loop: false },
-    { id: 'wake', atMs: advanced.targetMs, volume: 1, durationMs: 0, loop: true }
-  ];
   const pending: PlannedPhase[] = [];
+  const whisper: PlannedPhase = {
+    id: 'whisper',
+    atMs: advanced.targetMs - 15 * 60000,
+    volume: 0.25,
+    durationMs: 15000,
+    loop: false
+  };
+  const nudge: PlannedPhase = {
+    id: 'nudge',
+    atMs: advanced.targetMs - 7 * 60000,
+    volume: 0.8,
+    durationMs: 30000,
+    loop: false
+  };
+  const wake: PlannedPhase = {
+    id: 'wake',
+    atMs: advanced.targetMs,
+    volume: 1,
+    durationMs: 0,
+    loop: true
+  };
+  const specs: PlannedPhase[] = [];
+  specs.push(whisper);
+  specs.push(nudge);
+  specs.push(wake);
   for (let i = 0; i < specs.length; i++) {
     if (specs[i].atMs <= now.getTime()) {
       continue;

@@ -4,41 +4,45 @@ import { groupSleepStartIndexes, selectAlternateCase } from './PredictionCases';
 
 export type AlarmMode = 'PREDICTIVE' | 'REACTIVE';
 
-export type AlarmState = {
+export interface AlarmConfidence {
+  sampleCount: number;
+  stdDevMinutes: number | null;
+  dryStreakNights: number;
+}
+
+export interface AlarmDebug {
+  weightedDeltaMinutes: number | null;
+  firstEventDeltasMinutes: number[];
+  refillDeltasMinutes: number[];
+  reason: string;
+}
+
+export interface AlarmState {
   alarm_mode: AlarmMode;
   /** Predicted first-leak time (T): full wake phase fires here; whisper/nudge are T−15 / T−7. */
   target_alarm_timestamp: Date | null;
   refill_target_alarm_timestamp: Date | null;
   /** Minutes after Go to sleep until the predicted first leak / full wake alarm (T). */
   predicted_toilet_visit_minutes_after_sleep: number | null;
-  confidence: {
-    sampleCount: number;
-    stdDevMinutes: number | null;
-    dryStreakNights: number;
-  };
-  debug: {
-    weightedDeltaMinutes: number | null;
-    firstEventDeltasMinutes: number[];
-    refillDeltasMinutes: number[];
-    reason: string;
-  };
+  confidence: AlarmConfidence;
+  debug: AlarmDebug;
   /** 1–9 when a case produced T. Absent in reactive mode. */
   case_id?: number | null;
-};
+}
 
-export type PredictiveState = {
+export interface PredictiveState {
   shouldPredict: boolean;
   targetTime: number | null;
   confidence: number;
   predictedToiletVisitMinutesAfterSleep: number | null;
   /** 1–9 when a case supplied the alarm. */
   caseId?: number;
-};
+}
 
-type NightRecord = {
+interface NightRecord {
   onset: Date;
   leaks: OopsieEvent[];
-};
+}
 
 const MAX_NIGHTS = 8;
 const PREDICTION_LEAD_MINUTES = 15;
@@ -50,10 +54,20 @@ const SLIDING_WINDOW_MINUTES = 60;
 const CONFIDENCE_THRESHOLD = 0.6;
 const RECENT_DOUBLE_WEIGHT_COUNT = 3;
 
-type WeightedDeltaSample = {
+interface WeightedDeltaSample {
   deltaMinutes: number;
   weight: number;
-};
+}
+
+interface WindowPeak {
+  start: number;
+  peakWeight: number;
+}
+
+interface FutureTarget {
+  onset: Date;
+  targetMs: number;
+}
 
 interface StartStamp {
   s: OopsieEvent;
@@ -63,6 +77,106 @@ interface StartStamp {
 interface LeakStamp {
   event: OopsieEvent;
   at: Date;
+}
+
+function startStamp(s: OopsieEvent, t: number): StartStamp {
+  const stamp: StartStamp = { s: s, t: t };
+  return stamp;
+}
+
+function leakStamp(event: OopsieEvent, at: Date): LeakStamp {
+  const stamp: LeakStamp = { event: event, at: at };
+  return stamp;
+}
+
+function nightRecord(onset: Date, leaks: OopsieEvent[]): NightRecord {
+  const record: NightRecord = { onset: onset, leaks: leaks };
+  return record;
+}
+
+function weightedSample(deltaMinutes: number, weight: number): WeightedDeltaSample {
+  const sample: WeightedDeltaSample = { deltaMinutes: deltaMinutes, weight: weight };
+  return sample;
+}
+
+function windowPeak(start: number, peakWeight: number): WindowPeak {
+  const peak: WindowPeak = { start: start, peakWeight: peakWeight };
+  return peak;
+}
+
+function futureTarget(onset: Date, targetMs: number): FutureTarget {
+  const target: FutureTarget = { onset: onset, targetMs: targetMs };
+  return target;
+}
+
+function inactivePrediction(confidence: number): PredictiveState {
+  const state: PredictiveState = {
+    shouldPredict: false,
+    targetTime: null,
+    confidence: confidence,
+    predictedToiletVisitMinutesAfterSleep: null
+  };
+  return state;
+}
+
+function activePrediction(targetTime: number, confidence: number, minutes: number, caseId: number): PredictiveState {
+  const state: PredictiveState = {
+    shouldPredict: true,
+    targetTime: targetTime,
+    confidence: confidence,
+    predictedToiletVisitMinutesAfterSleep: minutes,
+    caseId: caseId
+  };
+  return state;
+}
+
+function alarmConfidence(sampleCount: number, stdDevMinutes: number | null, dryStreakNights: number): AlarmConfidence {
+  const confidence: AlarmConfidence = {
+    sampleCount: sampleCount,
+    stdDevMinutes: stdDevMinutes,
+    dryStreakNights: dryStreakNights
+  };
+  return confidence;
+}
+
+function alarmDebug(
+  weightedDeltaMinutes: number | null,
+  firstEventDeltasMinutes: number[],
+  refillDeltasMinutes: number[],
+  reason: string
+): AlarmDebug {
+  const debug: AlarmDebug = {
+    weightedDeltaMinutes: weightedDeltaMinutes,
+    firstEventDeltasMinutes: firstEventDeltasMinutes,
+    refillDeltasMinutes: refillDeltasMinutes,
+    reason: reason
+  };
+  return debug;
+}
+
+function alarmState(
+  mode: AlarmMode,
+  target: Date | null,
+  minutes: number | null,
+  sampleCount: number,
+  stdDevMinutes: number | null,
+  dryStreakNights: number,
+  weightedDeltaMinutes: number | null,
+  firstEventDeltasMinutes: number[],
+  refillDeltasMinutes: number[],
+  reason: string,
+  caseId: number | null
+): AlarmState {
+  const state: AlarmState = {
+    alarm_mode: mode,
+    target_alarm_timestamp: target,
+    refill_target_alarm_timestamp: null,
+    predicted_toilet_visit_minutes_after_sleep: minutes,
+    confidence: alarmConfidence(sampleCount, stdDevMinutes, dryStreakNights),
+    debug: alarmDebug(weightedDeltaMinutes, firstEventDeltasMinutes, refillDeltasMinutes, reason),
+    case_id: caseId
+  };
+  return state;
 }
 
 function asValidDate(value: Date | null | undefined): Date | null {
@@ -120,7 +234,7 @@ export function anchorStartsForPredictiveLeakTiming(
   for (let i = 0; i < starts.length; i++) {
     const t = eventOnsetMs(starts[i]);
     if (t != null) {
-      withT.push({ s: starts[i], t: t });
+      withT.push(startStamp(starts[i], t));
     }
   }
   withT.sort((a, b) => b.t - a.t);
@@ -167,7 +281,7 @@ function buildNightRecords(
   for (let i = 0; i < leaks.length; i++) {
     const at = asValidDate(leaks[i].date);
     if (at != null) {
-      leakEvents.push({ event: leaks[i], at: at });
+      leakEvents.push(leakStamp(leaks[i], at));
     }
   }
   leakEvents.sort((a, b) => a.at.getTime() - b.at.getTime());
@@ -180,7 +294,10 @@ function buildNightRecords(
   }
   stopTimes.sort((a, b) => a - b);
 
-  if (!startTimes.length) return [];
+  if (!startTimes.length) {
+    const none: NightRecord[] = [];
+    return none;
+  }
 
   // Stop alarm, then Go to sleep again, stays one night. Wake up, or the next
   // evening's Go to sleep, starts another. Leaks in the night share the first bedtime.
@@ -193,14 +310,15 @@ function buildNightRecords(
     const onset = startTimes[group[0]];
     const nextOnset = startTimes[group[group.length - 1] + 1] ?? null;
     const leaksForNight = leakEvents
-      .filter(({ at }) => {
+      .filter((stamp: LeakStamp): boolean => {
+        const at = stamp.at;
         const leakMs = at.getTime();
         if (leakMs < onset.getTime()) return false;
         if (nextOnset && leakMs >= nextOnset.getTime()) return false;
         return true;
       })
-      .map(({ event }) => event);
-    return { onset, leaks: leaksForNight };
+      .map((stamp: LeakStamp): OopsieEvent => stamp.event);
+    return nightRecord(onset, leaksForNight);
   });
 }
 
@@ -290,7 +408,7 @@ function leakDate(event: OopsieEvent): Date | null {
 }
 
 function conservativeReactiveState(confidence: number): PredictiveState {
-  return { shouldPredict: false, targetTime: null, confidence, predictedToiletVisitMinutesAfterSleep: null };
+  return inactivePrediction(confidence);
 }
 
 /** Human-readable offset for mission copy, e.g. "12h 30m" or "45 min". */
@@ -335,7 +453,7 @@ export function predictionBoxText(totalMinutes: number): string {
   return `Toilet visit ~${formatMinutesAfterSleep(totalMinutes)} after going to sleep`;
 }
 
-function findPeakSlidingWindow(samples: WeightedDeltaSample[]): { start: number; peakWeight: number } | null {
+function findPeakSlidingWindow(samples: WeightedDeltaSample[]): WindowPeak | null {
   if (!samples.length) return null;
   const sorted = samples.slice().sort((a, b) => a.deltaMinutes - b.deltaMinutes);
 
@@ -362,7 +480,7 @@ function findPeakSlidingWindow(samples: WeightedDeltaSample[]): { start: number;
     runningWeight -= sorted[left].weight;
   }
 
-  return bestWeight > 0 ? { start: bestStart, peakWeight: bestWeight } : null;
+  return bestWeight > 0 ? windowPeak(bestStart, bestWeight) : null;
 }
 
 function medianMinutesIntoDay(dates: Date[]): number | null {
@@ -421,7 +539,7 @@ export function advanceOnsetUntilFutureTarget(
   predictedLeakMinutesAfterSleep: number,
   now: Date,
   maxDays = 14
-): { onset: Date; targetMs: number } | null {
+): FutureTarget | null {
   const candidate = new Date(onset.getTime());
   for (let day = 0; day <= maxDays; day++) {
     if (day > 0) {
@@ -429,7 +547,7 @@ export function advanceOnsetUntilFutureTarget(
     }
     const targetMs = candidate.getTime() + predictedLeakMinutesAfterSleep * 60_000;
     if (targetMs > now.getTime()) {
-      return { onset: new Date(candidate.getTime()), targetMs };
+      return futureTarget(new Date(candidate.getTime()), targetMs);
     }
   }
   return null;
@@ -471,10 +589,7 @@ function getCase1PredictiveState(
     if (!Number.isFinite(deltaMinutes) || deltaMinutes <= 0 || deltaMinutes > 12 * 60) {
       continue;
     }
-    weightedSamples.push({
-      deltaMinutes: deltaMinutes,
-      weight: nightIndex < RECENT_DOUBLE_WEIGHT_COUNT ? 2 : 1
-    });
+    weightedSamples.push(weightedSample(deltaMinutes, nightIndex < RECENT_DOUBLE_WEIGHT_COUNT ? 2 : 1));
   }
 
   const firstEventDeltas = weightedSamples.map((sample) => sample.deltaMinutes);
@@ -510,13 +625,7 @@ function getCase1PredictiveState(
   const advanced = advanceOnsetUntilFutureTarget(onsetForTarget, peakWindow.start, now);
   if (!advanced) return conservativeReactiveState(confidence);
 
-  return {
-    shouldPredict: true,
-    targetTime: advanced.targetMs,
-    confidence,
-    predictedToiletVisitMinutesAfterSleep: peakWindow.start,
-    caseId: 1
-  };
+  return activePrediction(advanced.targetMs, confidence, peakWindow.start, 1);
 }
 
 function resolveAlternateOnset(
@@ -568,7 +677,7 @@ function buildDetailedNights(starts: OopsieEvent[], leaks: OopsieEvent[], stops:
       }
     }
     const wet = records[i].leaks.length > 0;
-    detailed.push({
+    const night: DetailedNight = {
       onset: records[i].onset,
       delayMin: delayMin,
       wet: wet,
@@ -576,7 +685,8 @@ function buildDetailedNights(starts: OopsieEvent[], leaks: OopsieEvent[], stops:
       dry: !wet && wakeMs != null,
       wakeMs: wakeMs,
       firstValidLeakMs: firstValidLeakMs
-    });
+    };
+    detailed.push(night);
   }
   return detailed;
 }
@@ -705,13 +815,7 @@ function getCase9PredictiveState(
   if (!advanced) {
     return conservativeReactiveState(0);
   }
-  return {
-    shouldPredict: true,
-    targetTime: advanced.targetMs,
-    confidence: Math.min(1, retainedDelays.length / 8),
-    predictedToiletVisitMinutesAfterSleep: delay,
-    caseId: 9
-  };
+  return activePrediction(advanced.targetMs, Math.min(1, retainedDelays.length / 8), delay, 9);
 }
 
 export function getPredictiveState(
@@ -733,13 +837,7 @@ export function getPredictiveState(
     if (alternate) {
       const advanced = advanceOnsetUntilFutureTarget(tonightOnset, alternate.delayMin, now);
       if (advanced) {
-        return {
-          shouldPredict: true,
-          targetTime: advanced.targetMs,
-          confidence: alternate.confidence,
-          predictedToiletVisitMinutesAfterSleep: alternate.delayMin,
-          caseId: alternate.caseId
-        };
+        return activePrediction(advanced.targetMs, alternate.confidence, alternate.delayMin, alternate.caseId);
       }
     }
   }
@@ -771,46 +869,39 @@ export function computeAlarmState(
     .slice(0, MAX_NIGHTS);
 
   if (!nights.length) {
+    const noDeltas: number[] = [];
     if (predictiveState.shouldPredict && predictiveState.targetTime != null) {
       const alternateCase = predictiveState.caseId != null && predictiveState.caseId > 1;
-      return {
-        alarm_mode: 'PREDICTIVE',
-        target_alarm_timestamp: new Date(predictiveState.targetTime),
-        refill_target_alarm_timestamp: null,
-        predicted_toilet_visit_minutes_after_sleep: predictiveState.predictedToiletVisitMinutesAfterSleep,
-        confidence: {
-          sampleCount: 0,
-          stdDevMinutes: null,
-          dryStreakNights: 0
-        },
-        debug: {
-          weightedDeltaMinutes: predictiveState.targetTime,
-          firstEventDeltasMinutes: [],
-          refillDeltasMinutes: [],
-          reason: alternateCase
-            ? `Case ${predictiveState.caseId} timing model supports a predictive alarm ${predictiveState.predictedToiletVisitMinutesAfterSleep} min after sleep.`
-            : `High-density cluster confidence ${(predictiveState.confidence * 100).toFixed(0)}% supports predictive pre-wake window (projected from history until Go to sleep).`
-        },
-        case_id: predictiveState.caseId ?? null
-      };
+      const reason = alternateCase
+        ? `Case ${predictiveState.caseId} timing model supports a predictive alarm ${predictiveState.predictedToiletVisitMinutesAfterSleep} min after sleep.`
+        : `High-density cluster confidence ${(predictiveState.confidence * 100).toFixed(0)}% supports predictive pre-wake window (projected from history until Go to sleep).`;
+      return alarmState(
+        'PREDICTIVE',
+        new Date(predictiveState.targetTime),
+        predictiveState.predictedToiletVisitMinutesAfterSleep,
+        0,
+        null,
+        0,
+        predictiveState.targetTime,
+        noDeltas,
+        noDeltas,
+        reason,
+        predictiveState.caseId ?? null
+      );
     }
-    return {
-      alarm_mode: 'REACTIVE',
-      target_alarm_timestamp: null,
-      refill_target_alarm_timestamp: null,
-      predicted_toilet_visit_minutes_after_sleep: null,
-      confidence: {
-        sampleCount: 0,
-        stdDevMinutes: null,
-        dryStreakNights: 0
-      },
-      debug: {
-        weightedDeltaMinutes: null,
-        firstEventDeltasMinutes: [],
-        refillDeltasMinutes: [],
-        reason: 'No valid sleep-onset records.'
-      }
-    };
+    return alarmState(
+      'REACTIVE',
+      null,
+      null,
+      0,
+      null,
+      0,
+      null,
+      noDeltas,
+      noDeltas,
+      'No valid sleep-onset records.',
+      null
+    );
   }
 
   const computationNights = getPredictionComputationNights(nights, stops);
@@ -854,26 +945,22 @@ export function computeAlarmState(
 
   if (predictiveState.shouldPredict && predictiveState.targetTime != null) {
     const alternateCase = predictiveState.caseId != null && predictiveState.caseId > 1;
-    return {
-      alarm_mode: 'PREDICTIVE',
-      target_alarm_timestamp: new Date(predictiveState.targetTime),
-      refill_target_alarm_timestamp: null,
-      predicted_toilet_visit_minutes_after_sleep: predictiveState.predictedToiletVisitMinutesAfterSleep,
-      confidence: {
-        sampleCount: firstEventDeltas.length,
-        stdDevMinutes: sigma,
-        dryStreakNights: dryStreak
-      },
-      debug: {
-        weightedDeltaMinutes: predictiveState.targetTime,
-        firstEventDeltasMinutes: firstEventDeltas,
-        refillDeltasMinutes: refillDeltas,
-        reason: alternateCase
-          ? `Case ${predictiveState.caseId} timing model supports a predictive alarm ${predictiveState.predictedToiletVisitMinutesAfterSleep} min after sleep.`
-          : `High-density cluster confidence ${(predictiveState.confidence * 100).toFixed(0)}% supports predictive pre-wake window (projected from history until Go to sleep).`
-      },
-      case_id: predictiveState.caseId ?? null
-    };
+    const reason = alternateCase
+      ? `Case ${predictiveState.caseId} timing model supports a predictive alarm ${predictiveState.predictedToiletVisitMinutesAfterSleep} min after sleep.`
+      : `High-density cluster confidence ${(predictiveState.confidence * 100).toFixed(0)}% supports predictive pre-wake window (projected from history until Go to sleep).`;
+    return alarmState(
+      'PREDICTIVE',
+      new Date(predictiveState.targetTime),
+      predictiveState.predictedToiletVisitMinutesAfterSleep,
+      firstEventDeltas.length,
+      sigma,
+      dryStreak,
+      predictiveState.targetTime,
+      firstEventDeltas,
+      refillDeltas,
+      reason,
+      predictiveState.caseId ?? null
+    );
   }
 
   // Physiological rationale:
@@ -883,83 +970,67 @@ export function computeAlarmState(
   //   crossing the threshold that usually leads to a leak.
   if (!hasMinimumConsecutiveLeakNights(nights, stops)) {
     const streakLen = getConsecutiveLeakStreakFromNewest(nights, stops).length;
-    return {
-      alarm_mode: 'REACTIVE',
-      target_alarm_timestamp: null,
-      refill_target_alarm_timestamp: null,
-      predicted_toilet_visit_minutes_after_sleep: null,
-      confidence: {
-        sampleCount: firstEventDeltas.length,
-        stdDevMinutes: sigma,
-        dryStreakNights: dryStreak
-      },
-      debug: {
-        weightedDeltaMinutes: predictiveState.targetTime,
-        firstEventDeltasMinutes: firstEventDeltas,
-        refillDeltasMinutes: refillDeltas,
-        reason:
-          historyCutoffMs != null
-            ? `Need ${MIN_LEAK_NIGHTS_FOR_PREDICTION} consecutive leak nights after last activated prediction (${streakLen}/${MIN_LEAK_NIGHTS_FOR_PREDICTION} in current streak).`
-            : `Need ${MIN_LEAK_NIGHTS_FOR_PREDICTION} consecutive completed nights with a leak (${streakLen}/${MIN_LEAK_NIGHTS_FOR_PREDICTION} in current streak; a dry night resets the count).`
-      }
-    };
+    const reason = historyCutoffMs != null
+      ? `Need ${MIN_LEAK_NIGHTS_FOR_PREDICTION} consecutive leak nights after last activated prediction (${streakLen}/${MIN_LEAK_NIGHTS_FOR_PREDICTION} in current streak).`
+      : `Need ${MIN_LEAK_NIGHTS_FOR_PREDICTION} consecutive completed nights with a leak (${streakLen}/${MIN_LEAK_NIGHTS_FOR_PREDICTION} in current streak; a dry night resets the count).`;
+    return alarmState(
+      'REACTIVE',
+      null,
+      null,
+      firstEventDeltas.length,
+      sigma,
+      dryStreak,
+      predictiveState.targetTime,
+      firstEventDeltas,
+      refillDeltas,
+      reason,
+      null
+    );
   }
 
   if (!firstEventDeltas.length || sigma == null) {
-    return {
-      alarm_mode: 'REACTIVE',
-      target_alarm_timestamp: null,
-      refill_target_alarm_timestamp: null,
-      predicted_toilet_visit_minutes_after_sleep: null,
-      confidence: {
-        sampleCount: firstEventDeltas.length,
-        stdDevMinutes: sigma,
-        dryStreakNights: dryStreak
-      },
-      debug: {
-        weightedDeltaMinutes: predictiveState.targetTime,
-        firstEventDeltasMinutes: firstEventDeltas,
-        refillDeltasMinutes: refillDeltas,
-        reason: 'Insufficient leak history for predictive calculation.'
-      }
-    };
+    return alarmState(
+      'REACTIVE',
+      null,
+      null,
+      firstEventDeltas.length,
+      sigma,
+      dryStreak,
+      predictiveState.targetTime,
+      firstEventDeltas,
+      refillDeltas,
+      'Insufficient leak history for predictive calculation.',
+      null
+    );
   }
 
   if (sigma > STABILITY_STDDEV_LIMIT_MINUTES) {
-    return {
-      alarm_mode: 'REACTIVE',
-      target_alarm_timestamp: null,
-      refill_target_alarm_timestamp: null,
-      predicted_toilet_visit_minutes_after_sleep: null,
-      confidence: {
-        sampleCount: firstEventDeltas.length,
-        stdDevMinutes: sigma,
-        dryStreakNights: dryStreak
-      },
-      debug: {
-        weightedDeltaMinutes: predictiveState.targetTime,
-        firstEventDeltasMinutes: firstEventDeltas,
-        refillDeltasMinutes: refillDeltas,
-        reason: `High variability: sigma > ${STABILITY_STDDEV_LIMIT_MINUTES} minutes.`
-      }
-    };
+    return alarmState(
+      'REACTIVE',
+      null,
+      null,
+      firstEventDeltas.length,
+      sigma,
+      dryStreak,
+      predictiveState.targetTime,
+      firstEventDeltas,
+      refillDeltas,
+      `High variability: sigma > ${STABILITY_STDDEV_LIMIT_MINUTES} minutes.`,
+      null
+    );
   }
 
-  return {
-    alarm_mode: 'REACTIVE',
-    target_alarm_timestamp: null,
-    refill_target_alarm_timestamp: null,
-    predicted_toilet_visit_minutes_after_sleep: null,
-    confidence: {
-      sampleCount: firstEventDeltas.length,
-      stdDevMinutes: sigma,
-      dryStreakNights: dryStreak
-    },
-    debug: {
-      weightedDeltaMinutes: null,
-      firstEventDeltasMinutes: firstEventDeltas,
-      refillDeltasMinutes: refillDeltas,
-      reason: 'No high-confidence mode cluster (Sleep Hygiene First gate).'
-    }
-  };
+  return alarmState(
+    'REACTIVE',
+    null,
+    null,
+    firstEventDeltas.length,
+    sigma,
+    dryStreak,
+    null,
+    firstEventDeltas,
+    refillDeltas,
+    'No high-confidence mode cluster (Sleep Hygiene First gate).',
+    null
+  );
 }
