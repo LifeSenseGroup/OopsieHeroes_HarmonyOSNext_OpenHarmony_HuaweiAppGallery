@@ -39,7 +39,6 @@
     "The progress will be available after the 2nd measuring day" : "The progress will be available after the 2nd measuring day", 
     "Did you have a dry night?" : "Kuru bir gece geçirdin mi?",
     "Do it later" : "Sonra yap",
-    "Do you want first to leave a review on ThrustPilot?" : "ThrustPilot'a ilk siz mi yorum bırakmak istiyorsunuz?" ,
     "Feedback sent!" : "Geri bildirim gönderildi!",
     "Give feedback" : "Geri bildirim ver",
     "Go to sleep" : "Uyumaya git",
@@ -61,11 +60,11 @@
   "OnboardingScreen" : { 
     "Hi!" : "Merhaba!",
     "How old are you?": "Kaç yaşındasın?",
-    "To start using Oopsie Heroes, we first need your email address or phone number." : "Oopsie Heroes'u kullanmaya başlamak için önce e-posta adresinize veya telefon numaranıza ihtiyacımız var.",
+    "To start using Oopsie Heroes, we first need your email address." : "Oopsie Heroes'u kullanmaya başlamak için önce e-posta adresinize ihtiyacımız var." ,
 
     "I agree to the" : "Kabul ediyorum",
     "Privacy Policy" : "Gizlilik Politikası",
-    "Email or phone number" : "E-posta veya telefon",
+    "Email" : "E-posta",
     "Pick your hero!" : "Kahramanını seç!",
     "Next" : "Sonraki",
     "Let’s go!" : "Hadi gidelim !",

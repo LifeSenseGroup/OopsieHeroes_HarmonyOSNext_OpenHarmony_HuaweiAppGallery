@@ -50,8 +50,6 @@ export type CoachResult = {
   id: CoachMessageId;
   text: string;
   surface: CoachSurface;
-  /** Nights in the current dry streak, for translated copy such as N11 and N13. */
-  dryStreak?: number;
 };
 
 export type CoachProfile = {
@@ -546,8 +544,7 @@ export function selectMorningCoach(
       dry_streak: streakDry,
       name: profile.nickname
     }),
-    surface: 'morning',
-    dryStreak: streakDry
+    surface: 'morning'
   };
 }
 

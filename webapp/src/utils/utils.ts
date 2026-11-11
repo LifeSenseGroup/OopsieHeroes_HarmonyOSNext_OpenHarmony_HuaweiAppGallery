@@ -246,15 +246,19 @@ export function parseLeaksIntoItems(leaks:EventOopsie[],month:number)
     return items
 }
 
-// Email, or a phone number of any length. A leading + is allowed for a country code.
+// Function to validate email format
 export function validateEmail(userEmail: string) {
-    const value = (userEmail ?? "").trim();
-    if (!value) return false;
 
+    var emailOK = false;
+
+    // Regular expression for validating email addresses
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (emailRegex.test(value)) return true;
-
-    return /^\+?\d+$/.test(value);
+  
+    if (emailRegex.test(userEmail)) {
+      // Email is valid
+      emailOK = true;  
+    }
+    return emailOK;
   }
 
 

@@ -112,10 +112,6 @@ msgstr "削除してもいいですか？"
 msgid "Do you wake up sooner with the voice recording than with the standard alarm sound?"
 msgstr "録音メッセージの方がデフォルトのアラーム音より早く目覚めることができましたか？"
 
-#: src/screen/Home.tsx:33
-msgid "Do you want first to leave a review on ThrustPilot ?"
-msgstr ""
-
 #: src/component/FeedbackQuestion/feedback_questions.tsx:58
 msgid "Does the alarm wake you up?"
 msgstr "アラームで起きられましたか？"
@@ -227,10 +223,6 @@ msgstr "終了する"
 msgid "Leaving already?"
 msgstr "もう終了しましたか？"
 
-#: src/screen/Home.tsx:133
-msgid "Let us know by leaving a review on TrustPilot"
-msgstr ""
-
 #: src/screen/RegisterEmail.tsx:61
 msgid "Let’s go!"
 msgstr "開始"
@@ -318,10 +310,6 @@ msgstr "電話の音"
 #: src/screen/RegisterSex.tsx:87
 msgid "Pick your hero!"
 msgstr "キャラクターを決めて！"
-
-#: src/screen/Home.tsx:131
-#~ msgid "Please rate your experience on Trustpilot"
-#~ msgstr ""
 
 #: src/helper/alarmSound.ts:68
 msgid "Please record a personal message first"

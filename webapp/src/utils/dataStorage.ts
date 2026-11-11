@@ -1,9 +1,9 @@
-// for storing data local and remote 
+// for storing data on this phone 
 
 import { openDB as openDBlocal } from 'idb';
 
 import { EventOopsie, UserData, eTypes } from './dataStructures';
-import { store_selectedSound, store_onBoardingDone, store_customer_country, store_customer_email,  store_customer_age, store_customer_sex, store_eventsInBackLogToBeSendToMongoDB, txtSndfilename, txtVibrate, store_UserSavedToRemoteDB, store_nativeSystemType} from '../stores'
+import { store_selectedSound, store_onBoardingDone, store_customer_country, store_customer_email,  store_customer_age, store_customer_sex, txtSndfilename, txtVibrate} from '../stores'
 import { get } from 'svelte/store';
 import {setSndFile} from './NativeBridge'
 import {setVibrate} from './NativeBridge'
@@ -162,19 +162,6 @@ export async function storeVallocal(idStr: string, val: number) {
 }
 
 
-export async function getRemainingEvents(startIndex:number):Promise<EventOopsie[]> {
-
-  const db = await openDBlocal('oopsie', 1);
-  const events = await db.getAll('events');
-  db.close();
-  
-  const valuesFromIndexXToEnd = events.slice(startIndex).map(item => item.value);  // only the remaining and strip the number only the value (event) itself
-
-  return valuesFromIndexXToEnd;
-
-}
-
-
 export async function getLeaks():Promise<EventOopsie[]> {
   const db = await openDBlocal('oopsie', 1);
   const events = await db.getAll('events');
@@ -229,12 +216,8 @@ export async function getStops():Promise<EventOopsie[]> {
   const lastUsedKey = await db.count('events');
   const newKey = lastUsedKey + 1;
 
-
-  var counter: number = get(store_eventsInBackLogToBeSendToMongoDB);
   await db.put('events', { id: newKey, value: event });
-    counter++;
-    store_eventsInBackLogToBeSendToMongoDB.set(counter);
-    db.close();
+  db.close();
 
 }
 
@@ -302,8 +285,6 @@ export async function deleteEventLocal(eventData: EventOopsie) {
 }
 
 
-// Assuming you have the required functions and variables (openDBlocal and store_eventsInBackLogToBeSendToMongoDBValue) already defined.
-
 async function updateEvent(eventKey, newData) {
   const db = await openDBlocal('oopsie', 1);
 
@@ -370,69 +351,6 @@ export async function createAndStoreWake(opts: {
     extra_info
   };
   await addEventLocal(event);
-}
-// Updated this function to use the Data API for syncing user data to MongoDB Atlas instead of the Realm SDK.
-// It also includes error handling and local state management to ensure we don't keep trying to sync the same data if it fails.
-export async function writeUserToRemoteDB() {
-  var retVal = false;
-
-  const ownerId = getOwnerId();
-  const email = get(store_customer_email);
-  const age = get(store_customer_age);
-  const sex = get(store_customer_sex);
-  const country = get(store_customer_country);
-  const os = get(store_nativeSystemType);
-
-  // 2. Data API Configuration (Ensure this matches the one in accessRealm.ts)
-  const DATA_API_CONFIG = {
-    endpoint: "https://data.mongodb-api.com/app/stitchoopsieheroes-fngyh/endpoint/data/v1/action/",
-    apiKey: "1666cbbf-d1ec-4218-ae21-7689e532e87c",
-    dataSource: "mongodb-atlas",
-    database: "oopsieheroesdatabase"
-  };
-
-  try {
-    const response = await fetch(DATA_API_CONFIG.endpoint + "updateOne", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': DATA_API_CONFIG.apiKey
-      },
-      body: JSON.stringify({
-        dataSource: DATA_API_CONFIG.dataSource,
-        database: DATA_API_CONFIG.database,
-        collection: "oopsieheroesusers",
-        filter: { owner_id: ownerId },
-        update: {
-          $set: {
-            email: email,
-            age: age,
-            sex: sex,
-            country: country,
-            os: os,
-            last_sync: new Date()
-          }
-        },
-        upsert: true
-      })
-    });
-
-    if (response.ok) {
-      // Mark as saved locally so we don't keep trying to sync the same data
-      const db = await openDBlocal('oopsie', 1);
-      await db.put('user', { id: "savedToDB", value: true });
-      db.close();
-
-      // We use a safe check for the store before setting
-      try { store_UserSavedToRemoteDB.set(1); } catch(e) {}
-
-      retVal = true;
-      console.log("User sync successful for:", ownerId);
-    }
-  } catch(err) {
-    console.error("User sync failed via Data API:", err);
-  }
-  return retVal;
 }
 
 // These ensure settings are saved to the LOCAL phone database immediately

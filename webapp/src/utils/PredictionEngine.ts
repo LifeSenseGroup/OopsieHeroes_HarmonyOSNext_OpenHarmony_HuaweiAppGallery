@@ -1,5 +1,5 @@
 import type { EventOopsie } from './dataStructures';
-import { groupSleepStartIndexes, selectAlternateCase } from './predictionCases';
+import { groupSleepStartIndexes, selectAlternateCase, selectCase9Fallback } from './predictionCases';
 
 export type AlarmMode = 'PREDICTIVE' | 'REACTIVE';
 
@@ -28,7 +28,7 @@ export type PredictiveState = {
   targetTime: number | null;
   confidence: number;
   predictedToiletVisitMinutesAfterSleep: number | null;
-  /** 2–8 when a later case supplied the alarm. Case 1 leaves this unset. */
+  /** 2–9 when a later case supplied the alarm. Case 1 leaves this unset. */
   caseId?: number;
 };
 
@@ -465,20 +465,29 @@ export function getPredictiveState(
   const leaksForEngine = filterEventsAfterCutoff(leaks, historyCutoffMs);
   const stopsForEngine = filterEventsAfterCutoff(stops, historyCutoffMs);
   const tonightOnset = resolveAlternateOnset(startsForEngine, leaksForEngine, stopsForEngine, now);
-  if (!tonightOnset) return case1;
+  const alternate = tonightOnset
+    ? selectAlternateCase(startsForEngine, leaksForEngine, stopsForEngine, tonightOnset)
+    : null;
+  // Case 9 keeps leak nights from before an activated prediction. Cases 1–8 stay on the cutoff.
+  const case9Onset = tonightOnset ?? resolveAlternateOnset(starts, leaks, stops, now);
+  const case9Minutes =
+    alternate || !case9Onset
+      ? null
+      : selectCase9Fallback(starts, leaks, stops, case9Onset, historyCutoffMs);
+  const delayMin = alternate?.delayMin ?? case9Minutes;
+  const caseId = alternate?.caseId ?? (case9Minutes != null ? 9 : null);
+  const scheduleOnset = alternate ? tonightOnset : case9Onset;
+  if (delayMin == null || caseId == null || !scheduleOnset) return case1;
 
-  const alternate = selectAlternateCase(startsForEngine, leaksForEngine, stopsForEngine, tonightOnset);
-  if (!alternate) return case1;
-
-  const advanced = advanceOnsetUntilFutureTarget(tonightOnset, alternate.delayMin, now);
+  const advanced = advanceOnsetUntilFutureTarget(scheduleOnset, delayMin, now);
   if (!advanced) return case1;
 
   return {
     shouldPredict: true,
     targetTime: advanced.targetMs,
-    confidence: alternate.confidence,
-    predictedToiletVisitMinutesAfterSleep: alternate.delayMin,
-    caseId: alternate.caseId
+    confidence: alternate?.confidence ?? 1,
+    predictedToiletVisitMinutesAfterSleep: delayMin,
+    caseId
   };
 }
 
@@ -501,7 +510,7 @@ export function computeAlarmState(
     .sort((a, b) => b.onset.getTime() - a.onset.getTime())
     .slice(0, MAX_NIGHTS);
 
-  if (!nights.length) {
+  if (!nights.length && !(predictiveState.shouldPredict && predictiveState.targetTime != null)) {
     return {
       alarm_mode: 'REACTIVE',
       target_alarm_timestamp: null,

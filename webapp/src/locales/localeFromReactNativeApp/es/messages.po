@@ -110,10 +110,6 @@ msgstr "¿De verdad quieres eliminar este evento?"
 msgid "Do you wake up sooner with the voice recording than with the standard alarm sound?"
 msgstr "¿Despiertas más rápido con la voz grabada que con la alarma normal?"
 
-#: src/screen/Home.tsx:33
-msgid "Do you want first to leave a review on ThrustPilot ?"
-msgstr "¿Quiéres primero dejar una evaluación en ThrustPilot?"
-
 #: src/component/FeedbackQuestion/feedback_questions.tsx:58
 msgid "Does the alarm wake you up?"
 msgstr "¿Te despertó la alarma?"
@@ -219,10 +215,6 @@ msgstr "Salir"
 #: src/screen/Feedback.tsx:176
 msgid "Leaving already?"
 msgstr "¿Listo para salir?"
-
-#: src/screen/Home.tsx:133
-msgid "Let us know by leaving a review on TrustPilot"
-msgstr "Háganoslo saber dejando un comentario en ThustPilot"
 
 #: src/screen/RegisterEmail.tsx:61
 msgid "Let’s go!"

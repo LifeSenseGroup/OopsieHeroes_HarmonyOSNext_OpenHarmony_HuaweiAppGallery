@@ -31,7 +31,22 @@ web version of the Oopsie Heroes App should replace the current react-native whi
   show a cirlce for the current day. 
   show a circle with blue color fill when 
 
-
+- predictive alarm (calendar heatmap / nightly outlook) :
+   - after enough leak history (min 3 nights with leaks) the calendar can offer a prediction for the next likely toilet visit
+   - the box shows roughly when the leak may happen as minutes after going to sleep, not as a fixed clock time 
+   - alarm is off by default; user must press Activate alarm on the prediction box to opt in for that offer
+   - after Go to sleep the target is recalculated from the real bedtime and a 3-step staircase is scheduled: whisper (10% vol, ~15s), nudge (25%, ~30s), wake (100%, loops until dismissed)
+   - how the prediction is computed (PredictionEngine.ts) :
+      - take up to the last 8 completed nights; for each night pair a Go to sleep with leaks in that window
+      - use minutes from Go to sleep until the first leak of the night
+      - need at least 3 consecutive completed nights that each had a leak; a dry night resets the count; if timing varies too much (std dev > 60 min) stay REACTIVE
+      - slide a 60 min window over those first-leak times and pick the window where most nights cluster (last 3 nights count double)
+      - if that cluster is strong enough (confidence >= 60%) we predict the next leak around the start of that window
+      - the calendar box shows that as minutes after going to sleep; whisper/nudge/wake are 15 and 7 min before that time
+      - after you Activate a prediction and that cycle completes, the counter resets and you need 3 new consecutive leak nights; declining or ignoring the box does not reset it, and new leaks keep updating the offer while the streak builds
+   - a normal sensor leak during the night still wins over the prediction (reactive alarm path)
+   - main code: PredictionEngine.ts, PredictiveStaircaseScheduler.ts, predictionLifecycle.ts, CalendarScreen.svelte, HomeScreen.svelte
+   
 - GUI:
    - backgrounds and some other pictures have 2 versions one for phones and one wider version for Tablets.
    - startup/splash screen is used

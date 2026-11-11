@@ -1,7 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import { onDestroy } from 'svelte';
-  import { _ } from 'svelte-i18n';
   import {
     playHeroNudgeSound,
     recordHeroNudgeSound,
@@ -81,38 +80,38 @@
 </script>
 
 {#if open}
-  <div class="modal-overlay" role="dialog" aria-modal="true" aria-label={$_('heroNudge.title')}>
+  <div class="modal-overlay" role="dialog" aria-modal="true" aria-label="Hero Nudge Setup">
     <div class="sheet">
       <div class="sheet-content">
         <div class="drag-handle" />
         <div class="header-row">
-          <h2>{$_('heroNudge.title')}</h2>
-          <button class="close-btn" type="button" aria-label={$_('heroNudge.close')} on:click={closeModal}>×</button>
+          <h2>Hero Nudge Setup</h2>
+          <button class="close-btn" type="button" aria-label="Close Hero Nudge setup" on:click={closeModal}>×</button>
         </div>
-        <p class="instructions">{$_('heroNudge.instructions')}</p>
+        <p class="instructions">Record in a soft whisper to help your hero transition to a lighter sleep stage.</p>
         <div class="script-box">
-          {$_('heroNudge.line1')}
+          Shhh... you're doing so well tonight.
           <br /><br />
-          {$_('heroNudge.line2')}
+          You are a real Hero, sleeping so deeply and comfortably.
           <br /><br />
-          {$_('heroNudge.line3')}
+          Everything is safe and warm. Let's keep the bed nice and dry and cozy, just like it is right now.
           <br /><br />
-          {$_('heroNudge.line4')}
+          I'm so proud of you for being a Hero.
           <br /><br />
-          {$_('heroNudge.line5')}
+          Sweet dreams... I'll see you in the morning.
         </div>
 
         <div class="record-actions">
           {#if isRecording}
-            <button class="mic-btn stop" type="button" on:click={stopRecording}>■ {$_('heroNudge.stop')}</button>
+            <button class="mic-btn stop" type="button" on:click={stopRecording}>■ Stop</button>
           {:else}
-            <button class="mic-btn" type="button" on:click={startRecording}>● {$_('heroNudge.record')}</button>
+            <button class="mic-btn" type="button" on:click={startRecording}>● Record</button>
           {/if}
         </div>
 
         <div class="secondary-actions">
-          <button class="secondary-btn" type="button" on:click={playPreview}>{$_('heroNudge.preview')}</button>
-          <button class="save-btn" type="button" on:click={saveNudge}>{$_('heroNudge.save')}</button>
+          <button class="secondary-btn" type="button" on:click={playPreview}>Play Preview</button>
+          <button class="save-btn" type="button" on:click={saveNudge}>Save</button>
         </div>
       </div>
     </div>

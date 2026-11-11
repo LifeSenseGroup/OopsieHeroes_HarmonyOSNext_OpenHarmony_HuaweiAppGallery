@@ -74,7 +74,7 @@ describe('computeAlarmState', () => {
     );
   });
 
-  it('hides prediction after a completed dry night even when three wet nights preceded it', () => {
+  it('uses Case 9 after one dry night when three wet nights preceded it', () => {
     const lastSleep = atLocal(2026, 8, 29, 20, 0);
     const { starts: wetStarts, leaks: wetLeaks } = seedThreeStableWetNights(lastSleep, 150);
     const drySleep = atLocal(2026, 9, 1, 20, 0);
@@ -86,12 +86,12 @@ describe('computeAlarmState', () => {
 
     const state = computeAlarmState(starts, leaks, now, stops);
 
-    expect(state.alarm_mode).toBe('REACTIVE');
-    expect(state.target_alarm_timestamp).toBeNull();
-    expect(state.debug?.reason).toContain('0/3');
+    expect(state.alarm_mode).toBe('PREDICTIVE');
+    expect(state.debug?.reason).toContain('Case 9');
+    expect(state.predicted_toilet_visit_minutes_after_sleep).toBeCloseTo(150, 0);
   });
 
-  it('stays REACTIVE when a dry night breaks the consecutive leak streak', () => {
+  it('uses Case 9 when a dry night breaks the consecutive leak streak', () => {
     const lastSleep = atLocal(2026, 8, 29, 20, 0);
     const { starts: wetStarts, leaks: wetLeaks } = seedThreeStableWetNights(lastSleep, 150);
     const drySleep = atLocal(2026, 8, 30, 20, 0);
@@ -108,9 +108,9 @@ describe('computeAlarmState', () => {
 
     const state = computeAlarmState(starts, leaks, now, stops);
 
-    expect(state.alarm_mode).toBe('REACTIVE');
-    expect(state.target_alarm_timestamp).toBeNull();
-    expect(state.debug?.reason).toContain('1/3');
+    expect(state.alarm_mode).toBe('PREDICTIVE');
+    expect(state.debug?.reason).toContain('Case 9');
+    expect(state.debug?.reason).not.toContain('High-density cluster');
   });
 
   it('stays REACTIVE with fewer than three consecutive leak nights', () => {
@@ -185,7 +185,7 @@ describe('computeAlarmState', () => {
     expect(state.debug?.reason).toContain('Case 2');
   });
 
-  it('ignores nights before history cutoff', () => {
+  it('lets Case 9 reuse leak nights after an activated prediction when that night leaked', () => {
     const lastSleep = atLocal(2026, 8, 29, 20, 0);
     const { starts, leaks } = seedThreeStableWetNights(lastSleep, 150);
     const cutoffMs = atLocal(2026, 8, 29, 20, 0).getTime();
@@ -193,7 +193,9 @@ describe('computeAlarmState', () => {
 
     const state = computeAlarmState(starts, leaks, now, [], cutoffMs);
 
-    expect(state.alarm_mode).toBe('REACTIVE');
+    expect(state.alarm_mode).toBe('PREDICTIVE');
+    expect(state.debug?.reason).toContain('Case 9');
+    expect(state.predicted_toilet_visit_minutes_after_sleep).toBeCloseTo(150, 0);
   });
 
   it('predicts earliest cluster when leaks are at 15, 30, and 60 minutes', () => {
