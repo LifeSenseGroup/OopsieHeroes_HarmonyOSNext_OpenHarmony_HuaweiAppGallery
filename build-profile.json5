@@ -5,20 +5,46 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "C:/Users/20232832/.ohos/config/default_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_hUYQxxckXp5c5VNl9SCUXgdybSCR-NuOPIPmEHKDv5U=.cer",
-          "keyAlias": "debugKey",
-          "keyPassword": "0000001A13F49602FD813A79F42B8259E1B44CF221256219454AEF5124AF721E00A17ABDB8E10FCD67ED",
-          "profile": "C:/Users/20232832/.ohos/config/default_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_hUYQxxckXp5c5VNl9SCUXgdybSCR-NuOPIPmEHKDv5U=.p7b",
+          "certpath": "C:/code/harmony/OHHarmonyNext.cer",
+          "keyAlias": "oopsieHeroes",
+          "keyPassword": "00000019E348BC4CEE3F810AD9C6A13ED051755A46277BA62D8B8387178BC6B6F96DC57EA437B48B2A",
+          "profile": "C:/code/harmony/OhHarmonyNextRelease.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:/Users/20232832/.ohos/config/default_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_hUYQxxckXp5c5VNl9SCUXgdybSCR-NuOPIPmEHKDv5U=.p12",
-          "storePassword": "0000001AAC119A945D65E353AD4075AE0082C726966EFEDD2FF7DC9639EF8FCDEDA233A934686854F21D"
+          "storeFile": "C:/code/harmony/KeyStoreFile/Oh_HarmonyNext.p12",
+          "storePassword": "00000019AC42C150D5A3E7524DACB2CC8FD9272A4F8EADDCF8990A4EF324263FE2FD00D6FBCD399A8D"
+        }
+      },
+      {
+        "name": "deviceDebug",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\markt\\.ohos\\config\\deviceDebug_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_M3I22Ak14nf35Yrfg1fImSyv6RvplFxYFfu1uHkMUU0=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "000000199CAC8289DB2E949BFBBF6B90BDABFF8A7406617C1D08B72DE685D859DF87EF0AC802B3D54B",
+          "profile": "C:\\Users\\markt\\.ohos\\config\\deviceDebug_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_M3I22Ak14nf35Yrfg1fImSyv6RvplFxYFfu1uHkMUU0=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\markt\\.ohos\\config\\deviceDebug_OopsieHeroes_HarmonyOSNext_OpenHarmony_HuaweiAppGallery_M3I22Ak14nf35Yrfg1fImSyv6RvplFxYFfu1uHkMUU0=.p12",
+          "storePassword": "00000019A82FCD9B94E231731C261F6AD98D5947B8DE5375CAC62DC9179E246EE79BA2AD0AC2531155"
         }
       }
     ],
     "products": [
       {
+        "name": "deviceDebug",
+        "signingConfig": "deviceDebug",
+        "targetSdkVersion": "5.1.0(18)",
+        "compatibleSdkVersion": "5.1.0(18)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      },
+      {
         "name": "default",
-        "signingConfig": "OhharmonyNext",
+        "signingConfig": "default",
         "targetSdkVersion": "5.1.0(18)",
         "compatibleSdkVersion": "5.1.0(18)",
         "runtimeOS": "HarmonyOS",
@@ -47,7 +73,8 @@
         {
           "name": "default",
           "applyToProducts": [
-            "default"
+            "default",
+            "deviceDebug"
           ]
         }
       ]
