@@ -11,6 +11,12 @@
     "deliveryWithInstall": true,
     "installationFree": false,
     "pages": "$profile:main_pages",
+    "metadata": [
+      {
+        "name": "avoid_cutout",
+        "value": "true"
+      }
+    ],
     "abilities": [
       {
         "name": "EntryAbility",

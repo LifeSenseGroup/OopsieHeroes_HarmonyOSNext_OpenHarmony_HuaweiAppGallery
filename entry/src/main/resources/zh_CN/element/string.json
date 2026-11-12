@@ -1,5 +1,8 @@
 {
   "string": [
-    { "name": "microphone_permission_reason", "value": "允许 Oopsie Heroes 使用麦克风吗？" }
+    { "name": "microphone_permission_reason", "value": "允许 Oopsie Heroes 使用麦克风吗？" },
+    { "name": "voice_recording_permission", "value": "请在设置中允许访问麦克风，以录制语音。" },
+    { "name": "voice_recording_failed", "value": "无法录制语音，请重试。" },
+    { "name": "voice_recording_missing", "value": "请先点击麦克风按钮录制语音。" }
   ]
 }

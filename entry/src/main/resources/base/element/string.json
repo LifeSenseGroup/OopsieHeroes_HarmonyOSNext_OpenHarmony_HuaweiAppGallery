@@ -118,6 +118,9 @@
 
     { "name": "weight", "value": "Weight" },
 
-    { "name": "blink", "value": "BLINK" }
+    { "name": "blink", "value": "BLINK" },
+    { "name": "voice_recording_permission", "value": "Allow microphone access in Settings to record a voice." },
+    { "name": "voice_recording_failed", "value": "The voice could not be recorded. Please try again." },
+    { "name": "voice_recording_missing", "value": "Record a voice with the microphone button first." }
   ]
 }

@@ -11,6 +11,8 @@ import { SensorBeepDetector } from '../manager/SensorBeepDetector';
 import { AlarmVolume } from '../prediction/AlarmVolume';
 
 const DOMAIN = 0x0000;
+// The shipped web UI offers a three-second parent voice recording.
+const VOICE_RECORDING_DURATION_MS = 3000;
 
 @Entry
 @Component
@@ -23,6 +25,11 @@ struct ActivityOopsieWeb {
   private recorder?: media.AVRecorder;
   private recordingFile?: fileIo.File;
   private recordingStopTimer?: number;
+  private recordingStartTask?: Promise<void>;
+  private recordingStopTask?: Promise<void>;
+  private recordingInProgress: boolean = false;
+  private recordingFailed: boolean = false;
+  private soundDetectionRequested: boolean = false;
   private soundCapturer?: audio.AudioCapturer;
   private soundDetectionGeneration: number = 0;
   private soundAlarmTriggered: boolean = false;
@@ -62,7 +69,6 @@ struct ActivityOopsieWeb {
         })
         .width('100%')
         .height('100%')
-        .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
     }
     .width('100%')
     .height('100%')
@@ -120,6 +126,11 @@ struct ActivityOopsieWeb {
   }
 
   async playSound(fileName: string, durationMs: number, loop: boolean, volumeFraction: number = 1): Promise<void> {
+    if (fileName === 'customSnd') {
+      // MPEG-4 audio is not playable until stop() has finalized the recording.
+      // Also wait when Stop/automatic timeout is already finalizing the file.
+      await this.stopRecording();
+    }
     await this.stopSound();
     const fraction = Number.isFinite(volumeFraction) ? volumeFraction : 1;
     const hostContext = this.getUIContext().getHostContext() as common.UIAbilityContext | undefined;
@@ -138,6 +149,7 @@ struct ActivityOopsieWeb {
         length = stat.size;
       } catch (_) {
         hilog.warn(DOMAIN, 'testTag', 'No custom voice recording is available yet');
+        promptAction.showToast({ message: $r('app.string.voice_recording_missing') });
         return;
       }
     } else {
@@ -211,26 +223,52 @@ struct ActivityOopsieWeb {
   }
 
   async startRecording(): Promise<void> {
-    if (this.recorder) {
-      await this.stopRecording();
+    if (this.recordingStopTask) {
+      await this.recordingStopTask;
     }
+    if (this.recordingStartTask) {
+      await this.recordingStartTask;
+      return;
+    }
+    if (this.recorder) {
+      return;
+    }
+    this.recordingStartTask = this.beginVoiceRecording();
+    try {
+      await this.recordingStartTask;
+    } finally {
+      this.recordingStartTask = undefined;
+    }
+  }
+
+  private async beginVoiceRecording(): Promise<void> {
     const hostContext = this.getUIContext().getHostContext() as common.UIAbilityContext | undefined;
     if (!hostContext) {
       return;
     }
+    this.recordingInProgress = true;
+    this.recordingFailed = false;
     let outputFile: fileIo.File | undefined;
     let recorder: media.AVRecorder | undefined;
     try {
-      const permission = await abilityAccessCtrl.createAtManager()
-        .requestPermissionsFromUser(hostContext, ['ohos.permission.MICROPHONE']);
-      if (permission.authResults.length === 0 || permission.authResults[0] !== 0) {
-        hilog.warn(DOMAIN, 'testTag', 'Microphone permission was not granted');
+      if (!await this.requestMicrophonePermissionResult(hostContext)) {
+        this.recordingInProgress = false;
+        promptAction.showToast({ message: $r('app.string.voice_recording_permission') });
         return;
       }
-      const outputPath = `${hostContext.filesDir}/recorded_audio.m4a`;
+      await this.stopSound();
+      // Sensor listening and voice recording must not compete for the microphone.
+      // Remember the requested listening state so it can resume after recording.
+      await this.stopSoundDetection(true);
+      const outputPath = `${hostContext.filesDir}/recorded_audio_pending.m4a`;
       outputFile = fileIo.openSync(outputPath,
         fileIo.OpenMode.READ_WRITE | fileIo.OpenMode.CREATE | fileIo.OpenMode.TRUNC);
       recorder = await media.createAVRecorder();
+      recorder.on('error', (error: Error) => {
+        this.recordingFailed = true;
+        hilog.error(DOMAIN, 'testTag', 'Voice recorder error: %{public}s', `${error}`);
+        void this.stopRecording();
+      });
       await recorder.prepare({
         audioSourceType: media.AudioSourceType.AUDIO_SOURCE_TYPE_MIC,
         profile: {
@@ -246,8 +284,8 @@ struct ActivityOopsieWeb {
       this.recordingFile = outputFile;
       this.recorder = recorder;
       this.recordingStopTimer = setTimeout(() => {
-        this.stopRecording();
-      }, 10000);
+        void this.stopRecording();
+      }, VOICE_RECORDING_DURATION_MS);
     } catch (error) {
       hilog.error(DOMAIN, 'testTag', 'Harmony voice recording failed: %{public}s', `${error}`);
       if (recorder) {
@@ -260,10 +298,29 @@ struct ActivityOopsieWeb {
       if (outputFile) {
         fileIo.closeSync(outputFile);
       }
+      this.recordingInProgress = false;
+      promptAction.showToast({ message: $r('app.string.voice_recording_failed') });
+      if (this.soundDetectionRequested) {
+        await this.startSoundDetection();
+      }
     }
   }
 
   async stopRecording(): Promise<void> {
+    if (this.recordingStartTask) {
+      await this.recordingStartTask;
+    }
+    if (!this.recordingStopTask) {
+      this.recordingStopTask = this.finishVoiceRecording();
+    }
+    try {
+      await this.recordingStopTask;
+    } finally {
+      this.recordingStopTask = undefined;
+    }
+  }
+
+  private async finishVoiceRecording(): Promise<void> {
     if (this.recordingStopTimer !== undefined) {
       clearTimeout(this.recordingStopTimer);
       this.recordingStopTimer = undefined;
@@ -272,10 +329,12 @@ struct ActivityOopsieWeb {
     const outputFile = this.recordingFile;
     this.recorder = undefined;
     this.recordingFile = undefined;
+    let saved = false;
     if (recorder) {
       try {
         if (recorder.state === 'started' || recorder.state === 'paused') {
           await recorder.stop();
+          saved = !this.recordingFailed;
         }
       } catch (error) {
         hilog.error(DOMAIN, 'testTag', 'Harmony voice recording stop failed: %{public}s', `${error}`);
@@ -289,10 +348,30 @@ struct ActivityOopsieWeb {
     if (outputFile) {
       fileIo.closeSync(outputFile);
     }
+    const hostContext = this.getUIContext().getHostContext() as common.UIAbilityContext | undefined;
+    if (recorder && hostContext) {
+      try {
+        const pendingPath = `${hostContext.filesDir}/recorded_audio_pending.m4a`;
+        if (!saved || fileIo.statSync(pendingPath).size === 0) {
+          throw new Error('Voice recording was not finalized');
+        }
+        // Keep the previous usable recording if permission or recording fails.
+        fileIo.renameSync(pendingPath, `${hostContext.filesDir}/recorded_audio.m4a`);
+        hilog.info(DOMAIN, 'testTag', 'Parent voice recording saved');
+      } catch (error) {
+        hilog.error(DOMAIN, 'testTag', 'Could not save voice recording: %{public}s', `${error}`);
+        promptAction.showToast({ message: $r('app.string.voice_recording_failed') });
+      }
+    }
+    this.recordingInProgress = false;
+    if (recorder && this.soundDetectionRequested) {
+      await this.startSoundDetection();
+    }
   }
 
   async startSoundDetection(): Promise<void> {
-    if (this.soundCapturer) {
+    this.soundDetectionRequested = true;
+    if (this.recordingInProgress || this.soundCapturer) {
       return;
     }
     const requestGeneration = ++this.soundDetectionGeneration;
@@ -363,7 +442,10 @@ struct ActivityOopsieWeb {
     }
   }
 
-  async stopSoundDetection(): Promise<void> {
+  async stopSoundDetection(preserveRequest: boolean = false): Promise<void> {
+    if (!preserveRequest) {
+      this.soundDetectionRequested = false;
+    }
     this.soundDetectionGeneration++;
     const capturer = this.soundCapturer;
     this.soundCapturer = undefined;
