@@ -247,7 +247,7 @@ struct ActivityOopsieWeb {
       this.recorder = recorder;
       this.recordingStopTimer = setTimeout(() => {
         this.stopRecording();
-      }, 3000);
+      }, 10000);
     } catch (error) {
       hilog.error(DOMAIN, 'testTag', 'Harmony voice recording failed: %{public}s', `${error}`);
       if (recorder) {
