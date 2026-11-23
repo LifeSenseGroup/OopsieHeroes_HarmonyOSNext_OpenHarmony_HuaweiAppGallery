@@ -303,7 +303,7 @@ console.log("loading")
         <img  class="iconSpace"  on:click={() => { recording = true ;    setTimeout(() => {
           recording = false;
           console.log("Recording stopped");
-        }, 3000); recordSound(); }}  src="build/images/microphone.svg"  alt="microphone"> 
+        }, 10000); recordSound(); }}  src="build/images/microphone.svg"  alt="microphone">
      {/if}
 
  

@@ -160,6 +160,11 @@ export function setSound5()
 export function setSoundCustom()
 {
     if (TEST) console.log("setSoundCustom")
+    if (window.OopsieHarmony) {
+        txtSndfilename.set("customSnd");
+        window.OopsieHarmony.playSound("customSnd", 10000, false, 1);
+        return;
+    }
     if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"SNDCUSTOM"});
     if (store_nativeSystemTypeValue == "android")
     {
@@ -235,6 +240,10 @@ export function stopSelectedAlarm()
 export function recordSound()
 {
     if (TEST) console.log("recordSound")
+    if (window.OopsieHarmony) {
+        window.OopsieHarmony.startRecording();
+        return;
+    }
     if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"RECORDSND"});
     if (store_nativeSystemTypeValue == "android")
     {
@@ -252,6 +261,10 @@ export function recordSound()
 export function stopRecordSound()
 {
     if (TEST) console.log("stopRecordSound")
+    if (window.OopsieHarmony) {
+        window.OopsieHarmony.stopRecording();
+        return;
+    }
     if (store_nativeSystemTypeValue=="ios") window.webkit.messageHandlers.test.postMessage({name:"test", cmd:"STOPRECORDSND"});
     if (store_nativeSystemTypeValue == "android")
     {
